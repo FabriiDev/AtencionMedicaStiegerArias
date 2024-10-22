@@ -1,0 +1,24 @@
+//- index.pug
+extends layout
+
+block head
+block content
+    .d-flex.justify-content-center.min-vh-100
+        .conteiner.mt-5
+            h1(class="d-flex justify-content-center mb-4") Logueate aca doctoooor 
+            .logueo.container
+                form
+                    .mb-3
+                        label.form-label(for='exampleInputEmail1') Matricula
+                        input#matricula.form-control(type='text')
+                        #emailHelp.form-text
+                    .mb-3
+                        label.form-label(for='exampleInputPassword1') Contrasena
+                        input#pass.form-control(type='password')
+                    .d-grid.gap2
+                        button.btn.btn-success(type='submit' onclick='loguear(event)') Ingresar
+
+    script(src="/js/loginCliente.js")
+
+block footer
+    include templates/footer

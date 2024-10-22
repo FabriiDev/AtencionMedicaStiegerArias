@@ -1,0 +1,60 @@
+//- pag2.pug
+extends layout
+
+block content
+    .conteiner.cont-todo
+        .title.text-center.mt-5 
+            h1 Bienvenido nombre_medico!
+        .text-center.mt-3 Agenda Diaria
+        //- clavar filtrado de fechas
+        .conteiner.border.rounded.p-5
+            .d-flex.justify-content-start.mb-4.gap-3
+                .rounded.p-2.bg-success
+                    | turnos del 10/10/24
+                .d-flex.align-items-center.gap-3
+                    | Elegir fecha 
+                    input(type="date")
+            table.table.table-striped.shadow-lg
+                thead 
+                    tr
+                        th Paciente
+                        th Hora
+                        th Motivo
+                        th Estado
+                tbody
+                    //- SEGUN ESTADO PINTAR, ROJO CANCELADO, VERDE ATENDIDO
+                    tr
+                        td 
+                            a(href="/pag3") Pedrito
+                        td 8:00 AM 
+                        td Dolor de cabeza
+                        td.bg-danger Cancelado
+                    tr
+                        td 
+                            a(href="/pag3").link-primary Juancho
+                        td 9:00 AM 
+                        td Puchito
+                        td.bg-success Atendido
+                    tr
+                        td 
+                            a(href="/pag3").link-primary Maria
+                        td 10:00 AM 
+                        td Zurda
+                        td.bg-primary Pendiente
+                    tr
+                        td 
+                            a(href="/pag3").link-primary Juanjo
+                        td 10:00 AM 
+                        td Distraccion
+                        td.bg-primary Pendiente
+                    tr
+                        td 
+                            a(href="/pag3").link-primary Peretti
+                        td 10:00 AM 
+                        td Boludazo
+                        td.bg-primary Pendiente
+                
+
+
+block footer
+    //-include layout/footer
