@@ -8,9 +8,7 @@ class MedicoController {
         
     }
 
-    Agenda = (req, res) => {
-        res.render('agenda');
-    }
+    
 
     CreateHCE = (req, res) => {
         res.render('createHCE');

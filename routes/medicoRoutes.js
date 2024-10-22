@@ -3,7 +3,7 @@ const router = express.Router();
 const medicoController = require('../controller/medicoController');
 
 router.get('/', medicoController.Index);
-router.get('/agenda', medicoController.Agenda);
+//router.get('/agenda', medicoController.Agenda);
 router.get('/HCE', medicoController.HCE);
 router.get('/createHCE', medicoController.CreateHCE);
 

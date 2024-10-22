@@ -2,6 +2,7 @@ const express = require('express');
 const path = require('path');
 const port = process.env.PORT || 3003; 
 const medicoRoutes = require('./routes/medicoRoutes');
+const turnoRoutes=require('./routes/turnoRoutes')
 
 const app = express();
 
@@ -20,8 +21,8 @@ app.set('views', path.join(__dirname, 'views'));
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Usar las rutas de 'medico'
-app.use('/', medicoRoutes);
-
+app.use('/index', medicoRoutes);
+app.use('/agenda',turnoRoutes)
 // Escuchar en el puerto configurado
 app.listen(port, () => {
     console.log(`Servidor corriendo en http://localhost:${port}`);

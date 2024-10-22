@@ -10,13 +10,13 @@ class Medico{
         this.template = template;
     }
 
-    static async traerMedico(){
+    static async traerMedico(matricula){
         conn = await crearConexion();
         const query = `SELECT m.matricula_medico, m.nombre, m.apellido, M.especialidad, M.template 
                         FROM medico m 
                         WHERE matricula_medico = ?;`
         try{
-            const [result] = await conn.query(query);
+            const [result] = await conn.query(query,[matricula]);
             return result.length ? result[0] : null;
             // si hay resultado traer medico, si no, devoler null
         }catch(error){
