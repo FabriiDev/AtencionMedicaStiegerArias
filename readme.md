@@ -1,4 +1,6 @@
-Práctico Integrador Laboratorio 2
+> [NOTE]
+> Práctico Integrador Laboratorio 2
+
 La aplicación “Atención Médica” consiste en una aplicación para que el médico profesional pueda consultar 
 su agenda en la institución además de poder gestionar la información de la historia clínica de sus pacientes.
 El profesional accede con su usuario y puede consultar la información de su agenda diaria. Al comienzo vera 
