@@ -1,4 +1,4 @@
-> [NOTE]
+> [!NOTE]
 > Práctico Integrador Laboratorio 2
 
 La aplicación “Atención Médica” consiste en una aplicación para que el médico profesional pueda consultar 
