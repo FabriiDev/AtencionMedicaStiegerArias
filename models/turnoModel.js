@@ -24,9 +24,9 @@ class Turno {
         conn = await crearConexion();
 
         let query = `SELECT p.apellido,p.nombre,t.estado,t.hora,t.motivo_consulta
-FROM turno t
-JOIN paciente p ON p.dni_paciente=t.dni_paciente
-WHERE t.fecha=?;`;
+                    FROM turno t
+                    JOIN paciente p ON p.dni_paciente=t.dni_paciente
+                    WHERE t.fecha=?;`;
         try {
             const [result] = await conn.query(query, [fecha]);
             return result.length ? result : null;

@@ -20,7 +20,7 @@ function loguear(event) {
             if (data.success) {
                 alert("Login exitoso");
                 // redirigir a la agenda
-                window.location.href = '/agenda';
+                window.location.href = '/turnos/agenda';
 
             } else {
                 alert("Credenciales inválidas");

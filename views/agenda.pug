@@ -9,11 +9,12 @@ block content
         //- clavar filtrado de fechas
         .conteiner.border.rounded.p-5
             .d-flex.justify-content-start.mb-4.gap-3
-                .rounded.p-2.bg-success
-                    | turnos del 10/10/24
+                .rounded.p-2.bg-success.d-flex
+                    | turnos del: &nbsp;
+                    #fechaInicial
                 .d-flex.align-items-center.gap-3
                     | Elegir fecha 
-                    input(type="date")
+                    input(type="date")#fecha
             table.table.table-striped.shadow-lg
                 thead 
                     tr
@@ -54,7 +55,7 @@ block content
                         td Boludazo
                         td.bg-primary Pendiente
                 
-
+    script(src="/js/agendaCliente.js")
 
 block footer
     //-include layout/footer

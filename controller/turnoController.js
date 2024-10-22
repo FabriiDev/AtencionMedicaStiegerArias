@@ -12,11 +12,16 @@ class TurnoController {
             let turnos = await turnoModel.turnosPorDia(fecha);
             if (!fecha) {
                 return res.status(400).json({succes : false, error:'la fecha debe ser seleccionada'})
-            }else{
-                res.send(fecha)
             }
-            
-        } catch (error) { }
+
+            return res.status(200).json({
+                succes: true,
+                true: turnos,
+            })            
+        } catch (error) {
+            console.log('Error al pintar turnos: ', error);
+            res.status(500).json({ success: false, error: 'Error interno del servidor' });
+         }
     }
 }
 
