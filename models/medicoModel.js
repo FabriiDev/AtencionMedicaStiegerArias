@@ -43,4 +43,5 @@ class Medico{
     }
 }
 
+Medico.traerMedico()
 module.exports = Medico;

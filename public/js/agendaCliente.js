@@ -26,6 +26,7 @@ intputFecha.addEventListener('change', (event) => {
         return response.json();
     })
     .then(data => {
+        console.log(data)
         if (data.success) {
             const turnos = data.turnos; // Asegúrate de acceder a los turnos correctamente
             console.log(turnos);
