@@ -23,11 +23,10 @@ function turnosHoy() {
         return response.json();
     })
     .then(data => {
-        //console.log(data)
+
         if (data.success) {
             
             const turnos = JSON.parse(data.jsonstring);
-            console.log(turnos);
 
             for (const element of turnos) {
                 document.getElementById('pintarTablaTurnos').innerHTML += pintarTabla(element);
@@ -46,7 +45,6 @@ turnosHoy();
 
 intputFecha.addEventListener('change', (event) => {
     fechaSeleccionada = event.target.value;
-    console.log(fechaSeleccionada);
     fetch('/turnos/pintarTurnos', {
         method: 'POST',
         headers: {
@@ -60,12 +58,16 @@ intputFecha.addEventListener('change', (event) => {
         return response.json();
     })
     .then(data => {
-        //console.log(data.success)
         if (data.success) {
-            const turnos = data.turnos; // Asegúrate de acceder a los turnos correctamente
-            console.log(turnos);
+            document.getElementById('fechaInicial').innerHTML = fechaSeleccionada;
+            const turnos = JSON.parse(data.jsonstring)
+            document.getElementById('pintarTablaTurnos').innerHTML=""
+            for (const element of turnos) {
+                document.getElementById('pintarTablaTurnos').innerHTML += pintarTabla(element);
+            }
         } else {
             console.error(data.message || 'No se encontraron turnos');
+            document.getElementById('pintarTablaTurnos').innerHTML=`no se encontraron turnos para el ${fechaSeleccionada}`
         }
     })
     .catch(error => {

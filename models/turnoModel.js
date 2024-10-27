@@ -20,15 +20,15 @@ class Turno {
         this.matricula_medico = matricula_medico;
     }
 
-    static async turnosPorDia(fecha) {
+    static async turnosPorDia(fecha,matricula) {
         conn = await crearConexion();
 
         let query = `SELECT p.apellido,p.nombre,t.estado,t.hora,t.motivo_consulta
                     FROM turno t
                     JOIN paciente p ON p.dni_paciente=t.dni_paciente
-                    WHERE t.fecha=?;`;
+                    WHERE t.fecha=? and matricula_medico =?`;
         try {
-            const [result] = await conn.query(query, [fecha]);
+            const [result] = await conn.query(query, [fecha,matricula]);
             return result.length ? result : null;
             // si hay resultado traer turno, si no, devoler null
         } catch (error) {
@@ -36,6 +36,20 @@ class Turno {
         } finally {
             if (conn) conn.end();
         }
+    }
+
+    static async turnosPorMedico(matricula){
+        conn= await crearConexion()
+        let query='SELECT * FROM `turno` WHERE `matricula_medico` =?;'
+        try {
+            const [result] = await conn.query(query, [matricula]);
+            return result.length ? result : null;
+        } catch (error) {
+            console.log("Error al traer turnos: ", error);
+        }finally {
+            if (conn) conn.end();
+        }
+
     }
 }
 

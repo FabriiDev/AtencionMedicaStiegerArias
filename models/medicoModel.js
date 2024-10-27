@@ -28,7 +28,7 @@ class Medico{
     }
 
     static async login(matricula_medico, password){
-        const query = `SELECT m.matricula_medico, m.password 
+        const query = `SELECT m.matricula_medico, m.password , m.nombre , m.apellido 
                         FROM medico m 
                         WHERE matricula_medico = ? and password = ?;`
         try{

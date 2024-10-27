@@ -29,7 +29,12 @@ class MedicoController {
             const medico = await medicoModel.login(matricula, password);
             
             if(medico){
+                req.session.autenticado=true
+                req.session.nombre=medico.nombre
+                req.session.apellido=medico.apellido
+                req.session.matricula=medico.matricula_medico
                 res.json({success: true});
+
             }else{
                 res.json({success: false, message: 'Credenciales incorrectas'});
             }
