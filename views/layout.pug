@@ -6,8 +6,9 @@ html(lang="en")
         meta(name="viewport", content="width=device-width, initial-scale=1.0")
         title My Site
         link(rel="stylesheet", href="/styles/bootstrap.min.css")
-        block head
+        block head // Bloque opcional para añadir más elementos en el <head>
     body
-        block header // Sección para el header
+        block header 
+        
         block content // Sección principal para el contenido de cada página
-        block footer // Sección para el footer
+        block footer

@@ -1,0 +1,144 @@
+
+extends layout
+
+block head 
+    link(rel="stylesheet", href="/styles/general.css")
+
+block header 
+    include templates/header.pug
+
+block content
+    .container-fluid.cont-todo 
+        - var flag = true;
+        if flag
+            .text-center.cont-todo.mt-5
+                .row.g-3 
+                    .col-12.col-md-12
+                        .card.w-100 
+                            .card-body
+                                h3.card-title.fs-2.text-center.d-flex.align-items-center.justify-content-center.gap-2
+                                    img(src="/icons/paciente.png", alt="").img-fluid
+                                    |Paciente: Juan Perez
+                                div.text-center.fs-3.fw-semibold.mb-4.d-flex.align-items-center.justify-content-center.gap-2
+                                    img(src="/icons/doctor.png", alt="").img-fluid
+                                    |Doc: Alan Alvarez
+                                .d-flex.justify-content-center.align-items-center.gap-4
+                                    div Atenciones:
+                                    select.btn.btn-info.dropdown-toggle
+                                        option 01/10/24
+                                        option 25/10/24
+                                        option 10/11/24
+                                        option 01/12/24
+                            .card-body
+                                h4.card-title Motivo 
+                                p.card-text.mb-3 
+                                    | Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptates sint eveniet ducimus praesentium mollitia, 
+                                    | repellat non facere, deleniti incidunt eum ex corporis veritatis voluptate atque, unde et reprehenderit. Consectetur, ipsa.
+
+            .row.g-3.mt-5
+                .col-12.col-md-4
+                    h5.card-title.titulos-tar.sombra-titulo.d-flex.justify-content-center.gap-2.fs-3
+                        img(src="/icons/diagnostico.png", alt="").img-fluid
+                        | Diagnostico 
+                    .card.bg-papel.sombra-titulo.w-100
+                        .card-body.largo.fs-4
+                            p.card-text.fst-italic Estado: confirmado 
+                            p.card-text.fst-italic Detalles: puchitoooooooo
+
+                .col-12.col-md-4
+                    h5.card-title.titulos-tar.sombra-titulo.d-flex.justify-content-center.gap-2.fs-3
+                        img(src="/icons/evolucion.png", alt="")
+                        | Evolucion 
+                    .card.bg-papel.sombra-titulo.w-100
+                        .card-body.largo.fs-4
+                            p.card-text.fst-italic Detalles: Fumo mas que antes :C
+
+                .col-12.col-md-4
+                    h5.card-title.titulos-tar.sombra-titulo.d-flex.justify-content-center.gap-2.fs-3
+                        img(src="/icons/medicamentos.png", alt="")
+                        | Medicamentos 
+                    .card.bg-papel.sombra-titulo.w-100
+                        .card-body.largo.fs-4
+                            p.card-text.fst-italic Nicotinel
+                            p.card-text.fst-italic Chicles
+                            p.card-text.fst-italic Pipas
+
+            .row.g-3.mt-5
+                .col-12.col-md-4
+                    h5.card-title.titulos-tar.sombra-titulo.d-flex.justify-content-center.gap-2.fs-3
+                        img(src="/icons/antecedentes.png", alt="")
+                        | Antecedentes 
+                    .card.bg-papel.sombra-titulo.w-100
+                        .card-body.largo.fs-4
+                            p.card-text.fst-italic Detalles: 
+                                | no se 
+                        .card-text.d-flex.justify-content-between.p-2
+                            p Desde 1/1/1 
+                            p Hasta 11/10/24
+
+                .col-12.col-md-4
+                    h5.card-title.titulos-tar.sombra-titulo.d-flex.justify-content-center.gap-2.fs-3
+                        img(src="/icons/habitos.png", alt="")
+                        | Habitos 
+                    .card.bg-papel.sombra-titulo.w-100
+                        .card-body.largo.fs-4
+                            p.card-text.fst-italic Detalles: 
+                                | y fumar pa
+                        .card-text.d-flex.justify-content-between.p-2
+                            p Desde 1/1/1 
+                            p Hasta 11/10/24
+
+                .col-12.col-md-4
+                    h5.card-title.titulos-tar.sombra-titulo.d-flex.justify-content-center.gap-2.fs-3
+                        img(src="/icons/alergias.png", alt="")
+                        | Alergia 
+                    .card.bg-papel.sombra-titulo.w-100
+                        .card-body.largo.fs-4
+                            p.card-text.fst-italic Nombre: tabaco
+                            p.card-text.fst-italic Detalles: 
+                                | fumo y le tengo alergia, maginate
+                        .card-text.d-flex.justify-content-between.p-2
+                            p Desde 1/1/1 
+                            p Hasta 11/10/24
+
+            .text-center.mt-3.p-3
+                a(href="/pag4crear" target="_blank").btn.btn-light.btn-lg Nuevo
+
+        else 
+            .text-center.cont-todo.mt-5
+                .row.g-3 
+                    .col-12.col-md-12
+                        .card.w-100 
+                            .card-body
+                                h3.card-title.fs-2.text-center.d-flex.align-items-center.justify-content-center.gap-2
+                                    img(src="/icons/paciente.png", alt="").img-fluid
+                                    |Paciente: Juan Perez
+                                div.text-center.fs-3.fw-semibold.mb-4.d-flex.align-items-center.justify-content-center.gap-2
+                                    img(src="/icons/doctor.png", alt="").img-fluid
+                                    |Doc: Alan Alvarez
+                                .d-flex.justify-content-center.align-items-center.gap-4
+                                    div Atenciones:
+                                    select.btn.btn-info.dropdown-toggle
+                                        option 01/10/24
+                                        option 25/10/24
+                                        option 10/11/24
+                                        option 01/12/24
+                            .card-body
+                                h4.card-title Motivo 
+                                p.card-text.mb-3 
+                                    | Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptates sint eveniet ducimus praesentium mollitia, 
+                                    | repellat non facere, deleniti incidunt eum ex corporis veritatis voluptate atque, unde et reprehenderit. Consectetur, ipsa.
+
+            .row.g-3.mt-5.cont-todo
+                .col-12.col-md-12
+                    h5.card-title.titulos-tar.sombra-titulo.d-flex.justify-content-center.gap-2.fs-3
+                        img(src="/icons/diagnostico.png", alt="").img-fluid
+                        | Diagnostico 
+                    .card.bg-papel.sombra-titulo.w-100
+                        .card-body.largo.fs-4.text-center
+                            p.card-text.fst-italic Estado: confirmado 
+                            p.card-text.fst-italic Detalles: puchitoooooooo
+block footer 
+    include templates/footer.pug
+
+

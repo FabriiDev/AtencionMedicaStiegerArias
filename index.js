@@ -42,6 +42,10 @@ async function hashear(){
     console.log(passHasheada);
 }
 
+app.get('/HCEborrar', (req, res) => {
+    res.render('HCE');
+})
+
 //hashear();
 
 // Escuchar en el puerto configurado

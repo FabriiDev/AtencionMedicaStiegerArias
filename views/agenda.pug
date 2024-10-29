@@ -1,21 +1,24 @@
 //- pag2.pug
 extends layout
-
+block head 
+    link(rel="stylesheet", href="/styles/general.css")
+block header 
+    include templates/header.pug
 block content
     .conteiner.cont-todo
         .title.text-center.mt-5 
-            h1 Bienvenido #{nombre}!
-        .text-center.mt-3 Agenda Diaria
+            h1.text-light Bienvenido #{nombre}!
+        .text-center.mt-3.text-light Agenda Diaria
         //- clavar filtrado de fechas
-        .conteiner.border.rounded.p-5
-            .d-flex.justify-content-start.mb-4.gap-3
-                .rounded.p-2.bg-success.d-flex
+        .conteiner.rounded.p-2
+            .d-flex.justify-content-center.mb-4.gap-3
+                .rounded.p-2.bg-primary.text-light.titulos-tur.d-flex
                     | turnos del: &nbsp;
                     #fechaInicial
-                .d-flex.align-items-center.gap-3
+                .d-flex.align-items-center.gap-3.titulos-tur
                     | Elegir fecha 
                     input(type="date")#fecha
-            table.table.table-striped.shadow-lg
+            table.table.table-striped.sombra-tabla.textos-tur
                 thead 
                     tr
                         th Paciente
@@ -28,5 +31,5 @@ block content
                 
     script(src="/js/agendaCliente.js")
 
-block footer
-    //-include layout/footer
+block footer 
+    include templates/footer.pug

@@ -2,9 +2,10 @@
 extends layout
 
 block head
+    link(rel="stylesheet", href="/styles/login.css")
 block content
-    .d-flex.justify-content-center.min-vh-100
-        .conteiner.mt-5
+    .d-flex.justify-content-center
+        .conteiner.mt-5.border.p-5.bg-textura-1.shadow.mb-5.bg-body-tertiary.rounded
             h1(class="d-flex justify-content-center mb-4") Logueate aca doctoooor 
             .logueo.container
                 form
@@ -14,11 +15,11 @@ block content
                         #emailHelp.form-text
                     .mb-3
                         label.form-label(for='exampleInputPassword1') Contrasena
-                        input#pass.form-control(type='password')
+                        input#pass.form-control(type='password').mb-5
                     .d-grid.gap2
-                        button.btn.btn-success(type='submit' onclick='loguear(event)') Ingresar
+                        button.btn.btn-primary(type='submit' onclick='loguear(event)') Ingresar
 
     script(src="/js/loginCliente.js")
 
-block footer
+//- block footer
     include templates/footer
