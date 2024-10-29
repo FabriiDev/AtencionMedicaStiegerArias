@@ -17,4 +17,6 @@ router.use(checkeo)
 router.get('/agenda', turnoController.Agenda)
 router.post('/pintarTurnos', turnoController.pintarTurnos)
 
+router.get("/HCE:numeroTurno", turnoController.HCE);
+
 module.exports = router;

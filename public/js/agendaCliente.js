@@ -87,11 +87,12 @@ function pintarTabla(turnos){
         colorEstado = 'bg-primary';
     }
 
+    
 
     pintarTablaTurnos = `
             <tr>
                 <td>
-                    <a href="#" target="_blank"> ${turnos.apellido} ${turnos.nombre} </a>
+                    <a href="/turnos/HCE${turnos.numero_turno}" target="_blank"> ${turnos.apellido} ${turnos.nombre} </a>
                 </td>
                 <td> ${turnos.hora} </td>
                 <td> ${turnos.motivo_consulta} </td>

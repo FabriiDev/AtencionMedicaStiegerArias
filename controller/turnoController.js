@@ -27,7 +27,18 @@ class TurnoController {
             res.status(500).json({ success: false, error: 'Error interno del servidor' });
         }
     }
+    async HCE(req, res) {
+        // res.send('tuqi'+req.params.numeroTurno)
+
+        let turno = await turnoModel.numero_turno(req.params.numeroTurno)
+        console.log(turno)
+
+
+
+        res.render('HCE',{turno})
+    }
 }
+
 
 
 module.exports = new TurnoController;
