@@ -17,9 +17,7 @@ function turnosHoy() {
         })
     })
     .then(response => {
-        if (!response.ok) {
-            throw new Error('Error en la respuesta del servidor: ' + response.status);
-        }
+        
         return response.json();
     })
     .then(data => {
@@ -35,6 +33,7 @@ function turnosHoy() {
             // document.getElementById('pintarTablaTurnos').innerHTML = pintarTabla(element);
         } else {
             console.error(data.message || 'No se encontraron turnos');
+            document.getElementById('pintarTablaTurnos').innerHTML=`no se encontraron turnos para el ${fechaSeleccionada}`
         }
     })
     .catch(error => {
@@ -66,6 +65,7 @@ intputFecha.addEventListener('change', (event) => {
                 document.getElementById('pintarTablaTurnos').innerHTML += pintarTabla(element);
             }
         } else {
+            document.getElementById('fechaInicial').innerHTML = fechaSeleccionada;
             console.error(data.message || 'No se encontraron turnos');
             document.getElementById('pintarTablaTurnos').innerHTML=`no se encontraron turnos para el ${fechaSeleccionada}`
         }

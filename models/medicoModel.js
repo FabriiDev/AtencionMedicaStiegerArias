@@ -12,7 +12,7 @@ class Medico{
 
     static async traerMedico(matricula){
         conn = await crearConexion();
-        const query = `SELECT m.matricula_medico, m.nombre, m.apellido, M.especialidad, M.template 
+        const query = `SELECT m.matricula_medico, m.nombre, m.apellido, M.especialidad, M.template, M.password
                         FROM medico m 
                         WHERE matricula_medico = ?;`
         try{

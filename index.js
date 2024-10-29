@@ -2,8 +2,12 @@ const express = require('express');
 const path = require('path');
 const port = process.env.PORT || 3003;
 const cookieSession = require('cookie-session') //• $ npm install cookie-session
+const bcrypt = require('bcrypt');
+
 const medicoRoutes = require('./routes/medicoRoutes');
 const turnoRoutes = require('./routes/turnoRoutes');
+
+
 
 const app = express();
 
@@ -32,6 +36,13 @@ app.use(express.static(path.join(__dirname, 'public')));
 // Usar las rutas de 'medico'
 app.use('/', medicoRoutes);
 app.use('/turnos', turnoRoutes);
+
+async function hashear(){
+    let passHasheada = await bcrypt.hash('password123', 8)
+    console.log(passHasheada);
+}
+
+//hashear();
 
 // Escuchar en el puerto configurado
 app.listen(port, () => {

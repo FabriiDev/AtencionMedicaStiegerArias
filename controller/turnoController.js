@@ -7,11 +7,6 @@ class TurnoController {
             let nombre = req.session.nombre
             res.render('agenda', { turnos, nombre })
         })
-
-
-
-
-
     };
 
     async pintarTurnos(req, res) {

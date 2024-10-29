@@ -1,5 +1,5 @@
 const medicoModel = require('../models/medicoModel');
-
+const bcrypt = require('bcrypt');
 class MedicoController {
 
     // ----------> renderizar paginas <-------------------
@@ -21,14 +21,18 @@ class MedicoController {
     async Login (req, res) {
         try{
             const {matricula, password} = req.body;
-
             if(!matricula || !password){
                 return res.status(400).json({success: false, error: 'Debes ingresar matricula y contraseña'});
             }
-
-            const medico = await medicoModel.login(matricula, password);
+            const medico = await medicoModel.traerMedico(matricula);
             
-            if(medico){
+            const passHasheada = medico.password;
+            let flag = bcrypt.compare(password, passHasheada);
+            
+            
+
+            
+            if(flag){
                 req.session.autenticado=true
                 req.session.nombre=medico.nombre
                 req.session.apellido=medico.apellido
