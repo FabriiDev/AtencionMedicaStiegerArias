@@ -51,7 +51,10 @@ block content
                         | Evolucion 
                     .card.bg-papel.sombra-titulo.w-100
                         .card-body.largo.fs-4
-                            p.card-text.fst-italic Detalles: #{turno.evolucion}
+                            if turno.evolucion
+                                p.card-text.fst-italic Detalles: #{turno.evolucion}
+                            else
+                                p.card-text.fst-italic primera visita
 
                 .col-12.col-md-4
                     h5.card-title.titulos-tar.sombra-titulo.d-flex.justify-content-center.gap-2.fs-3
@@ -59,9 +62,8 @@ block content
                         | Medicamentos 
                     .card.bg-papel.sombra-titulo.w-100
                         .card-body.largo.fs-4
-                            p.card-text.fst-italic Nicotinel
-                            p.card-text.fst-italic Chicles
-                            p.card-text.fst-italic Pipas
+                            p.card-text.fst-italic #{turno.nombre_medicamento}
+                            
 
             .row.g-3.mt-5
                 .col-12.col-md-4
@@ -71,10 +73,17 @@ block content
                     .card.bg-papel.sombra-titulo.w-100
                         .card-body.largo.fs-4
                             p.card-text.fst-italic Detalles: 
-                                | no se 
+                                if turno.antecedente
+                                    | #{turno.antecedente} 
+                                else
+                                    | no hay
+                    if turno.fecha_desde_antecedente
                         .card-text.d-flex.justify-content-between.p-2
-                            p Desde 1/1/1 
-                            p Hasta 11/10/24
+                            p #{turno.fecha_desde_antecedente}
+                            p #{turno.fecha_hasta_antecedente}
+                    else
+                        .card-text.d-flex.justify-content-between.p-2
+                            p 
 
                 .col-12.col-md-4
                     h5.card-title.titulos-tar.sombra-titulo.d-flex.justify-content-center.gap-2.fs-3
@@ -83,10 +92,15 @@ block content
                     .card.bg-papel.sombra-titulo.w-100
                         .card-body.largo.fs-4
                             p.card-text.fst-italic Detalles: 
-                                | y fumar pa
+                            if turno.habito
+                                | #{turno.habito}
+                            else 
+                                | sin habitos
+                    if turno.fecha_desde_habito
                         .card-text.d-flex.justify-content-between.p-2
-                            p Desde 1/1/1 
-                            p Hasta 11/10/24
+                            p Desde #{turno.fecha_desde_habito}
+                            p Hasta #{turno.fecha_hasta_habito}
+                    else
 
                 .col-12.col-md-4
                     h5.card-title.titulos-tar.sombra-titulo.d-flex.justify-content-center.gap-2.fs-3
@@ -94,12 +108,16 @@ block content
                         | Alergia 
                     .card.bg-papel.sombra-titulo.w-100
                         .card-body.largo.fs-4
-                            p.card-text.fst-italic Nombre: tabaco
-                            p.card-text.fst-italic Detalles: 
-                                | fumo y le tengo alergia, maginate
+                            if turno.nombre_alergia
+                                p.card-text.fst-italic Nombre: #{turno.nombre_alergia}
+                                p.card-text.fst-italic Importancia: 
+                                    | #{turno.importancia_alergia}
+                            else
+                                p.card-text.fst-italic NOHAY
+                    if turno.fecha_desde_alergia
                         .card-text.d-flex.justify-content-between.p-2
-                            p Desde 1/1/1 
-                            p Hasta 11/10/24
+                            p Desde #{turno.fecha_desde_alergia} 
+                            p Hasta #{turno.fecha_hasta_alergia} 
 
             .text-center.mt-3.p-3
                 a(href="/pag4crear" target="_blank").btn.btn-light.btn-lg Nuevo
@@ -138,6 +156,8 @@ block content
                         .card-body.largo.fs-4.text-center
                             p.card-text.fst-italic Estado: confirmado 
                             p.card-text.fst-italic Detalles: puchitoooooooo
+    script.
+        const miVariable = !{JSON.stringify(turno)};
     
     script(src='/js/HCECliente.js') 
 block footer 

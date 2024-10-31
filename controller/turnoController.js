@@ -29,11 +29,11 @@ class TurnoController {
     }
     async HCE(req, res) {
 
-
         let turno = await turnoModel.numero_turno(req.params.numeroTurno)
 
+       
         console.log(turno)
-        res.render('HCE',{turno});
+        res.render('HCE', { turno });
 
     }
 

@@ -109,7 +109,7 @@ WHERE
 
     static async numero_turno(numero_turno) {
         conn = await crearConexion()
-        let query = `SELECT
+        let query = `SELECT DISTINCT
     t.numero_turno,
     t.fecha,
     t.hora,
@@ -120,15 +120,21 @@ WHERE
     m.nombre AS nombre_medico,
     m.apellido AS apellido_medico,
     m.especialidad,
-    d.resumen_evolucion AS diagnostico,
-    d.estado AS estado_diagnostico,
-    e.resumen_evolucion AS evolucion,
-    al.nombre_alergia,
-    al.importancia AS importancia_alergia,
-    an.descripcion AS antecedente,
-    h.descripcion AS habito,
-    r.id_receta,
-    me.nombre_medicamento
+    GROUP_CONCAT(DISTINCT d.resumen_evolucion ORDER BY d.resumen_evolucion SEPARATOR ', ') AS diagnostico,
+    GROUP_CONCAT(DISTINCT d.estado ORDER BY d.estado SEPARATOR ', ') AS estado_diagnostico,
+    GROUP_CONCAT(DISTINCT e.resumen_evolucion ORDER BY e.resumen_evolucion SEPARATOR ', ') AS evolucion,
+    GROUP_CONCAT(DISTINCT al.nombre_alergia ORDER BY al.nombre_alergia SEPARATOR ', ') AS nombre_alergia,
+    GROUP_CONCAT(DISTINCT al.importancia ORDER BY al.importancia SEPARATOR ', ') AS importancia_alergia,
+    GROUP_CONCAT(DISTINCT al.fecha_desde ORDER BY al.fecha_desde SEPARATOR ', ') AS fecha_desde_alergia,
+    GROUP_CONCAT(DISTINCT al.fecha_hasta ORDER BY al.fecha_hasta SEPARATOR ', ') AS fecha_hasta_alergia,
+    GROUP_CONCAT(DISTINCT an.descripcion ORDER BY an.descripcion SEPARATOR ', ') AS antecedente,
+    GROUP_CONCAT(DISTINCT an.fecha_desde ORDER BY an.fecha_desde SEPARATOR ', ') AS fecha_desde_antecedente,
+    GROUP_CONCAT(DISTINCT an.fecha_hasta ORDER BY an.fecha_hasta SEPARATOR ', ') AS fecha_hasta_antecedente,
+    GROUP_CONCAT(DISTINCT h.descripcion ORDER BY h.descripcion SEPARATOR ', ') AS habito,
+    GROUP_CONCAT(DISTINCT h.fecha_desde ORDER BY h.fecha_desde SEPARATOR ', ') AS fecha_desde_habito,
+    GROUP_CONCAT(DISTINCT h.fecha_hasta ORDER BY h.fecha_hasta SEPARATOR ', ') AS fecha_hasta_habito,
+    GROUP_CONCAT(DISTINCT r.id_receta ORDER BY r.id_receta SEPARATOR ', ') AS id_receta,
+    GROUP_CONCAT(DISTINCT me.nombre_medicamento ORDER BY me.nombre_medicamento SEPARATOR ', ') AS nombre_medicamento
 FROM
     turno t
 JOIN paciente p ON
@@ -150,7 +156,11 @@ LEFT JOIN receta r ON
 LEFT JOIN medicamento me ON
     r.id_medicamento = me.id_medicamento
 WHERE
-    t.numero_turno = ?;`
+    t.numero_turno = ?
+GROUP BY
+    t.numero_turno, t.fecha, t.hora, t.motivo_consulta, 
+    p.nombre, p.apellido, p.dni_paciente, 
+    m.nombre, m.apellido, m.especialidad;`
 
         try {
             const [result] = await conn.query(query, [numero_turno]);
