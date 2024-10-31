@@ -46,6 +46,12 @@ app.get('/HCEborrar', (req, res) => {
     res.render('HCE');
 })
 
+// cerrar sesion
+app.get('/logout', (req, res) => {
+    req.session = null;
+    res.render('index');
+});
+
 //hashear();
 
 // Escuchar en el puerto configurado

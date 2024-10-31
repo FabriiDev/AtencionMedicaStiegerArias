@@ -57,6 +57,7 @@ class Turno {
         let query = `SELECT
     t.numero_turno,
     t.fecha,
+    t.hora,
     p.nombre,
     p.apellido,
     p.dni_paciente,
@@ -78,19 +79,19 @@ JOIN paciente p ON
     p.dni_paciente = t.dni_paciente
 JOIN medico m ON
     m.matricula_medico = t.matricula_medico
-JOIN diagnostico d ON
+LEFT JOIN diagnostico d ON
     t.numero_turno = d.numero_turno
-JOIN evolucion e ON
+LEFT JOIN evolucion e ON
     t.numero_turno = e.numero_turno
-JOIN alergia al ON
+LEFT JOIN alergia al ON
     t.numero_turno = al.numero_turno
-JOIN antecedente an ON
+LEFT JOIN antecedente an ON
     t.numero_turno = an.numero_turno
-JOIN habito h ON
+LEFT JOIN habito h ON
     t.numero_turno = h.numero_turno
-JOIN receta r ON
+LEFT JOIN receta r ON
     t.numero_turno = r.numero_turno
-JOIN medicamento me ON
+LEFT JOIN medicamento me ON
     r.id_medicamento = me.id_medicamento
 WHERE
     t.dni_paciente = ?;`
@@ -133,19 +134,19 @@ JOIN paciente p ON
     p.dni_paciente = t.dni_paciente
 JOIN medico m ON
     m.matricula_medico = t.matricula_medico
-JOIN diagnostico d ON
+LEFT JOIN diagnostico d ON
     t.numero_turno = d.numero_turno
-JOIN evolucion e ON
+LEFT JOIN evolucion e ON
     t.numero_turno = e.numero_turno
-JOIN alergia al ON
+LEFT JOIN alergia al ON
     t.numero_turno = al.numero_turno
-JOIN antecedente an ON
+LEFT JOIN antecedente an ON
     t.numero_turno = an.numero_turno
-JOIN habito h ON
+LEFT JOIN habito h ON
     t.numero_turno = h.numero_turno
-JOIN receta r ON
+LEFT JOIN receta r ON
     t.numero_turno = r.numero_turno
-JOIN medicamento me ON
+LEFT JOIN medicamento me ON
     r.id_medicamento = me.id_medicamento
 WHERE
     t.numero_turno = ?;`
