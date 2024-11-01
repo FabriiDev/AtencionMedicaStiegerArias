@@ -5,17 +5,17 @@ block head
 block header 
     include templates/header.pug
 block content
-    .conteiner.cont-todo
+    .conteiner.cont-todo.width-90
         .title.text-center.mt-5 
             h1.text-light Bienvenido #{nombre}!
-        .text-center.mt-3.text-light Agenda Diaria
+        .text-center.mt-3.text-light.fs-5 Agenda Diaria
         //- clavar filtrado de fechas
         .conteiner.rounded.p-2
             .d-flex.justify-content-center.mb-4.gap-3
-                .rounded.p-2.bg-primary.text-light.titulos-tur.d-flex
+                //-.rounded.p-2.bg-primary.text-light.titulos-tur.d-flex
                     | turnos del: &nbsp;
                     #fechaInicial
-                .d-flex.align-items-center.gap-3.titulos-tur
+                .d-flex.align-items-center.gap-3.titulos-tur.text-light
                     | Elegir fecha 
                     input(type="date")#fecha
             table.table.table-striped.sombra-tabla.textos-tur

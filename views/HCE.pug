@@ -8,7 +8,7 @@ block header
     include templates/header.pug
 
 block content
-    .container-fluid.cont-todo 
+    .container-fluid.cont-todo.width-90
         - var flag = true;
         if flag
             .text-center.cont-todo.mt-5
@@ -43,7 +43,7 @@ block content
                     .card.bg-papel.sombra-titulo.w-100
                         .card-body.largo.fs-4
                             p.card-text.fst-italic Estado: #{turno.estado_diagnostico} 
-                            p.card-text.fst-italic Detalles: #{turno.diagnostico}
+                            p.card-text.fst-italic Detalles: #{turno.diagnostico || "No hay diagnostico previo"}
 
                 .col-12.col-md-4
                     h5.card-title.titulos-tar.sombra-titulo.d-flex.justify-content-center.gap-2.fs-3
@@ -51,10 +51,7 @@ block content
                         | Evolucion 
                     .card.bg-papel.sombra-titulo.w-100
                         .card-body.largo.fs-4
-                            if turno.evolucion
-                                p.card-text.fst-italic Detalles: #{turno.evolucion}
-                            else
-                                p.card-text.fst-italic primera visita
+                            p.card-text.fst-italic Detalles: #{turno.evolucion || "No hay evolucion previa"}
 
                 .col-12.col-md-4
                     h5.card-title.titulos-tar.sombra-titulo.d-flex.justify-content-center.gap-2.fs-3
@@ -62,8 +59,7 @@ block content
                         | Medicamentos 
                     .card.bg-papel.sombra-titulo.w-100
                         .card-body.largo.fs-4
-                            p.card-text.fst-italic #{turno.nombre_medicamento}
-                            
+                            p.card-text.fst-italic #{turno.nombre_medicamento || "No se se recetaron medicamentos"}
 
             .row.g-3.mt-5
                 .col-12.col-md-4
@@ -73,17 +69,10 @@ block content
                     .card.bg-papel.sombra-titulo.w-100
                         .card-body.largo.fs-4
                             p.card-text.fst-italic Detalles: 
-                                if turno.antecedente
-                                    | #{turno.antecedente} 
-                                else
-                                    | no hay
-                    if turno.fecha_desde_antecedente
+                                | #{turno.antecedente || "No hay antecedentes"} 
                         .card-text.d-flex.justify-content-between.p-2
-                            p #{turno.fecha_desde_antecedente}
-                            p #{turno.fecha_hasta_antecedente}
-                    else
-                        .card-text.d-flex.justify-content-between.p-2
-                            p 
+                            p Desde: #{turno.fecha_desde_antecedente || "No hay registros"}
+                            p Hasta: #{turno.fecha_hasta_antecedente || "No hay registros"} 
 
                 .col-12.col-md-4
                     h5.card-title.titulos-tar.sombra-titulo.d-flex.justify-content-center.gap-2.fs-3
@@ -92,15 +81,10 @@ block content
                     .card.bg-papel.sombra-titulo.w-100
                         .card-body.largo.fs-4
                             p.card-text.fst-italic Detalles: 
-                            if turno.habito
-                                | #{turno.habito}
-                            else 
-                                | sin habitos
-                    if turno.fecha_desde_habito
+                                | #{turno.habito || "No hay habitos registrados"}
                         .card-text.d-flex.justify-content-between.p-2
-                            p Desde #{turno.fecha_desde_habito}
-                            p Hasta #{turno.fecha_hasta_habito}
-                    else
+                            p Desde: #{turno.fecha_desde_habito || "No hay registros"}
+                            p Hasta: #{turno.fecha_hasta_habito || "No hay registros"}
 
                 .col-12.col-md-4
                     h5.card-title.titulos-tar.sombra-titulo.d-flex.justify-content-center.gap-2.fs-3
@@ -108,22 +92,18 @@ block content
                         | Alergia 
                     .card.bg-papel.sombra-titulo.w-100
                         .card-body.largo.fs-4
-                            if turno.nombre_alergia
-                                p.card-text.fst-italic Nombre: #{turno.nombre_alergia}
-                                p.card-text.fst-italic Importancia: 
-                                    | #{turno.importancia_alergia}
-                            else
-                                p.card-text.fst-italic NOHAY
-                    if turno.fecha_desde_alergia
+                            p.card-text.fst-italic Nombre: #{turno.nombre_alergia || "No hay alergias"}
+                            p.card-text.fst-italic Importancia: 
+                                | #{turno.importancia_alergia || "No hay registros"}
                         .card-text.d-flex.justify-content-between.p-2
-                            p Desde #{turno.fecha_desde_alergia} 
-                            p Hasta #{turno.fecha_hasta_alergia} 
+                            p Desde: #{turno.fecha_desde_alergia || "No hay registros"} 
+                            p Hasta: #{turno.fecha_hasta_alergia || "No hay registros"} 
 
             .text-center.mt-3.p-3
                 a(href="/pag4crear" target="_blank").btn.btn-light.btn-lg Nuevo
 
         else 
-            .text-center.cont-todo.mt-5
+            .text-center.cont-todo.mt-5.width-90
                 .row.g-3 
                     .col-12.col-md-12
                         .card.w-100 

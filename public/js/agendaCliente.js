@@ -1,10 +1,12 @@
-const intputFecha = document.getElementById('fecha');
-let hoy = new Date;
-let fechaSeleccionada = hoy.toISOString().split('T')[0];
+const inputFecha = document.getElementById('fecha');
+let hoy = new Date();
+let fechaSeleccionada = hoy.toLocaleDateString('en-CA'); // Formato YYYY-MM-DD
+inputFecha.value = fechaSeleccionada;
+
 
 let pintarTablaTurnos = document.getElementById('pintarTablaTurnos');
 
-document.getElementById('fechaInicial').innerHTML = fechaSeleccionada;
+//document.getElementById('fechaInicial').innerHTML = fechaSeleccionada;
 
 function turnosHoy() {
     fetch('/turnos/pintarTurnos', {
@@ -42,7 +44,7 @@ function turnosHoy() {
 }
 turnosHoy();
 
-intputFecha.addEventListener('change', (event) => {
+inputFecha.addEventListener('change', (event) => {
     fechaSeleccionada = event.target.value;
     fetch('/turnos/pintarTurnos', {
         method: 'POST',
@@ -58,14 +60,14 @@ intputFecha.addEventListener('change', (event) => {
     })
     .then(data => {
         if (data.success) {
-            document.getElementById('fechaInicial').innerHTML = fechaSeleccionada;
+            //document.getElementById('fechaInicial').innerHTML = fechaSeleccionada;
             const turnos = JSON.parse(data.jsonstring)
             document.getElementById('pintarTablaTurnos').innerHTML=""
             for (const element of turnos) {
                 document.getElementById('pintarTablaTurnos').innerHTML += pintarTabla(element);
             }
         } else {
-            document.getElementById('fechaInicial').innerHTML = fechaSeleccionada;
+            //document.getElementById('fechaInicial').innerHTML = fechaSeleccionada;
             console.error(data.message || 'No se encontraron turnos');
             document.getElementById('pintarTablaTurnos').innerHTML=`no se encontraron turnos para el ${fechaSeleccionada}`
         }

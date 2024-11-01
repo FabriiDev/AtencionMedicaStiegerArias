@@ -7,7 +7,12 @@ body{
     background: -webkit-linear-gradient(to right, #348AC7, #7474BF);
     background: linear-gradient(to right, #348AC7, #7474BF);
     margin: 0 auto;
+    
+}
+
+.width-90{
     width: 90%;
+    margin: 0 auto;
 }
 
 .bg-header{
