@@ -79,7 +79,6 @@ ORDER BY fecha DESC`
             // Llama al procedimiento almacenado
             const query = 'CALL obtenerDetalleTurno(?)';
             const [result] = await conn.query(query, [numero_turno]);
-            console.log(result);
             // Accede al primer elemento del primer array de resultados
             const turno = result[0][0]; // Extrae el primer registro
             return turno || null; // Devuelve el objeto si existe, si no, null

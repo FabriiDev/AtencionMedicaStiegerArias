@@ -34,7 +34,6 @@ class TurnoController {
         if (turno.matricula_medico == req.session.matricula) {
             flag = true;
         }
-        console.log(turno)
         res.render('HCE', { turno, flag });
     }
 
@@ -44,7 +43,7 @@ class TurnoController {
 
     async turnosPorDni(req, res) {
         let turno = await turnoModel.dni(req.body.dni)
-       turno= JSON.stringify({turno: turno})
+        turno = JSON.stringify({ turno: turno })
         res.send(turno)
     }
 }

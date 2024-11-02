@@ -1,7 +1,7 @@
 
 
 
-function as() {
+function cargardatos() {
     fetch('/turnos/DNI', {
         method: 'POST',
         headers: {
@@ -14,7 +14,6 @@ function as() {
         .then(response => response.json())
         .then(data => {
             if (data) {
-
                 let turnos = data.turno
                 console.log(turnos)
                 cargarSelect(turnos)
@@ -25,11 +24,11 @@ function as() {
 }
 
 
+
 function cargarSelect(turnos) {
-    let select = document.getElementById('selectTurnos')
 
 
-    turnos.forEach(element => {
+    for (const element of turnos) {
         let option = document.createElement('option')
         const fecha = new Date(element.fecha);
         const fechaFormateada = fecha.toISOString().split('T')[0];
@@ -38,8 +37,21 @@ function cargarSelect(turnos) {
         option.value = element.numero_turno
         option.innerHTML = fechaFormateada
         select.appendChild(option)
-    });
+    }
 
 }
 
-as()
+
+
+
+
+cargardatos()
+
+
+select = document.getElementById('selectTurnos')
+
+select.addEventListener('change', function () {
+    const valorSeleccionado = this.value;
+
+    window.location.href = `/turnos/HCE${valorSeleccionado}`
+});
