@@ -23,11 +23,7 @@ block content
                                     |Doc: #{turno.nombre_medico+" "+turno.apellido_medico} 
                                 .d-flex.justify-content-center.align-items-center.gap-4
                                     div Atenciones:
-                                    select.btn.btn-info.dropdown-toggle
-                                        option 01/10/24
-                                        option 25/10/24
-                                        option 10/11/24
-                                        option 01/12/24
+                                    select.btn.btn-info.dropdown-toggle#selectTurnos
                             .card-body
                                 h4.card-title Motivo 
                                 p.card-text.mb-3 
@@ -136,7 +132,7 @@ block content
                             p.card-text.fst-italic Estado: confirmado 
                             p.card-text.fst-italic Detalles: puchitoooooooo
     script.
-        const miVariable = !{JSON.stringify(turno)};
+        const dni = !{JSON.stringify(turno.dni_paciente)};
     
     script(src='/js/HCECliente.js') 
 block footer 

@@ -55,46 +55,11 @@ class Turno {
     static async dni(dni_paciente) {
         conn = await crearConexion()
         let query = `SELECT
-    t.numero_turno,
-    t.fecha,
-    t.hora,
-    p.nombre,
-    p.apellido,
-    p.dni_paciente,
-    m.nombre,
-    m.apellido,
-    m.especialidad,
-    d.resumen_evolucion AS diagnostico,
-    d.estado AS estado_diagnostico,
-    e.resumen_evolucion AS evolucion,
-    al.nombre_alergia,
-    al.importancia AS importancia_alergia,
-    an.descripcion AS antecedente,
-    h.descripcion AS habito,
-    r.id_receta,
-    me.nombre_medicamento
-FROM
-    turno t
-JOIN paciente p ON
-    p.dni_paciente = t.dni_paciente
-JOIN medico m ON
-    m.matricula_medico = t.matricula_medico
-LEFT JOIN diagnostico d ON
-    t.numero_turno = d.numero_turno
-LEFT JOIN evolucion e ON
-    t.numero_turno = e.numero_turno
-LEFT JOIN alergia al ON
-    t.numero_turno = al.numero_turno
-LEFT JOIN antecedente an ON
-    t.numero_turno = an.numero_turno
-LEFT JOIN habito h ON
-    t.numero_turno = h.numero_turno
-LEFT JOIN receta r ON
-    t.numero_turno = r.numero_turno
-LEFT JOIN medicamento me ON
-    r.id_medicamento = me.id_medicamento
-WHERE
-    t.dni_paciente = ?;`
+    numero_turno,
+    fecha
+FROM turno
+WHERE dni_paciente = ?
+ORDER BY fecha DESC`
 
         try {
             const [result] = await conn.query(query, [dni_paciente]);

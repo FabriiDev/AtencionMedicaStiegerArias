@@ -16,7 +16,7 @@ router.use(checkeo)
 
 router.get('/agenda', turnoController.Agenda)
 router.post('/pintarTurnos', turnoController.pintarTurnos)
-
+router.post('/DNI',turnoController.turnosPorDni)
 
 router.get("/HCErender", turnoController.HCErender);
 router.get("/HCE:numeroTurno", turnoController.HCE);
