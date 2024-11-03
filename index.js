@@ -49,7 +49,7 @@ async function hashear() {
 }
 
 app.get('/HCEborrar', (req, res) => {
-    res.render('HCE');
+    res.render('createHCE');
 })
 
 // cerrar sesion
