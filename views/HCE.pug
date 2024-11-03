@@ -8,6 +8,7 @@ block header
     include templates/header.pug
 
 block content
+    
     .container-fluid.cont-todo.width-90
         if  flag
             .text-center.cont-todo.mt-5
@@ -93,10 +94,11 @@ block content
                         .card-text.d-flex.justify-content-between.p-2
                             p Desde: #{turno.fecha_desde_alergia || "No hay registros"} 
                             p Hasta: #{turno.fecha_hasta_alergia || "No hay registros"} 
-
-            .text-center.mt-3.p-3
+            
+            .text-center.mt-3.p-3.d-flex.gap-3.justify-content-center
                 a(href="/pag4crear" target="_blank").btn.btn-light.btn-lg Nuevo
-
+                a(href="/#" target="_blank").btn.btn-light.btn-lg Editar
+            #aca 
         else 
             .text-center.cont-todo.mt-5.width-90
                 .row.g-3 
@@ -111,16 +113,12 @@ block content
                                     |Doc: Alan Alvarez
                                 .d-flex.justify-content-center.align-items-center.gap-4
                                     div Atenciones:
-                                    select.btn.btn-info.dropdown-toggle
-                                        option 01/10/24
-                                        option 25/10/24
-                                        option 10/11/24
-                                        option 01/12/24
+                                    select.btn.btn-info.dropdown-toggle#selectTurnos
+                                        
                             .card-body
                                 h4.card-title Motivo 
                                 p.card-text.mb-3 
-                                    | Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptates sint eveniet ducimus praesentium mollitia, 
-                                    | repellat non facere, deleniti incidunt eum ex corporis veritatis voluptate atque, unde et reprehenderit. Consectetur, ipsa.
+                                    |#{turno.motivo_consulta} 
 
             .row.g-3.mt-5.cont-todo
                 .col-12.col-md-12
@@ -129,8 +127,11 @@ block content
                         | Diagnostico 
                     .card.bg-papel.sombra-titulo.w-100
                         .card-body.largo.fs-4.text-center
-                            p.card-text.fst-italic Estado: confirmado 
-                            p.card-text.fst-italic Detalles: puchitoooooooo
+                            p.card-text.fst-italic Estado: #{turno.estado_diagnostico} 
+                            p.card-text.fst-italic Detalles: #{turno.diagnostico || "No hay diagnostico previo"}
+            .text-center.mt-3.p-3.d-flex.gap-3.justify-content-center
+                a(href="/pag4crear" target="_blank").btn.btn-light.btn-lg Nuevo
+                a(href="/#" target="_blank").btn.btn-light.btn-lg Editar
     script.
         const dni = !{JSON.stringify(turno.dni_paciente)};
     
