@@ -13,15 +13,14 @@ block content
                 .card
                     .card-body
                         .fecha.mt-3.d-flex.gap-3.mb-3.align-items-center.flex-column
-                            h3.car-title Paciente: Juan Perez
+                            h3.car-title Paciente: #{turno.nombre_paciente} #{turno.apellido_paciente}
                             div Turno: 
                                 select(disabled).border
-                                    option 01/10/24
+                                    option #{fechaFormateada}
                         .d-flex.justify-content-center.align-items-center.text-center.gap-3
                             h4.card-title Motivo:  
                         .card-text.mb-3.text-center 
-                            | Lorem, ipsum dolor sit amet consectetur adipisicing elit. Iusto omnis deleniti sequi porro vero necessitatibus 
-                            | harum praesentium veritatis voluptatem unde repellendus voluptas accusamus, eaque maiores explicabo qui quam est quod.
+                            | #{turno.motivo_consulta}
         
         //- Sección única de columna con 6 filas
         .conteiner.text-center.cont-todo.mt-5
@@ -30,99 +29,100 @@ block content
                     .d-flex.justify-content-around.align-items-center
                         h5.card-title.fs-3.d-flex.gap-2.align-items-center.bg-light.p-3 Diagnostico
                             .obligatorio.fs-4 (obligatorio)
-                            button.btn.btn-success Nuevo 
+                            button(onclick="diagnostico()").btn.btn-success#btnDiagnostico Nuevo 
                     .card.bg-papel.mb-5
                         .card-body.largo 
                             p.card-text Estado 
-                                select
-                                    option Preeliminar
-                                    option Confirmado
+                                select(disabled)#estadoDiagnostico
+                                    option(value='Preeliminar') Preeliminar 
+                                    option(value='Confirmado') Confirmado
                             p.card-text Detalles: 
-                            textarea.txt-area-style 
+                            textarea(disabled).txt-area-style#diagnosticoDetalle
 
             .row.mt-3
                 .col-12
                     .d-flex.justify-content-around.align-items-center
                         h5.card-title.fs-3.d-flex.gap-2.align-items-center.bg-light.p-3 Evolucion
                             .obligatorio.fs-4 (obligatorio)
-                            button.btn.btn-success Nuevo 
+                            button(onclick="evolucion()").btn.btn-success#btnEvolucion Nuevo 
                     .card.bg-papel.mb-5
                         .card-body.largo.d-flex.justify-content-center.align-items-center.flex-column
                             p.card-text Detalles: 
-                            textarea.txt-area-style
-                            button.btn.btn-primary.btn-lg Autocompletar
+                            textarea(disabled).txt-area-style#evolucionDetalle
+                                | #{template}
+                            
 
             .row.mt-3
                 .col-12
                     .d-flex.justify-content-around.align-items-center
                         h5.card-title.fs-3.d-flex.gap-2.align-items-center.bg-light.p-3 Medicamentos
-                            button.btn.btn-success Nuevo 
+                            button(onclick="medicamento()").btn.btn-success#btnMedicamento Nuevo 
                     .card.bg-papel.mb-5
                         .card-body.largo
                             .d-flex.gap-3.mb-5.flex-column 
                                 label.card-text Nombre: 
-                                input(type="text" placeholder="Paracetamol")
+                                input(type="text" placeholder="Paracetamol" disabled)#nombreMedicamento
                             .d-flex.gap-3.flex-column
                                 label.card-text Descripcion: 
-                                textarea.txt-area-style
+                                textarea(disabled).txt-area-style#detalleMedicamento
 
             .row.mt-3
                 .col-12
                     .d-flex.justify-content-around.align-items-center
                         h5.card-title.fs-3.d-flex.gap-2.align-items-center.bg-light.p-3 Antecedentes
-                            button.btn.btn-success Nuevo 
+                            button(onclick="antecedentes()").btn.btn-success#btnAntecedentes Nuevo 
                     .card.bg-papel.mb-5
                         .card-body.largo
                             .card-text.mb-3 Descripcion: 
-                            textarea.txt-area-style
+                            textarea(disabled).txt-area-style#detalleAntecedentes
                         .card-text.d-flex.justify-content-between.p-2.gap-2
                             .d-flex.ipt-fecha.gap-2.align-items-center 
                                 | Desde: 
-                                input(type="text" placeholder="15/05/24").ahi-nomas
+                                input(type="text" placeholder="15/05/24" disabled).ahi-nomas#desdeAntecedentes
                             .d-flex.ipt-fecha.gap-2 
                                 | Hasta: 
-                                input(type="text" placeholder="01/06/24").ahi-nomas
+                                input(type="text" placeholder="01/06/24" disabled).ahi-nomas#hastaAntecedentes
 
             .row.mt-3
                 .col-12
                     .d-flex.justify-content-around.align-items-center
                         h5.card-title.fs-3.d-flex.gap-2.align-items-center.bg-light.p-3 Habitos
-                            button.btn.btn-success Nuevo 
+                            button(onclick="habitos()").btn.btn-success#btnHabitos Nuevo 
                     .card.bg-papel.mb-5
                         .card-body.largo 
                             .card-text.mb-3 Descripcion: 
-                            textarea.txt-area-style
+                            textarea(disabled).txt-area-style#detalleHabitos
                         .card-text.d-flex.justify-content-between.p-2.gap-2
                             .d-flex.ipt-fecha.gap-2.align-items-center 
                                 | Desde: 
-                                input(type="text" placeholder="15/05/24").ahi-nomas
+                                input(type="text" placeholder="15/05/24" disabled).ahi-nomas#desdeHabitos
                             .d-flex.ipt-fecha.gap-2 
                                 | Hasta: 
-                                input(type="text" placeholder="01/06/24").ahi-nomas
+                                input(type="text" placeholder="01/06/24" disabled).ahi-nomas#hastaHabitos
 
             .row.mt-3
                 .col-12
                     .d-flex.justify-content-around.align-items-center 
                         h5.card-title.fs-3.d-flex.gap-2.align-items-center.bg-light.p-3 Alergia
-                            button.btn.btn-success Nuevo 
+                            button(onclick="alergia()").btn.btn-success#btnAlergia Nuevo 
                     .card.bg-papel.mb-5
                         .card-body.largo
                             .d-flex.gap-3.mb-5.flex-column 
                                 label.card-text Nombre: 
-                                input(type="text" placeholder="Polen")
+                                input(type="text" placeholder="Polen" disabled)#nombreAlergia
                             .d-flex.gap-3.flex-column
                                 label.card-text Descripcion: 
-                                textarea.txt-area-style
+                                textarea(disabled).txt-area-style#detalleAlergia
                         .card-text.d-flex.justify-content-between.p-2.gap-2
                             .d-flex.ipt-fecha.gap-2.align-items-center  
                                 | Desde: 
-                                input(type="text" placeholder="15/05/24").ahi-nomas
+                                input(type="text" placeholder="15/05/24" disabled).ahi-nomas#desdeAlergia
                             .d-flex.ipt-fecha.gap-2 
                                 | Hasta: 
-                                input(type="text" placeholder="01/06/24").ahi-nomas
+                                input(type="text" placeholder="01/06/24" disabled).ahi-nomas#hastaAlergia
 
     .text-center.mt-3.mb-5
         a(href="/pag4crear").btn.btn-success Guardar
-
+    script(src='/js/createHCE.js') 
 block footer 
     include templates/footer.pug

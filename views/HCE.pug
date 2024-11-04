@@ -96,7 +96,7 @@ block content
                             p Hasta: #{turno.fecha_hasta_alergia || "No hay registros"} 
             
             .text-center.mt-3.p-3.d-flex.gap-3.justify-content-center
-                a(href="/pag4crear" target="_blank").btn.btn-light.btn-lg Nuevo
+                a(href=`/turnos/createHCE${turno.numero_turno}` target="_blank").btn.btn-light.btn-lg Nuevo
                 a(href="/#" target="_blank").btn.btn-light.btn-lg Editar
             #aca 
         else 
@@ -130,7 +130,7 @@ block content
                             p.card-text.fst-italic Estado: #{turno.estado_diagnostico} 
                             p.card-text.fst-italic Detalles: #{turno.diagnostico || "No hay diagnostico previo"}
             .text-center.mt-3.p-3.d-flex.gap-3.justify-content-center
-                a(href="/pag4crear" target="_blank").btn.btn-light.btn-lg Nuevo
+                a(href=`/turnos/createHCE${turno.numero_turno}` target="_blank").btn.btn-light.btn-lg Nuevo
                 a(href="/#" target="_blank").btn.btn-light.btn-lg Editar
     script.
         const dni = !{JSON.stringify(turno.dni_paciente)};

@@ -37,6 +37,7 @@ class MedicoController {
                 req.session.nombre=medico.nombre
                 req.session.apellido=medico.apellido
                 req.session.matricula=medico.matricula_medico
+                req.session.template=medico.template
                 res.json({success: true});
 
             }else{

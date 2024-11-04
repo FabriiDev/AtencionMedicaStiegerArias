@@ -15,6 +15,7 @@ Cosas por hacer
 - permita modificar la ultima atencion del paciente solo si lo atendio el
 
 
+
 ------------------------------> Para el sabado 2/11 Hacer: <---------------------------------------
 
 - Crear consulta y todo lo demas para llenar el select de "atenciones" con las fechas
@@ -27,11 +28,15 @@ condiciones que dice el integrador --> fabri
 
 - Crear la vista createHCE.pug --> fabri
 
-- Ver libreria para texto enriquesido --> valen
-
-- Crear los PA --> los 2
 
 
+
+------------------------------------------->hacer martes 5/11<---------------------------------------------
+manejar logica de consulta en createHCE a traves de un objeto enviado por post
+
+hacer los pa 
+
+consultar texto enriquecido
 
 
 
