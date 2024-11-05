@@ -29,100 +29,100 @@ block content
                     .d-flex.justify-content-around.align-items-center
                         h5.card-title.fs-3.d-flex.gap-2.align-items-center.bg-light.p-3 Diagnostico
                             .obligatorio.fs-4 (obligatorio)
-                            button(onclick="diagnostico()").btn.btn-success#btnDiagnostico Nuevo 
                     .card.bg-papel.mb-5
-                        .card-body.largo 
+                        .card-body.largo.d-flex.justify-content-center.flex-column
                             p.card-text Estado 
                                 select#estadoDiagnostico
                                     option(value='Preeliminar') Preeliminar 
                                     option(value='Confirmado') Confirmado
                             p.card-text Detalles: 
                             textarea.txt-area-style#diagnosticoDetalle
+                            button(onclick="diagnostico()").btn.w-25.text-center.m-auto.btn-primary#btnDiagnostico Cargar 
 
             .row.mt-3
                 .col-12
                     .d-flex.justify-content-around.align-items-center
                         h5.card-title.fs-3.d-flex.gap-2.align-items-center.bg-light.p-3 Evolucion
                             .obligatorio.fs-4 (obligatorio)
-                            button(onclick="evolucion()").btn.btn-success#btnEvolucion Nuevo 
                     .card.bg-papel.mb-5
                         .card-body.largo.d-flex.justify-content-center.align-items-center.flex-column
                             p.card-text Detalles: 
                             textarea.txt-area-style#evolucionDetalle
                                 | #{template}
-                            
+                            button(onclick="evolucion()").btn.w-25.text-center.m-auto.btn-primary#btnEvolucion Cargar 
 
             .row.mt-3
                 .col-12
                     .d-flex.justify-content-around.align-items-center
                         h5.card-title.fs-3.d-flex.gap-2.align-items-center.bg-light.p-3 Medicamentos
-                            button(onclick="medicamento()").btn.btn-success#btnMedicamento Nuevo 
                     .card.bg-papel.mb-5
                         .card-body.largo
                             .d-flex.gap-3.mb-5.flex-column 
                                 label.card-text Nombre: 
-                                input(type="text" placeholder="Paracetamol" disabled)#nombreMedicamento
+                                input(type="text" placeholder="Paracetamol")#nombreMedicamento
                             .d-flex.gap-3.flex-column
                                 label.card-text Descripcion: 
-                                textarea(disabled).txt-area-style#detalleMedicamento
+                                textarea.txt-area-style#detalleMedicamento
+                                button(onclick="medicamento()").btn.w-25.text-center.m-auto.btn-primary#btnMedicamento Cargar 
 
             .row.mt-3
                 .col-12
                     .d-flex.justify-content-around.align-items-center
                         h5.card-title.fs-3.d-flex.gap-2.align-items-center.bg-light.p-3 Antecedentes
-                            button(onclick="antecedentes()").btn.btn-success#btnAntecedentes Nuevo 
+                        
                     .card.bg-papel.mb-5
                         .card-body.largo
                             .card-text.mb-3 Descripcion: 
-                            textarea(disabled).txt-area-style#detalleAntecedentes
-                        .card-text.d-flex.justify-content-between.p-2.gap-2
+                            textarea.txt-area-style#detalleAntecedentes
+                        .card-text.d-flex.justify-content-around.p-2.gap-2
                             .d-flex.ipt-fecha.gap-2.align-items-center 
                                 | Desde: 
-                                input(type="text" placeholder="15/05/24" disabled).ahi-nomas#desdeAntecedentes
+                                input(type="text" placeholder="15/05/24").ahi-nomas#desdeAntecedentes
                             .d-flex.ipt-fecha.gap-2 
                                 | Hasta: 
-                                input(type="text" placeholder="01/06/24" disabled).ahi-nomas#hastaAntecedentes
+                                input(type="text" placeholder="01/06/24").ahi-nomas#hastaAntecedentes
+                        button(onclick="antecedentes()").btn.w-25.text-center.m-auto.btn-primary.mb-3#btnAntecedentes Cargar 
 
             .row.mt-3
                 .col-12
                     .d-flex.justify-content-around.align-items-center
                         h5.card-title.fs-3.d-flex.gap-2.align-items-center.bg-light.p-3 Habitos
-                            button(onclick="habitos()").btn.btn-success#btnHabitos Nuevo 
                     .card.bg-papel.mb-5
                         .card-body.largo 
                             .card-text.mb-3 Descripcion: 
-                            textarea(disabled).txt-area-style#detalleHabitos
-                        .card-text.d-flex.justify-content-between.p-2.gap-2
+                            textarea.txt-area-style#detalleHabitos
+                        .card-text.d-flex.justify-content-around.p-2.gap-2
                             .d-flex.ipt-fecha.gap-2.align-items-center 
                                 | Desde: 
-                                input(type="text" placeholder="15/05/24" disabled).ahi-nomas#desdeHabitos
+                                input(type="text" placeholder="15/05/24").ahi-nomas#desdeHabitos
                             .d-flex.ipt-fecha.gap-2 
                                 | Hasta: 
-                                input(type="text" placeholder="01/06/24" disabled).ahi-nomas#hastaHabitos
+                                input(type="text" placeholder="01/06/24").ahi-nomas#hastaHabitos
+                        button(onclick="habitos()").btn.w-25.text-center.m-auto.btn-primary.mb-3#btnHabitos Cargar 
 
             .row.mt-3
                 .col-12
                     .d-flex.justify-content-around.align-items-center 
                         h5.card-title.fs-3.d-flex.gap-2.align-items-center.bg-light.p-3 Alergia
-                            button(onclick="alergia()").btn.btn-success#btnAlergia Nuevo 
                     .card.bg-papel.mb-5
                         .card-body.largo
                             .d-flex.gap-3.mb-5.flex-column 
                                 label.card-text Nombre: 
-                                input(type="text" placeholder="Polen" disabled)#nombreAlergia
+                                input(type="text" placeholder="Polen")#nombreAlergia
                             .d-flex.gap-3.flex-column
                                 label.card-text Descripcion: 
-                                textarea(disabled).txt-area-style#detalleAlergia
-                        .card-text.d-flex.justify-content-between.p-2.gap-2
+                                textarea.txt-area-style#detalleAlergia
+                        .card-text.d-flex.justify-content-around.p-2.gap-2
                             .d-flex.ipt-fecha.gap-2.align-items-center  
                                 | Desde: 
-                                input(type="text" placeholder="15/05/24" disabled).ahi-nomas#desdeAlergia
+                                input(type="text" placeholder="15/05/24" ).ahi-nomas#desdeAlergia
                             .d-flex.ipt-fecha.gap-2 
                                 | Hasta: 
-                                input(type="text" placeholder="01/06/24" disabled).ahi-nomas#hastaAlergia
+                                input(type="text" placeholder="01/06/24" ).ahi-nomas#hastaAlergia
+                        button(onclick="alergia()").btn.w-25.text-center.m-auto.btn-primary.mb-3#btnAlergia Cargar 
 
     .text-center.mt-3.mb-5
-        a(href="/pag4crear").btn.btn-success Guardar
+        a(href="/pag4crear").btn.btn-success.btn-float.sombra-btn-guardar Guardar Historial
     script(src='/js/createHCE.js') 
 block footer 
     include templates/footer.pug
