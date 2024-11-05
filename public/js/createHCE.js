@@ -1,23 +1,15 @@
 
 var historial = {
-
     diagnosticos: [],
-
     evolucion: '',
-
     medicamentos: [],
-
     antecedentes: [],
-
-    habitos:[],
-
+    habitos: [],
     alergias: [],
 }
 
-
-
-function guardarDiagnostico() {
-    console.log('diagnosticoGuardar')
+function cargarDiagnostico() {
+    console.log('diagnosticoCargar')
     let detalle = document.getElementById('diagnosticoDetalle').value
     let estado = document.getElementById('estadoDiagnostico').value
     let data = { detalle: detalle, estado: estado }
@@ -26,124 +18,93 @@ function guardarDiagnostico() {
 
 }
 
-
-
-function guardarEvolucion() {
-    console.log('evoguardar')
+function cargarEvolucion() {
+    console.log('evolucionCargar')
     let detalle = document.getElementById('evolucionDetalle').value
-
-
-
-
+    historial.evolucion = detalle
     //disabled= true al terminar
 }
 
-function medicamento() {
-    console.log('mesi')
-    document.getElementById('nombreMedicamento').disabled = false
-    document.getElementById('detalleMedicamento').disabled = false
-}
-
-function guardarMedicamento() {
-    console.log('mesiGuardar')
+function cargarMedicamento() {
+    console.log('mesiCargar')
     let nombre = document.getElementById('nombreMedicamento').value
-    let detalle = document.getElementById('detalleMedicamento').value
-    let data = { nombre: nombre, detalle: detalle }
+    let data = { nombre: nombre }
     historial.medicamentos.push(data)
 }
 
-function antecedentes() {
-    console.log('ante')
-    document.getElementById('detalleAntecedentes').disabled = false
-    document.getElementById('desdeAntecedentes').disabled = false
-    document.getElementById('hastaAntecedentes').disabled = false
-}
-
-function guardarAntecedentes() {
-    console.log('antesGuardar')
+function cargarAntecedentes() {
+    console.log('antesCargar')
     let detalle = document.getElementById('detalleAntecedentes').value
     let fdesde = document.getElementById('desdeAntecedentes').value
     let fhasta = document.getElementById('hastaAntecedentes').value
-    let data={detalle:detalle,fdesde:fdesde,fhasta:fhasta}
+    let data = { detalle: detalle, fdesde: fdesde, fhasta: fhasta }
     historial.antecedentes.push(data)
 }
 
-
-function habitos() {
-    console.log('habi')
-    document.getElementById('detalleHabitos').disabled = false
-    document.getElementById('desdeHabitos').disabled = false
-    document.getElementById('hastaHabitos').disabled = false
-}
-
-function guardarHabitos() {
-    console.log('habitoGuardar')
+function cargarHabitos() {
+    console.log('habitoCargar')
     let detalle = document.getElementById('detalleHabitos').value
     let fdesde = document.getElementById('desdeHabitos').value
     let fhasta = document.getElementById('hastaHabitos').value
-    let data={detalle:detalle,fdesde:fdesde,fhasta:fhasta}
+    let data = { detalle: detalle, fdesde: fdesde, fhasta: fhasta }
     historial.habitos.push(data)
 }
 
-function alergia() {
-    console.log('alergia')
-    document.getElementById('nombreAlergia').disabled = false
-    document.getElementById('desdeAlergia').disabled = false
-    document.getElementById('hastaAlergia').disabled = false
-    document.getElementById('detalleAlergia').disabled = false
-}
-
-function guardarAlergia() {
-    console.log('alergiaGuardar')
+function cargarAlergia() {
+    console.log('alergiaCargar')
     let nombre = document.getElementById('nombreAlergia').value
     let fdesde = document.getElementById('desdeAlergia').value
     let fhasta = document.getElementById('hastaAlergia').value
     let detalle = document.getElementById('detalleAlergia').value
-    let data={nombre:nombre,fdesde:fdesde,fhasta:fhasta,detalle}
+    let data = { nombre: nombre, fdesde: fdesde, fhasta: fhasta, detalle }
     historial.alergias.push(data)
 }
 
+function guardarHistorial() {
+
+    console.log(historial)
+
+    let obligatorios = false
+    if (historial.diagnosticos[0] && historial.diagnosticos[0] != '' && historial.evolucion != '' && historial.diagnosticos[0].estado != "") {
+        obligatorios = true
+    }
+
+    if (obligatorios) {
+
+        fetch('/turnos/guardarHCE', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                historial
+            })
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert("Historial guardado");
+                    // redirigir a la agenda
+                    console.log(data)
+
+                } else {
+                    alert("ocurrio un error al guardar el historial ");
+                }
+            })
+            .catch(error => console.error('Error:', error));
+    } else {
+        alert('el diagnostico y evolucion son campos obligatorios')
+    }
+
+    historial = {
+        diagnosticos: [],
+        evolucion: '',
+        medicamentos: [],
+        antecedentes: [],
+        habitos: [],
+        alergias: [],
+    }
+
+}
 
 
-
-
-
-
-
-
-
-/*
-
-#detalleAlergia
-#hastaAlergia
-#desdeAlergia
-#nombreAlergia
-#btnAlergia
-
-#hastaHabitos
-#desdeHabitos
-#detalleHabitos
-#btnHabitos
-
-#hastaAntecedentes
-#desdeAntecedentes
-#detalleAntecedentes
-#btnAntecedentes
-
-#detalleMedicamento
-#nombreMedicamento
-#btnMedicamento
-
-#evolucionDetalle
-#btnEvolucion
-
-#diagnosticoDetalle
-#btnDiagnostico
-#estadoDiagnostico
-
-#nombreAlergia
-#hastaAlergia
-#desdeAlergia
-#detalleAlergia
-#btnAlergia
-*/ 

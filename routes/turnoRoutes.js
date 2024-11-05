@@ -19,6 +19,9 @@ router.post('/pintarTurnos', turnoController.pintarTurnos)
 router.post('/DNI',turnoController.turnosPorDni)
 
 router.get("/HCErender", turnoController.HCErender);
+router.post("/guardarHCE",turnoController.guardarHCE)
+
+
 router.get("/createHCE:numeroTurno",turnoController.createHCE)
 router.get("/HCE:numeroTurno", turnoController.HCE);
 module.exports = router;

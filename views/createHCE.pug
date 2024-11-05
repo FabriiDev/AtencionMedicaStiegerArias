@@ -33,11 +33,12 @@ block content
                         .card-body.largo.d-flex.justify-content-center.flex-column
                             p.card-text Estado 
                                 select#estadoDiagnostico
+                                    option(value="") Seleccione uno 
                                     option(value='Preeliminar') Preeliminar 
                                     option(value='Confirmado') Confirmado
                             p.card-text Detalles: 
                             textarea.txt-area-style#diagnosticoDetalle
-                            button(onclick="diagnostico()").btn.w-25.text-center.m-auto.btn-primary#btnDiagnostico Cargar 
+                            button(onclick="cargarDiagnostico()").btn.w-25.text-center.m-auto.btn-primary#btnDiagnostico Cargar 
 
             .row.mt-3
                 .col-12
@@ -49,7 +50,7 @@ block content
                             p.card-text Detalles: 
                             textarea.txt-area-style#evolucionDetalle
                                 | #{template}
-                            button(onclick="evolucion()").btn.w-25.text-center.m-auto.btn-primary#btnEvolucion Cargar 
+                            button(onclick="cargarEvolucion()").btn.w-25.text-center.m-auto.btn-primary#btnEvolucion Cargar 
 
             .row.mt-3
                 .col-12
@@ -62,8 +63,8 @@ block content
                                 input(type="text" placeholder="Paracetamol")#nombreMedicamento
                             .d-flex.gap-3.flex-column
                                 label.card-text Descripcion: 
-                                textarea.txt-area-style#detalleMedicamento
-                                button(onclick="medicamento()").btn.w-25.text-center.m-auto.btn-primary#btnMedicamento Cargar 
+                                textarea(disabled).txt-area-style#detalleMedicamento
+                                button(onclick="cargarMedicamento()").btn.w-25.text-center.m-auto.btn-primary#btnMedicamento Cargar 
 
             .row.mt-3
                 .col-12
@@ -81,7 +82,7 @@ block content
                             .d-flex.ipt-fecha.gap-2 
                                 | Hasta: 
                                 input(type="text" placeholder="01/06/24").ahi-nomas#hastaAntecedentes
-                        button(onclick="antecedentes()").btn.w-25.text-center.m-auto.btn-primary.mb-3#btnAntecedentes Cargar 
+                        button(onclick="cargarAntecedentes()").btn.w-25.text-center.m-auto.btn-primary.mb-3#btnAntecedentes Cargar 
 
             .row.mt-3
                 .col-12
@@ -98,7 +99,7 @@ block content
                             .d-flex.ipt-fecha.gap-2 
                                 | Hasta: 
                                 input(type="text" placeholder="01/06/24").ahi-nomas#hastaHabitos
-                        button(onclick="habitos()").btn.w-25.text-center.m-auto.btn-primary.mb-3#btnHabitos Cargar 
+                        button(onclick="cargarHabitos()").btn.w-25.text-center.m-auto.btn-primary.mb-3#btnHabitos Cargar 
 
             .row.mt-3
                 .col-12
@@ -119,10 +120,10 @@ block content
                             .d-flex.ipt-fecha.gap-2 
                                 | Hasta: 
                                 input(type="text" placeholder="01/06/24" ).ahi-nomas#hastaAlergia
-                        button(onclick="alergia()").btn.w-25.text-center.m-auto.btn-primary.mb-3#btnAlergia Cargar 
+                        button(onclick="cargarAlergia()").btn.w-25.text-center.m-auto.btn-primary.mb-3#btnAlergia Cargar 
 
     .text-center.mt-3.mb-5
-        a(href="/pag4crear").btn.btn-success.btn-float.sombra-btn-guardar Guardar Historial
+        button(onclick="guardarHistorial()").btn.btn-success.btn-float.sombra-btn-guardar Guardar Historial
     script(src='/js/createHCE.js') 
 block footer 
     include templates/footer.pug

@@ -53,8 +53,31 @@ class TurnoController {
     async createHCE(req, res) {
         let turno = await turnoModel.numero_turno(req.params.numeroTurno)
         const fechaFormateada = turno.fecha.toISOString().split('T')[0];
-        let template=req.session.template
-        res.render('createHCE',{turno,template,fechaFormateada})
+        let template = req.session.template
+        res.render('createHCE', { turno, template, fechaFormateada })
+    }
+
+    async guardarHCE(req, res) {
+        let envio = { success: false }//si hay tiempo mandar un mensaje segun el error o el if que dio el return
+        let historial = req.body.historial
+
+
+
+        historial.diagnosticos.forEach(element => {
+            if (element.estado == '' || element.detalle == '') {
+                //si falta cualquiera de los dos se sale de la ruta y se envia el valor de succes por default:false
+                res.send(envio)
+            }
+        });
+        if (historial.evolucion == '') {
+            res.send(envio)
+        }
+
+        
+
+
+        envio = { success: true }
+        res.send(envio)
     }
 }
 
