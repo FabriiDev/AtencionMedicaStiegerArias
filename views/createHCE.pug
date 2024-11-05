@@ -33,11 +33,11 @@ block content
                     .card.bg-papel.mb-5
                         .card-body.largo 
                             p.card-text Estado 
-                                select(disabled)#estadoDiagnostico
+                                select#estadoDiagnostico
                                     option(value='Preeliminar') Preeliminar 
                                     option(value='Confirmado') Confirmado
                             p.card-text Detalles: 
-                            textarea(disabled).txt-area-style#diagnosticoDetalle
+                            textarea.txt-area-style#diagnosticoDetalle
 
             .row.mt-3
                 .col-12
@@ -48,7 +48,7 @@ block content
                     .card.bg-papel.mb-5
                         .card-body.largo.d-flex.justify-content-center.align-items-center.flex-column
                             p.card-text Detalles: 
-                            textarea(disabled).txt-area-style#evolucionDetalle
+                            textarea.txt-area-style#evolucionDetalle
                                 | #{template}
                             
 
