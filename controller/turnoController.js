@@ -54,9 +54,14 @@ class TurnoController {
         let turno = await turnoModel.numero_turno(req.params.numeroTurno)
         const fechaFormateada = turno.fecha.toISOString().split('T')[0];
         let template = req.session.template
-        res.render('createHCE', { turno, template, fechaFormateada })
+
+        let medicamentos = await turnoModel.medicamentos()
+        res.render('createHCE', { turno, template, fechaFormateada, medicamentos })
     }
 
+
+
+    //--------------------------------------------------------------------------------------------------------------------------------
     async guardarHCE(req, res) {
         let envio = { success: false }//si hay tiempo mandar un mensaje segun el error o el if que dio el return
         let historial = req.body.historial
@@ -72,8 +77,46 @@ class TurnoController {
         if (historial.evolucion == '') {
             res.send(envio)
         }
+//--------------------------------------------------------------------------------
+        //si hay aunque sea 1 habito cargado se comprueban sus datos
+        if (historial.habitos[0]) {
 
-        
+            historial.habitos.forEach(element => {
+                if (element.detalle == '') {
+                    res.send(envio)
+                }
+            });
+        }
+
+
+        if (historial.antecedentes[0]) {
+            historial.antecedentes.forEach(element => {
+                if (element.detalle == '') {
+                    res.send(envio)
+                }
+            });
+        }
+
+        if (historial.alergias[0]) {
+            historial.alergias.forEach(element => {
+                if (element.nombre == '' || element.importanciaAlergia == '') {
+                    res.send(envio)
+                }
+            });
+        }
+
+        if (historial.medicamentos[0]) {
+            historial.medicamentos.forEach(element => {
+                if (element == '') {
+                    res.send(envio)
+                }
+            });
+        }
+//--------------------------------------------------------------------------------
+
+
+
+
 
 
         envio = { success: true }

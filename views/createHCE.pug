@@ -62,7 +62,10 @@ block content
                                 label.card-text Nombre: 
                                 input(type="text" placeholder="Paracetamol")#nombreMedicamento
                             .d-flex.gap-3.flex-column
-                                label.card-text Descripcion: 
+                                label.card-text tuqi: 
+                                select#selectMedicamento(name="medicamento")
+                                    each val in medicamentos
+                                        option(value=val.id_medicamentos) #{val.nombre_medicamento}
                                 textarea(disabled).txt-area-style#detalleMedicamento
                                 button(onclick="cargarMedicamento()").btn.w-25.text-center.m-auto.btn-primary#btnMedicamento Cargar 
 

@@ -8,6 +8,19 @@ var historial = {
     alergias: [],
 }
 
+function clean(){
+    historial = {
+        diagnosticos: [],
+        evolucion: '',
+        medicamentos: [],
+        antecedentes: [],
+        habitos: [],
+        alergias: [],
+    }
+
+    //agregar limpieza de campos
+}
+
 function cargarDiagnostico() {
     console.log('diagnosticoCargar')
     let detalle = document.getElementById('diagnosticoDetalle').value
@@ -27,8 +40,9 @@ function cargarEvolucion() {
 
 function cargarMedicamento() {
     console.log('mesiCargar')
-    let nombre = document.getElementById('nombreMedicamento').value
-    let data = { nombre: nombre }
+    let valor = document.getElementById('selectMedicamento').value
+    let nombre= document.getElementById('selectMedicamento').options[document.getElementById('selectMedicamento').selectedIndex].text
+    let data = { nombre: nombre, valor:valor }
     historial.medicamentos.push(data)
 }
 
@@ -55,8 +69,8 @@ function cargarAlergia() {
     let nombre = document.getElementById('nombreAlergia').value
     let fdesde = document.getElementById('desdeAlergia').value
     let fhasta = document.getElementById('hastaAlergia').value
-    let detalle = document.getElementById('detalleAlergia').value
-    let data = { nombre: nombre, fdesde: fdesde, fhasta: fhasta, detalle }
+    let importancia = document.getElementById('importanciaAlergia').value
+    let data = { nombre: nombre, fdesde: fdesde, fhasta: fhasta, importancia:importancia }
     historial.alergias.push(data)
 }
 
@@ -96,14 +110,7 @@ function guardarHistorial() {
         alert('el diagnostico y evolucion son campos obligatorios')
     }
 
-    historial = {
-        diagnosticos: [],
-        evolucion: '',
-        medicamentos: [],
-        antecedentes: [],
-        habitos: [],
-        alergias: [],
-    }
+    clean()
 
 }
 
