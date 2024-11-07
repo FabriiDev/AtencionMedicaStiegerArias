@@ -58,14 +58,11 @@ block content
                         h5.card-title.fs-3.d-flex.gap-2.align-items-center.bg-light.p-3 Medicamentos
                     .card.bg-papel.mb-5
                         .card-body.largo
-                            .d-flex.gap-3.mb-5.flex-column 
-                                label.card-text Nombre: 
-                                input(type="text" placeholder="Paracetamol")#nombreMedicamento
                             .d-flex.gap-3.flex-column
-                                label.card-text tuqi: 
-                                select#selectMedicamento(name="medicamento")
-                                    each val in medicamentos
-                                        option(value=val.id_medicamentos) #{val.nombre_medicamento}
+                                label.card-text Nombre: 
+                                    select#selectMedicamento(name="medicamento")
+                                        each val in medicamentos
+                                            option(value=val.id_medicamentos) #{val.nombre_medicamento}
                                 textarea(disabled).txt-area-style#detalleMedicamento
                                 button(onclick="cargarMedicamento()").btn.w-25.text-center.m-auto.btn-primary#btnMedicamento Cargar 
 
@@ -81,10 +78,10 @@ block content
                         .card-text.d-flex.justify-content-around.p-2.gap-2
                             .d-flex.ipt-fecha.gap-2.align-items-center 
                                 | Desde: 
-                                input(type="text" placeholder="15/05/24").ahi-nomas#desdeAntecedentes
+                                input(type="date" placeholder="15/05/24").ahi-nomas#desdeAntecedentes
                             .d-flex.ipt-fecha.gap-2 
                                 | Hasta: 
-                                input(type="text" placeholder="01/06/24").ahi-nomas#hastaAntecedentes
+                                input(type="date" placeholder="01/06/24").ahi-nomas#hastaAntecedentes
                         button(onclick="cargarAntecedentes()").btn.w-25.text-center.m-auto.btn-primary.mb-3#btnAntecedentes Cargar 
 
             .row.mt-3
@@ -98,10 +95,10 @@ block content
                         .card-text.d-flex.justify-content-around.p-2.gap-2
                             .d-flex.ipt-fecha.gap-2.align-items-center 
                                 | Desde: 
-                                input(type="text" placeholder="15/05/24").ahi-nomas#desdeHabitos
+                                input(type="date" placeholder="15/05/24").ahi-nomas#desdeHabitos
                             .d-flex.ipt-fecha.gap-2 
                                 | Hasta: 
-                                input(type="text" placeholder="01/06/24").ahi-nomas#hastaHabitos
+                                input(type="date" placeholder="01/06/24").ahi-nomas#hastaHabitos
                         button(onclick="cargarHabitos()").btn.w-25.text-center.m-auto.btn-primary.mb-3#btnHabitos Cargar 
 
             .row.mt-3
@@ -112,17 +109,21 @@ block content
                         .card-body.largo
                             .d-flex.gap-3.mb-5.flex-column 
                                 label.card-text Nombre: 
-                                input(type="text" placeholder="Polen")#nombreAlergia
+                                    input(type="text" placeholder="Polen")#nombreAlergia
                             .d-flex.gap-3.flex-column
-                                label.card-text Descripcion: 
-                                textarea.txt-area-style#detalleAlergia
+                                label.card-text Importancia: 
+                                    select
+                                        option Seleccione una
+                                        option Leve
+                                        option Normal
+                                        option Alta
                         .card-text.d-flex.justify-content-around.p-2.gap-2
                             .d-flex.ipt-fecha.gap-2.align-items-center  
                                 | Desde: 
-                                input(type="text" placeholder="15/05/24" ).ahi-nomas#desdeAlergia
+                                input(type="date" placeholder="15/05/24" ).ahi-nomas#desdeAlergia
                             .d-flex.ipt-fecha.gap-2 
                                 | Hasta: 
-                                input(type="text" placeholder="01/06/24" ).ahi-nomas#hastaAlergia
+                                input(type="date" placeholder="01/06/24" ).ahi-nomas#hastaAlergia
                         button(onclick="cargarAlergia()").btn.w-25.text-center.m-auto.btn-primary.mb-3#btnAlergia Cargar 
 
     .text-center.mt-3.mb-5
