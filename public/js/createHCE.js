@@ -1,3 +1,6 @@
+let numerito=numero
+console.log('numerito:')
+console.log(numerito)
 
 var historial = {
     diagnosticos: [],
@@ -6,6 +9,7 @@ var historial = {
     antecedentes: [],
     habitos: [],
     alergias: [],
+    numero_turno:numerito
 }
 
 function clean(){
@@ -43,6 +47,7 @@ function cargarMedicamento() {
     let valor = document.getElementById('selectMedicamento').value
     let nombre= document.getElementById('selectMedicamento').options[document.getElementById('selectMedicamento').selectedIndex].text
     let data = { nombre: nombre, valor:valor }
+    console.log(valor)
     historial.medicamentos.push(data)
 }
 

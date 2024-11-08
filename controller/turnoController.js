@@ -66,8 +66,6 @@ class TurnoController {
         let envio = { success: false }//si hay tiempo mandar un mensaje segun el error o el if que dio el return
         let historial = req.body.historial
 
-
-
         historial.diagnosticos.forEach(element => {
             if (element.estado == '' || element.detalle == '') {
                 //si falta cualquiera de los dos se sale de la ruta y se envia el valor de succes por default:false
@@ -77,7 +75,7 @@ class TurnoController {
         if (historial.evolucion == '') {
             res.send(envio)
         }
-//--------------------------------------------------------------------------------
+        //--------------------------------------------------------------------------------
         //si hay aunque sea 1 habito cargado se comprueban sus datos
         if (historial.habitos[0]) {
 
@@ -86,7 +84,10 @@ class TurnoController {
                     res.send(envio)
                 }
             });
+
+
         }
+
 
 
         if (historial.antecedentes[0]) {
@@ -112,9 +113,9 @@ class TurnoController {
                 }
             });
         }
-//--------------------------------------------------------------------------------
-
-
+        //--------------------------------------------------------------------------------
+        console.log(historial)
+        await turnoModel.transaccionHCE(historial)
 
 
 

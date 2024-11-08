@@ -75,7 +75,7 @@ ORDER BY fecha DESC`
         let conn;
         try {
             conn = await crearConexion();
-            
+
             // Llama al procedimiento almacenado
             const query = 'CALL obtenerDetalleTurno(?)';
             const [result] = await conn.query(query, [numero_turno]);
@@ -88,10 +88,10 @@ ORDER BY fecha DESC`
             if (conn) conn.end();
         }
     }
-    
 
 
-    static async medicamentos(){
+
+    static async medicamentos() {
         conn = await crearConexion()
         let query = `SELECT * FROM medicamento`
 
@@ -104,71 +104,129 @@ ORDER BY fecha DESC`
             if (conn) conn.end();
         }
     }
-    
-    /*static async numero_turno(numero_turno) {
-        conn = await crearConexion()
-        let query = `SELECT DISTINCT
-    t.numero_turno,
-    t.fecha,
-    t.hora,
-    t.motivo_consulta,
-    p.nombre AS nombre_paciente,
-    p.apellido AS apellido_paciente,
-    p.dni_paciente,
-    m.nombre AS nombre_medico,
-    m.apellido AS apellido_medico,
-    m.especialidad,
-    GROUP_CONCAT(DISTINCT d.resumen_evolucion ORDER BY d.resumen_evolucion SEPARATOR ', ') AS diagnostico,
-    GROUP_CONCAT(DISTINCT d.estado ORDER BY d.estado SEPARATOR ', ') AS estado_diagnostico,
-    GROUP_CONCAT(DISTINCT e.resumen_evolucion ORDER BY e.resumen_evolucion SEPARATOR ', ') AS evolucion,
-    GROUP_CONCAT(DISTINCT al.nombre_alergia ORDER BY al.nombre_alergia SEPARATOR ', ') AS nombre_alergia,
-    GROUP_CONCAT(DISTINCT al.importancia ORDER BY al.importancia SEPARATOR ', ') AS importancia_alergia,
-    GROUP_CONCAT(DISTINCT al.fecha_desde ORDER BY al.fecha_desde SEPARATOR ', ') AS fecha_desde_alergia,
-    GROUP_CONCAT(DISTINCT al.fecha_hasta ORDER BY al.fecha_hasta SEPARATOR ', ') AS fecha_hasta_alergia,
-    GROUP_CONCAT(DISTINCT an.descripcion ORDER BY an.descripcion SEPARATOR ', ') AS antecedente,
-    GROUP_CONCAT(DISTINCT an.fecha_desde ORDER BY an.fecha_desde SEPARATOR ', ') AS fecha_desde_antecedente,
-    GROUP_CONCAT(DISTINCT an.fecha_hasta ORDER BY an.fecha_hasta SEPARATOR ', ') AS fecha_hasta_antecedente,
-    GROUP_CONCAT(DISTINCT h.descripcion ORDER BY h.descripcion SEPARATOR ', ') AS habito,
-    GROUP_CONCAT(DISTINCT h.fecha_desde ORDER BY h.fecha_desde SEPARATOR ', ') AS fecha_desde_habito,
-    GROUP_CONCAT(DISTINCT h.fecha_hasta ORDER BY h.fecha_hasta SEPARATOR ', ') AS fecha_hasta_habito,
-    GROUP_CONCAT(DISTINCT r.id_receta ORDER BY r.id_receta SEPARATOR ', ') AS id_receta,
-    GROUP_CONCAT(DISTINCT me.nombre_medicamento ORDER BY me.nombre_medicamento SEPARATOR ', ') AS nombre_medicamento
-FROM
-    turno t
-JOIN paciente p ON
-    p.dni_paciente = t.dni_paciente
-JOIN medico m ON
-    m.matricula_medico = t.matricula_medico
-LEFT JOIN diagnostico d ON
-    t.numero_turno = d.numero_turno
-LEFT JOIN evolucion e ON
-    t.numero_turno = e.numero_turno
-LEFT JOIN alergia al ON
-    t.numero_turno = al.numero_turno
-LEFT JOIN antecedente an ON
-    t.numero_turno = an.numero_turno
-LEFT JOIN habito h ON
-    t.numero_turno = h.numero_turno
-LEFT JOIN receta r ON
-    t.numero_turno = r.numero_turno
-LEFT JOIN medicamento me ON
-    r.id_medicamento = me.id_medicamento
-WHERE
-    t.numero_turno = ?
-GROUP BY
-    t.numero_turno, t.fecha, t.hora, t.motivo_consulta, 
-    p.nombre, p.apellido, p.dni_paciente, 
-    m.nombre, m.apellido, m.especialidad;`
 
-        try {
-            const [result] = await conn.query(query, [numero_turno]);
-            return result.length ? result[0] : null;
-        } catch (error) {
-            console.log("Error al traer turnos: ", error);
-        } finally {
-            if (conn) conn.end();
-        }
-    }*/
-}
+
+
+    static async transaccionHCE(historial) {
+        let conn;
+        conn= await crearConexion()
+        conn.beginTransaction((err) => {
+            if (err) return reject(err);
+
+            
+            const queryActualizarTurno = `
+                UPDATE turno
+                SET estado = 'Atendido'
+                WHERE numero_turno = ?
+            `;
+            const paramsActualizarTurno = [historial.numero_turno];
+            console.log('actualizar turno')
+            conn.query(queryActualizarTurno, paramsActualizarTurno, (error) => {
+                if (error) return conn.rollback(() => reject(error));
+            });
+
+            console.log('actualizar ALERGIA')
+            // Inserta en la tabla alergia si los datos están presentes
+            if (historial.alergias[0].nombre && historial.alergias[0].importancia && historial.alergias[0].fdesde && historial.alergias[0].fhasta) {
+                const queryAlergia = `
+                    INSERT INTO alergia (nombre_alergia, importancia, fecha_desde, fecha_hasta, numero_turno)
+                    VALUES (?, ?, ?, ?, ?)
+                `;
+                const paramsAlergia = [historial.alergias[0].nombre, historial.alergias[0].importancia, historial.alergias[0].fdesde, historial.alergias[0].fhasta, historial.numero_turno];
+
+                conn.query(queryAlergia, paramsAlergia, (error) => {
+                    if (error) return conn.rollback(() => reject(error));
+                });
+            }
+
+            console.log('actualizar ANTECEDENTE')
+            // Inserta en la tabla antecedente si los datos están presentes
+            if (historial.antecedentes[0].detalle && historial.antecedentes[0].fdesde && historial.antecedentes[0].fhasta) {
+                const queryAntecedente = `
+                    INSERT INTO antecedente (descripcion_antecedente, fecha_desde, fecha_hasta, numero_turno)
+                    VALUES (?, ?, ?, ?)
+                `;
+                const paramsAntecedente = [historial.antecedentes[0].detalle, historial.antecedentes[0].fdesde,historial.antecedentes[0].fhasta, historial.numero_turno];
+
+                conn.query(queryAntecedente, paramsAntecedente, (error) => {
+                    if (error) return conn.rollback(() => reject(error));
+                });
+            }
+
+            console.log('actualizar DIAGNOSTICO')
+            // Inserta múltiples registros en la tabla diagnostico si existen en el array
+            historial.diagnosticos.forEach(diagnostico => {
+                const queryDiagnostico = `
+                    INSERT INTO diagnostico (resumen_evolucion, estado, numero_turno)
+                    VALUES (?, ?, ?)
+                `;
+                const paramsDiagnostico = [diagnostico.detalle, diagnostico.estado, historial.numero_turno];
+
+                conn.query(queryDiagnostico, paramsDiagnostico, (error) => {
+                    if (error) return conn.rollback(() => reject(error));
+                });
+            });
+
+            console.log('actualizar EVOLUCION')
+            // Inserta en la tabla evolucion
+            const queryEvolucion = `
+                INSERT INTO evolucion (resumen_evolucion, numero_turno)
+                VALUES (?, ?)
+            `;
+            const paramsEvolucion = [historial.evolucion, historial.numero_turno];
+
+            conn.query(queryEvolucion, paramsEvolucion, (error) => {
+                if (error) return conn.rollback(() => reject(error));
+
+                console.log('actualizar HABITO')
+                // Inserta en la tabla habito si los datos están presentes
+                if (historial.habitos[0].detalle && historial.habitos[0].fdesde && historial.habitos[0].fhasta) {
+                    const queryHabito = `
+                        INSERT INTO habito (descripcion, fecha_desde, fecha_hasta, numero_turno)
+                        VALUES (?, ?, ?, ?)
+                    `;
+                    const paramsHabito = [historial.habitos[0].detalle, historial.habitos[0].fdesde, historial.habitos[0].fhasta, historial.numero_turno];
+
+                    conn.query(queryHabito, paramsHabito, (error) => {
+                        if (error) return conn.rollback(() => reject(error));
+                    });
+                }
+
+                console.log('actualizar RECETA')
+                // Inserta en la tabla receta si hay un medicamento seleccionado
+                if (historial.medicamentos[0]) {
+                    const queryReceta = `
+                        INSERT INTO receta (numero_turno,id_medicamento )
+                        VALUES (?, ?)
+                    `;
+                    const paramsReceta = [historial.medicamentos[0].valor, historial.numero_turno];
+
+                    conn.query(queryReceta, paramsReceta, (error) => {
+                        if (error) return conn.rollback(() => reject(error));
+
+                        // Si todo ha ido bien, confirma la transacción
+                        conn.commit((err) => {
+                            if (err) return conn.rollback(() => reject(err));
+                            resolve('Datos actualizados correctamente');
+                        });
+                    });
+                } else {
+                    console.log('actualizar ELSE RECETA')
+                    // Si no hay medicamento, confirma la transacción sin insertar en receta
+                    conn.commit((err) => {
+                        if (err) return conn.rollback(() => reject(err));
+                        resolve('Datos actualizados correctamente');
+                    });
+                }
+            });
+        });
+    };
+};
+
+
+
+
+
+
 
 module.exports = Turno;

@@ -62,7 +62,7 @@ block content
                                 label.card-text Nombre: 
                                     select#selectMedicamento(name="medicamento")
                                         each val in medicamentos
-                                            option(value=val.id_medicamentos) #{val.nombre_medicamento}
+                                            option(value=val.id_medicamento) #{val.nombre_medicamento}
                                 textarea(disabled).txt-area-style#detalleMedicamento
                                 button(onclick="cargarMedicamento()").btn.w-25.text-center.m-auto.btn-primary#btnMedicamento Cargar 
 
@@ -112,11 +112,11 @@ block content
                                     input(type="text" placeholder="Polen")#nombreAlergia
                             .d-flex.gap-3.flex-column
                                 label.card-text Importancia: 
-                                    select
-                                        option Seleccione una
-                                        option Leve
-                                        option Normal
-                                        option Alta
+                                    select#importanciaAlergia
+                                        option(value="") Seleccione una
+                                        option(value="Leve")  Leve
+                                        option(value="Normal")  Normal
+                                        option(value="Alta")  Alta
                         .card-text.d-flex.justify-content-around.p-2.gap-2
                             .d-flex.ipt-fecha.gap-2.align-items-center  
                                 | Desde: 
@@ -125,9 +125,12 @@ block content
                                 | Hasta: 
                                 input(type="date" placeholder="01/06/24" ).ahi-nomas#hastaAlergia
                         button(onclick="cargarAlergia()").btn.w-25.text-center.m-auto.btn-primary.mb-3#btnAlergia Cargar 
-
+    
     .text-center.mt-3.mb-5
         button(onclick="guardarHistorial()").btn.btn-success.btn-float.sombra-btn-guardar Guardar Historial
+    script.
+        const numero = !{JSON.stringify(turno.numero_turno)};
     script(src='/js/createHCE.js') 
+    
 block footer 
     include templates/footer.pug
