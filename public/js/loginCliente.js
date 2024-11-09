@@ -18,12 +18,14 @@ function loguear(event) {
         .then(response => response.json())
         .then(data => {
             if (data.success) {
-                alert("Login exitoso");
                 // redirigir a la agenda
                 window.location.href = '/turnos/agenda';
 
             } else {
-                alert("Credenciales inválidas");
+                toastr.error('Credenciales invalidas', 'Servidor', {
+                    "progressBar": true,
+                    "positionClass": "toast-top-center"
+                });
                 limpiarCampos();
             }
         })

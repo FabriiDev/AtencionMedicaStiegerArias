@@ -25,7 +25,11 @@ class MedicoController {
                 return res.status(400).json({success: false, error: 'Debes ingresar matricula y contraseña'});
             }
             const medico = await medicoModel.traerMedico(matricula);
-            
+
+            // esto es por si no encuentra al medico, osea si no esta bien la matricula ingresada
+            if(!medico){
+                return res.status(400).json({success: false, error: 'Credenciales incorrectas' }); // credenciales incorrectas o no existe el medico
+            }
             const passHasheada = medico.password;
             let flag = bcrypt.compare(password, passHasheada);
             

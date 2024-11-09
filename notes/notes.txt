@@ -39,4 +39,20 @@ hacer los pa
 consultar texto enriquecido
 
 
+---------------------------------------> cosas para ver el 9/11 <---------------------------------------------
+
+- Ver de como prescentar los datos en caso que el paciente tenga mas de una alergia, habito o etc
+
+- Crear el update segun las cosas que pide el enunciado
+
+- Crear la opcion para que el medico pueda crear su template y guardarlas con el texto enriquecido en la db
+a esto le falta tambien los alerts, espero a hacer esa parte antes de crearlos... 
+
+- Posicionar el footer
+
+- el archivo faltaCredenciales.pug habria que borrarlom, ya no lo usamos!
+
+- Ojo! ver el tema de que el medico puede comenzar una atencion solo si el estado del turno es pendiente...
+
+
 

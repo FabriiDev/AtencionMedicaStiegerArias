@@ -3,6 +3,8 @@ extends layout
 
 block head
     link(rel="stylesheet", href="/styles/login.css")
+    //- estilos de alertas
+    link(rel="stylesheet", href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css")
 block content
     .d-flex.justify-content-center
         .conteiner.mt-5.border.p-5.bg-textura-1.shadow.mb-5.bg-body-tertiary.rounded
@@ -18,6 +20,15 @@ block content
                         input#pass.form-control(type='password').mb-5
                     .d-grid.gap2
                         button.btn.btn-primary(type='submit' onclick='loguear(event)') Ingresar
+    
+
+    script(src="https://code.jquery.com/jquery-3.7.1.min.js")
+
+    //- muy importante el orden, jquery primero, toastr despues y ultimo el js nuestro
+
+    script(src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js") 
+    
+    script(src="https://cdn.jsdelivr.net/npm/sweetalert2@11") 
 
     script(src="/js/loginCliente.js")
 

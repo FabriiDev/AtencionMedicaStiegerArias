@@ -13,21 +13,22 @@ block content
         .conteiner.rounded.p-2
             .d-flex.justify-content-center.mb-4.gap-3
                 //-.rounded.p-2.bg-primary.text-light.titulos-tur.d-flex
-                    | turnos del: &nbsp;
+                    | turnos del:  
                     #fechaInicial
                 .d-flex.align-items-center.gap-3.titulos-tur.text-light
                     | Elegir fecha 
                     input(type="date")#fecha
-            table.table.table-striped.sombra-tabla.textos-tur
-                thead 
-                    tr
-                        th Paciente
-                        th Hora
-                        th Motivo
-                        th Estado
-                tbody#pintarTablaTurnos
-                    //- SEGUN ESTADO PINTAR, ROJO CANCELADO, VERDE ATENDIDO
-                    
+            .table-responsive
+                table.table.table-striped.sombra-tabla.textos-tur
+                    thead 
+                        tr
+                            th Paciente
+                            th Hora
+                            th Motivo
+                            th Estado
+                    tbody#pintarTablaTurnos
+                        //- SEGUN ESTADO PINTAR, ROJO CANCELADO, VERDE ATENDIDO
+
                 
     script(src="/js/agendaCliente.js")
 

@@ -2,12 +2,12 @@
 const quill = new Quill('#editor', {
     theme: 'snow'
 });
+quill.clipboard.dangerouslyPasteHTML(laTemplate);
 
 // ------------------------------------------------------------ 
-let numerito=numero
+let numerito = numero
 console.log('numerito:')
 console.log(numerito)
-//toastr.info('info');
 var historial = {
     diagnosticos: [],
     evolucion: '',
@@ -15,10 +15,10 @@ var historial = {
     antecedentes: [],
     habitos: [],
     alergias: [],
-    numero_turno:numerito
+    numero_turno: numerito
 }
 
-function clean(){
+function clean() {
     historial = {
         diagnosticos: [],
         evolucion: '',
@@ -32,16 +32,35 @@ function clean(){
 }
 
 function cargarDiagnostico() {
-    console.log('diagnosticoCargar')
     let detalle = document.getElementById('diagnosticoDetalle').value
     let estado = document.getElementById('estadoDiagnostico').value
-    let data = { detalle: detalle, estado: estado }
-    historial.diagnosticos.push(data)
-
-
-}
     
-quill.clipboard.dangerouslyPasteHTML(laTemplate);
+    // controlar que complete los campos
+    if (detalle == '' || estado == '') {
+
+        toastr.error('Complete todos los campos', 'Servidor', {
+            "progressBar": true,
+            "positionClass": "toast-top-center"
+        });
+        
+
+    } else {
+        toastr.success('Diagnositco guardado con exito!', 'Servidor:', {
+            "progressBar": true,
+            "positionClass": "toast-top-center"
+        });
+        console.log('diagnosticoCargar')
+        let data = { detalle: detalle, estado: estado }
+        historial.diagnosticos.push(data)
+    }
+
+    
+
+    document.getElementById('diagnosticoDetalle').value = "";
+    document.getElementById('estadoDiagnostico').value = "";
+}
+
+
 
 function cargarEvolucion() {
     console.log('evolucionCargar')
@@ -52,47 +71,136 @@ function cargarEvolucion() {
     let detalle = quill.getText();
     historial.evolucion = detalle
     console.log('normal: ', detalle)
-    
-
     //disabled= true al terminar
 }
 
 function cargarMedicamento() {
-    console.log('mesiCargar')
-    let valor = document.getElementById('selectMedicamento').value
-    let nombre= document.getElementById('selectMedicamento').options[document.getElementById('selectMedicamento').selectedIndex].text
-    let data = { nombre: nombre, valor:parseInt(valor) }
-    console.log(valor)
     
-    historial.medicamentos.push(data)
+    let valor = document.getElementById('selectMedicamento').value
+    let nombre = document.getElementById('selectMedicamento').options[document.getElementById('selectMedicamento').selectedIndex].text
+    
+    // controlar que complete los campos
+    if (valor == '') {
+
+        toastr.error('Seleccione al menos un medicamento', 'Servidor', {
+            "progressBar": true,
+            "positionClass": "toast-top-center"
+        });
+        
+
+    } else {
+        toastr.success('Medicamento guardado con exito!', 'Servidor:', {
+            "progressBar": true,
+            "positionClass": "toast-top-center"
+        });
+        console.log('mesiCargar')
+        let data = { nombre: nombre, valor: parseInt(valor) }
+        console.log(valor)
+        historial.medicamentos.push(data)
+    }
+    
+    document.getElementById('selectMedicamento').value = "";
 }
 
 function cargarAntecedentes() {
-    console.log('antesCargar')
     let detalle = document.getElementById('detalleAntecedentes').value
     let fdesde = document.getElementById('desdeAntecedentes').value
     let fhasta = document.getElementById('hastaAntecedentes').value
-    let data = { detalle: detalle, fdesde: fdesde, fhasta: fhasta }
-    historial.antecedentes.push(data)
+
+    // controlar que complete los campos
+    if (detalle == '' || fdesde == '' || fhasta == '') {
+        toastr.error('Complete todos los campos', 'Servidor', {
+            "progressBar": true,
+            "positionClass": "toast-top-center"
+        });
+        
+    } else if (fdesde > fhasta) { // logica para las fechas
+        toastr.error('La fecha "Hasta" no puede ser menor que la fecha "Desde"', 'Servidor', {
+            "progressBar": true,
+            "positionClass": "toast-top-center"
+        });
+        
+    } else {
+        toastr.success('Antecedente guardado con exito!', 'Servidor:', {
+            "progressBar": true,
+            "positionClass": "toast-top-center"
+        });
+        console.log('antesCargar')
+        let data = { detalle: detalle, fdesde: fdesde, fhasta: fhasta }
+        historial.antecedentes.push(data)
+    }
+
+    document.getElementById('detalleAntecedentes').value = "";
+    document.getElementById('desdeAntecedentes').value = "";
+    document.getElementById('hastaAntecedentes').value = "";
 }
 
 function cargarHabitos() {
-    console.log('habitoCargar')
     let detalle = document.getElementById('detalleHabitos').value
     let fdesde = document.getElementById('desdeHabitos').value
     let fhasta = document.getElementById('hastaHabitos').value
-    let data = { detalle: detalle, fdesde: fdesde, fhasta: fhasta }
-    historial.habitos.push(data)
+    
+    // controlar que complete los campos
+    if (detalle == '' || fdesde == '' || fhasta == '') {
+        toastr.error('Complete todos los campos', 'Servidor', {
+            "progressBar": true,
+            "positionClass": "toast-top-center"
+        });
+        
+    } else if (fdesde > fhasta) { // logica para las fechas
+        toastr.error('La fecha "Hasta" no puede ser menor que la fecha "Desde"', 'Servidor', {
+            "progressBar": true,
+            "positionClass": "toast-top-center"
+        });
+        
+    } else {
+        toastr.success('Habito guardado con exito!', 'Servidor:', {
+            "progressBar": true,
+            "positionClass": "toast-top-center"
+        });
+        console.log('habitoCargar')
+        let data = { detalle: detalle, fdesde: fdesde, fhasta: fhasta }
+        historial.habitos.push(data)
+    }
+
+    document.getElementById('detalleHabitos').value = "";
+    document.getElementById('desdeHabitos').value = "";
+    document.getElementById('hastaHabitos').value = "";
 }
 
 function cargarAlergia() {
-    console.log('alergiaCargar')
     let nombre = document.getElementById('nombreAlergia').value
     let fdesde = document.getElementById('desdeAlergia').value
     let fhasta = document.getElementById('hastaAlergia').value
     let importancia = document.getElementById('importanciaAlergia').value
-    let data = { nombre: nombre, fdesde: fdesde, fhasta: fhasta, importancia:importancia }
-    historial.alergias.push(data)
+    
+     // controlar que complete los campos
+    if (nombre == '' || fdesde == '' || fhasta == '' || importancia == '') {
+        toastr.error('Complete todos los campos', 'Servidor', {
+            "progressBar": true,
+            "positionClass": "toast-top-center"
+        });
+        
+    } else if (fdesde > fhasta) { // logica para las fechas
+        toastr.error('La fecha "Hasta" no puede ser menor que la fecha "Desde"', 'Servidor', {
+            "progressBar": true,
+            "positionClass": "toast-top-center"
+        });
+        
+    } else {
+        toastr.success('Habito guardado con exito!', 'Servidor:', {
+            "progressBar": true,
+            "positionClass": "toast-top-center"
+        });
+        console.log('alergiaCargar')
+        let data = { nombre: nombre, fdesde: fdesde, fhasta: fhasta, importancia: importancia }
+        historial.alergias.push(data)
+    }
+
+    document.getElementById('nombreAlergia').value = '';
+    document.getElementById('desdeAlergia').value = '';
+    document.getElementById('hastaAlergia').value = '';
+    document.getElementById('importanciaAlergia').value = '';
 }
 
 function guardarHistorial() {
@@ -118,8 +226,12 @@ function guardarHistorial() {
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
-                    alert("Historial guardado");
+                    toastr.success('Historial guardado con exito', 'Servidor:', {
+                        "progressBar": true,
+                        "positionClass": "toast-top-center"
+                    });
                     // redirigir a la agenda
+                    // o mostrar el historial recien cargado? onda mandar al HCE 
                     console.log(data)
 
                 } else {
@@ -128,7 +240,10 @@ function guardarHistorial() {
             })
             .catch(error => console.error('Error:', error));
     } else {
-        alert('el diagnostico y evolucion son campos obligatorios')
+        toastr.error('El diagnostico y la evolucion, son obligatorios', 'Servidor', {
+            "progressBar": true,
+            "positionClass": "toast-top-center"
+        });
     }
 
     clean()
