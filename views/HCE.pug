@@ -3,6 +3,7 @@ extends layout
 
 block head 
     link(rel="stylesheet", href="/styles/general.css")
+    
 
 block header 
     include templates/header.pug
@@ -135,7 +136,8 @@ block content
     script.
         const dni = !{JSON.stringify(turno.dni_paciente)};
     
-    script(src='/js/HCECliente.js') 
+    script(src='/js/HCECliente.js')
+    
 block footer 
     include templates/footer.pug
 

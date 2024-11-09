@@ -1,7 +1,13 @@
+// ------------------- libreria txt enriquesido --------------- 
+const quill = new Quill('#editor', {
+    theme: 'snow'
+});
+
+// ------------------------------------------------------------ 
 let numerito=numero
 console.log('numerito:')
 console.log(numerito)
-
+//toastr.info('info');
 var historial = {
     diagnosticos: [],
     evolucion: '',
@@ -34,11 +40,20 @@ function cargarDiagnostico() {
 
 
 }
+    
+quill.clipboard.dangerouslyPasteHTML(laTemplate);
 
 function cargarEvolucion() {
     console.log('evolucionCargar')
-    let detalle = document.getElementById('evolucionDetalle').value
+    /* con esto se toma el texto con el formato html
+    let conHTML = quill.root.innerHTML;
+    console.log('texto con formato HTML: ', detalle)
+    */
+    let detalle = quill.getText();
     historial.evolucion = detalle
+    console.log('normal: ', detalle)
+    
+
     //disabled= true al terminar
 }
 
