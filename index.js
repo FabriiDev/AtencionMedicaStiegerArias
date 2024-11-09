@@ -44,10 +44,9 @@ app.use('/', medicoRoutes);
 app.use('/turnos', turnoRoutes);
 
 async function hashear() {
-    let passHasheada = await bcrypt.hash('password123', 8)
+    let passHasheada = await bcrypt.hash('pass456', 8)
     console.log(passHasheada);
 }
-
 app.get('/HCEborrar', (req, res) => {
     res.render('createHCE');
 })

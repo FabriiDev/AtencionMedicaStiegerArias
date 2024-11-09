@@ -10,49 +10,47 @@ Cosas por hacer
 
 - consulta el hce de ese paciente --> falta consultas por DNI
 
-- una vez que se inicia la consulta registrar evoluciones ,texto enriquecido 
+- una vez que se inicia la consulta registrar evoluciones ,texto enriquecido  --> echo
 
-- permita modificar la ultima atencion del paciente solo si lo atendio el
+- permita modificar la ultima atencion del paciente solo si lo atendio el --> echo
 
+- Crear consulta y todo lo demas para llenar el select de "atenciones" con las fechas
+de los turnos (segun numero de dni) para x cliente --> echo
 
+- Crear la vista createHCE.pug --> echo
 
 ------------------------------> Para el sabado 2/11 Hacer: <---------------------------------------
 
-- Crear consulta y todo lo demas para llenar el select de "atenciones" con las fechas
-de los turnos (segun numero de dni) para x cliente --> los 2
 
-- Cargar mas datos en la BD y subir a Clever Cloud --> los 2
+
+- Cargar mas datos en la BD y subir a Clever Cloud --> echo
 
 - Agreagar boton "Modificar" dentro del HCE, para hacer el (update) en caso de que cumplas las
-condiciones que dice el integrador --> fabri
-
-- Crear la vista createHCE.pug --> fabri
-
-
+condiciones que dice el integrador --> fabri echo
 
 
 ------------------------------------------->hacer martes 5/11<---------------------------------------------
-manejar logica de consulta en createHCE a traves de un objeto enviado por post
+manejar logica de consulta en createHCE a traves de un objeto enviado por post --> echo
 
-hacer los pa 
+hacer los pa --> echo
 
-consultar texto enriquecido
+consultar texto enriquecido --> echo
 
 
 ---------------------------------------> cosas para ver el 9/11 <---------------------------------------------
 
-- Ver de como prescentar los datos en caso que el paciente tenga mas de una alergia, habito o etc
+- Ver de como prescentar los datos en caso que el paciente tenga mas de una alergia, habito o etc --> echo
+
+- Posicionar el footer --> echo
+
+- el archivo faltaCredenciales.pug habria que borrarlom, ya no lo usamos! --> echo
+
+- Ojo! ver el tema de que el medico puede comenzar una atencion solo si el estado del turno es pendiente... --> echo
+
+
+---------------------------------------> cosas para ver el 10/11 <---------------------------------------------
 
 - Crear el update segun las cosas que pide el enunciado
 
 - Crear la opcion para que el medico pueda crear su template y guardarlas con el texto enriquecido en la db
 a esto le falta tambien los alerts, espero a hacer esa parte antes de crearlos... 
-
-- Posicionar el footer
-
-- el archivo faltaCredenciales.pug habria que borrarlom, ya no lo usamos!
-
-- Ojo! ver el tema de que el medico puede comenzar una atencion solo si el estado del turno es pendiente...
-
-
-

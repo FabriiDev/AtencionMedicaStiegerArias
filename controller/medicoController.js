@@ -31,8 +31,7 @@ class MedicoController {
                 return res.status(400).json({success: false, error: 'Credenciales incorrectas' }); // credenciales incorrectas o no existe el medico
             }
             const passHasheada = medico.password;
-            let flag = bcrypt.compare(password, passHasheada);
-            
+            let flag = await bcrypt.compare(password, passHasheada);
             
 
             

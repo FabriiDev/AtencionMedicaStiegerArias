@@ -38,9 +38,10 @@ block content
                         img(src="/icons/diagnostico.png", alt="").img-fluid
                         | Diagnostico 
                     .card.bg-papel.sombra-titulo.w-100
+                        button(onclick='adelante(1)') adelante 
                         .card-body.largo.fs-4
-                            p.card-text.fst-italic Estado: #{turno.estado_diagnostico} 
-                            p.card-text.fst-italic Detalles: #{turno.diagnostico || "No hay diagnostico previo"}
+                            p.card-text.fst-italic#estadoDiagnostico Estado: #{turno.estado_diagnostico} 
+                            p.card-text.fst-italic#detalleDiagnostico Detalles: #{turno.diagnostico || "No hay diagnostico previo"}
 
                 .col-12.col-md-4
                     h5.card-title.titulos-tar.sombra-titulo.d-flex.justify-content-center.gap-2.fs-3
@@ -56,7 +57,7 @@ block content
                         | Medicamentos 
                     .card.bg-papel.sombra-titulo.w-100
                         .card-body.largo.fs-4
-                            p.card-text.fst-italic #{turno.nombre_medicamento || "No se se recetaron medicamentos"}
+                            p.card-text.fst-italic#nombreMedicamento #{turno.nombre_medicamento || "No se se recetaron medicamentos"}
 
             .row.g-3.mt-5
                 .col-12.col-md-4
@@ -64,41 +65,46 @@ block content
                         img(src="/icons/antecedentes.png", alt="")
                         | Antecedentes 
                     .card.bg-papel.sombra-titulo.w-100
+                        button(onclick='adelante(2)') adelante 
                         .card-body.largo.fs-4
-                            p.card-text.fst-italic Detalles: 
+                            p.card-text.fst-italic#detalleAntecedente Detalles: 
                                 | #{turno.antecedente || "No hay antecedentes"} 
                         .card-text.d-flex.justify-content-between.p-2
-                            p Desde: #{turno.fecha_desde_antecedente || "No hay registros"}
-                            p Hasta: #{turno.fecha_hasta_antecedente || "No hay registros"} 
+                            p#desdeAntecedente Desde: #{turno.fecha_desde_antecedente || "No hay registros"}
+                            p#hastaAntecedente Hasta: #{turno.fecha_hasta_antecedente || "No hay registros"} 
 
                 .col-12.col-md-4
                     h5.card-title.titulos-tar.sombra-titulo.d-flex.justify-content-center.gap-2.fs-3
                         img(src="/icons/habitos.png", alt="")
                         | Habitos 
                     .card.bg-papel.sombra-titulo.w-100
+                        button(onclick='adelante(3)') adelante 
                         .card-body.largo.fs-4
-                            p.card-text.fst-italic Detalles: 
+                            p#detalleHabito.card-text.fst-italic Detalles: 
                                 | #{turno.habito || "No hay habitos registrados"}
                         .card-text.d-flex.justify-content-between.p-2
-                            p Desde: #{turno.fecha_desde_habito || "No hay registros"}
-                            p Hasta: #{turno.fecha_hasta_habito || "No hay registros"}
+                            p#desdeHabito Desde: #{turno.fecha_desde_habito || "No hay registros"}
+                            p#hastaHabito Hasta: #{turno.fecha_hasta_habito || "No hay registros"}
 
                 .col-12.col-md-4
                     h5.card-title.titulos-tar.sombra-titulo.d-flex.justify-content-center.gap-2.fs-3
                         img(src="/icons/alergias.png", alt="")
                         | Alergia 
                     .card.bg-papel.sombra-titulo.w-100
+                        button(onclick='adelante(4)') adelante 
                         .card-body.largo.fs-4
-                            p.card-text.fst-italic Nombre: #{turno.nombre_alergia || "No hay alergias"}
-                            p.card-text.fst-italic Importancia: 
+                            p.card-text.fst-italic#nombreAlergia Nombre: #{turno.nombre_alergia || "No hay alergias"}
+                            p.card-text.fst-italic#importanciaAlergia Importancia: 
                                 | #{turno.importancia_alergia || "No hay registros"}
                         .card-text.d-flex.justify-content-between.p-2
-                            p Desde: #{turno.fecha_desde_alergia || "No hay registros"} 
-                            p Hasta: #{turno.fecha_hasta_alergia || "No hay registros"} 
+                            p#desdeAlergia Desde: #{turno.fecha_desde_alergia || "No hay registros"} 
+                            p#hastaAlergia Hasta: #{turno.fecha_hasta_alergia || "No hay registros"}
+                            
             
             .text-center.mt-3.p-3.d-flex.gap-3.justify-content-center
-                a(href=`/turnos/createHCE${turno.numero_turno}` target="_blank").btn.btn-light.btn-lg Nuevo
-                a(href="/#" target="_blank").btn.btn-light.btn-lg Editar
+                if turno.estado=='Pendiente'
+                    a(href=`/turnos/createHCE${turno.numero_turno}` target="_blank").btn.btn-light.btn-lg Nuevo
+                        a(href="/#" target="_blank").btn.btn-light.btn-lg Editar
             #aca 
         else 
             .text-center.cont-todo.mt-5.width-90
@@ -128,13 +134,13 @@ block content
                         | Diagnostico 
                     .card.bg-papel.sombra-titulo.w-100
                         .card-body.largo.fs-4.text-center
-                            p.card-text.fst-italic Estado: #{turno.estado_diagnostico} 
-                            p.card-text.fst-italic Detalles: #{turno.diagnostico || "No hay diagnostico previo"}
+                            p#estadoDiagnostico.card-text.fst-italic Estado: #{turno.estado_diagnostico} 
+                            p#detalleDiagnostico.card-text.fst-italic Detalles: #{turno.diagnostico || "No hay diagnostico previo"}
             .text-center.mt-3.p-3.d-flex.gap-3.justify-content-center
-                a(href=`/turnos/createHCE${turno.numero_turno}` target="_blank").btn.btn-light.btn-lg Nuevo
-                a(href="/#" target="_blank").btn.btn-light.btn-lg Editar
+                if turno.estado=='Pendiente'
+                    a(href=`/turnos/createHCE${turno.numero_turno}` target="_blank").btn.btn-light.btn-lg Nuevo
     script.
-        const dni = !{JSON.stringify(turno.dni_paciente)};
+        let turnoS = !{JSON.stringify(turno)};
     
     script(src='/js/HCECliente.js')
     
