@@ -115,7 +115,12 @@ class TurnoController {
         }
         //--------------------------------------------------------------------------------
         console.log(historial)
-        await turnoModel.transaccionHCE(historial)
+        try {
+            await turnoModel.transaccionHCE(historial)
+        } catch (error) {
+            console.log(error)
+        }
+    
 
 
 

@@ -61,8 +61,9 @@ function cargarMedicamento() {
     console.log('mesiCargar')
     let valor = document.getElementById('selectMedicamento').value
     let nombre= document.getElementById('selectMedicamento').options[document.getElementById('selectMedicamento').selectedIndex].text
-    let data = { nombre: nombre, valor:valor }
+    let data = { nombre: nombre, valor:parseInt(valor) }
     console.log(valor)
+    
     historial.medicamentos.push(data)
 }
 
