@@ -52,26 +52,56 @@ separador()
 
 function adelante(valor) {
     console.log('valor switch:'+valor)
+    /* Botones flecha */
+    let diagDer = document.getElementById('diag-derecha');
+    let diagIzq = document.getElementById('diag-izquierda');
 
+    let anteIzq = document.getElementById('ante-izquierda');
+    let anteDer = document.getElementById('ante-derecha');
+
+    let habiIzq = document.getElementById('habi-izquierda');
+    let habiDer = document.getElementById('habi-derecha');
+
+    let alerIzq = document.getElementById('aler-izquierda');
+    let alerDer = document.getElementById('aler-derecha');
 
     switch (valor) {
         case 1:
-            indiceDiagnostico++
+            if (indiceDiagnostico >= detalleDiagnostico.length -1) {
+                diagDer.disabled = true;
+            } else {
+                diagDer.disabled = false;
+                indiceDiagnostico++
+            }
             cDiagnostico()
             break;
-        
         case 2:
-            indiceAntecedente++
+            if (indiceAntecedente >= detalleAntecedente.length -1) {
+                anteDer.disabled = true;
+                console.log('entro al if ')
+            }else{
+                anteDer.disabled = false;
+                indiceAntecedente++
+            }
             cAntecedente()
             break;
-
         case 3:
-            indiceHabito++
+            if (indiceHabito >= detalleHabito.length -1) {
+                habiDer.disabled = true;
+            }else{
+                habiDer.disabled = false;
+                indiceHabito++
+            }
             cHabito()
             break;
 
         case 4:
-            indiceAlergia++
+            if (indiceAlergia >= nombreAlergia.length -1) {
+                alerDer.disabled = true;
+            }else{
+                alerDer.disabled = false;
+                indiceAlergia++
+            }
             cAlergia()
             break;
         default:
@@ -81,32 +111,30 @@ function adelante(valor) {
 }
 
 function cDiagnostico() {
-    document.getElementById('estadoDiagnostico').innerHTML = detalleDiagnostico[indiceDiagnostico]
-    if (estadoDiagnostico[indiceDiagnostico]) {
-        document.getElementById('detalleDiagnostico').innerHTML = estadoDiagnostico[indiceDiagnostico]
-    } else {
-        document.getElementById('detalleDiagnostico').innerHTML = 'Preliminar'
-    }
+    document.getElementById('estadoDiagnostico').innerHTML = 'Detalle: '+ (detalleDiagnostico[indiceDiagnostico] || 'no hay datos');
+    
+    document.getElementById('detalleDiagnostico').innerHTML = 'Estado: '+(estadoDiagnostico[indiceDiagnostico] || 'Preliminar')
+    
 }
 
 function cAntecedente(){
-    document.getElementById('detalleAntecedente').innerHTML=detalleAntecedente[indiceAntecedente]
-    document.getElementById('desdeAntecedente').innerHTML=desdeAntecedente[indiceAntecedente]
-    document.getElementById('hastaAntecedente').innerHTML=hastaAntecedente[indiceAntecedente]
+    document.getElementById('detalleAntecedente').innerHTML='Detalle: '+ (detalleAntecedente[indiceAntecedente]  || 'No hay datos');
+    document.getElementById('desdeAntecedente').innerHTML='Desde: '+(desdeAntecedente[indiceAntecedente] || 'No hay datos');
+    document.getElementById('hastaAntecedente').innerHTML='Hasta: '+(hastaAntecedente[indiceAntecedente] || 'No hay datos');
 }
 
 function cHabito(){
-    document.getElementById('detalleHabito').innerHTML=detalleHabito[indiceHabito]
-    document.getElementById('desdeHabito').innerHTML=desdeHabito[indiceHabito]
-    document.getElementById('hastaHabito').innerHTML=hastaHabito[indiceHabito]
+    document.getElementById('detalleHabito').innerHTML='Detalle: '+(detalleHabito[indiceHabito]  || 'No hay datos');
+    document.getElementById('desdeHabito').innerHTML='Desde: '+(desdeHabito[indiceHabito]  || 'No hay datos');
+    document.getElementById('hastaHabito').innerHTML='Hasta: '+(hastaHabito[indiceHabito]  || 'No hay datos');
 }
 
 
 function cAlergia(){
-    document.getElementById('nombreAlergia').innerHTML=nombreAlergia[indiceAlergia]
-    document.getElementById('importanciaAlergia').innerHTML=importanciaAlergia[indiceAlergia]
-    document.getElementById('desdeAlergia').innerHTML=desdeAlergia[indiceAlergia]
-    document.getElementById('hastaAlergia').innerHTML=hastaAlergia[indiceAlergia]
+    document.getElementById('nombreAlergia').innerHTML='Nombre: '+(nombreAlergia[indiceAlergia]  || 'No hay datos');
+    document.getElementById('importanciaAlergia').innerHTML='Importancia: '+(importanciaAlergia[indiceAlergia]  || 'No hay datos');
+    document.getElementById('desdeAlergia').innerHTML='Desde: '+(desdeAlergia[indiceAlergia]  || 'No hay datos');
+    document.getElementById('hastaAlergia').innerHTML='Hasta: '+(hastaAlergia[indiceAlergia]  || 'No hay datos');
 }
 
 function cargardatos() {
@@ -160,3 +188,6 @@ select.addEventListener('change', function () {
 
 cargardatos()
 cDiagnostico()
+cAntecedente()
+cHabito()
+cAlergia()

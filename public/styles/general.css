@@ -92,3 +92,16 @@ body{
 .sombra-titulo{
     box-shadow: 0px 10px 19px black;
 }
+
+.btn-flecha{
+    transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.btn-flecha:hover{
+    transform: scale(1.1); 
+}
+
+.btn-flecha:active{
+    transform: scale(0.95);
+}
+
