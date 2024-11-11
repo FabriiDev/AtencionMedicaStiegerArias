@@ -77,7 +77,7 @@ ORDER BY fecha DESC`
             conn = await crearConexion();
 
             // Llama al procedimiento almacenado
-            const query = 'CALL obtenerDetalleTurno(?)';
+            const query = 'CALL obtener_turno_detalleDOS(?)';
             const [result] = await conn.query(query, [numero_turno]);
             // Accede al primer elemento del primer array de resultados
             const turno = result[0][0]; // Extrae el primer registro

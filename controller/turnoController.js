@@ -30,6 +30,7 @@ class TurnoController {
     async HCE(req, res) {
 
         let turno = await turnoModel.numero_turno(req.params.numeroTurno)
+        console.log(turno)
         let flag = false;
         if (turno.matricula_medico == req.session.matricula) {
             flag = true;

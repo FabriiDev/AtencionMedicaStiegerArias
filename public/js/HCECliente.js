@@ -25,6 +25,22 @@ let importanciaAlergia = []
 let desdeAlergia = []
 let hastaAlergia = []
 
+ /* Botones flecha */
+let diagDer = document.getElementById('diag-derecha');
+let diagIzq = document.getElementById('diag-izquierda');
+
+let anteIzq = document.getElementById('ante-izquierda');
+let anteDer = document.getElementById('ante-derecha');
+
+let habiIzq = document.getElementById('habi-izquierda');
+let habiDer = document.getElementById('habi-derecha');
+
+let alerIzq = document.getElementById('aler-izquierda');
+let alerDer = document.getElementById('aler-derecha');
+
+
+
+
 function separador() {
 
     detalleDiagnostico = turnoS.diagnostico.split('|')
@@ -45,69 +61,136 @@ function separador() {
     desdeAlergia=turnoS.fecha_desde_alergia.split('|')
     hastaAlergia=turnoS.fecha_hasta_alergia.split('|')
 
+    console.log('cantidad datos')
+    console.log('detallediagnostico')
+    console.log(detalleDiagnostico.length)
+    console.log('estado')
+    console.log(estadoDiagnostico.length)
+
+
 }
 
+function log(){
+    console.log('indices:')
+    console.log('alergia:')
+    console.log(indiceAlergia)
+    console.log('antecedente:')
+    console.log(indiceAntecedente)
+    console.log('diagnostico:')
+    console.log(indiceDiagnostico)
+    console.log('habito:')
+    console.log(indiceHabito)
+}
 separador()
 
-
-function adelante(valor) {
-    console.log('valor switch:'+valor)
-    /* Botones flecha */
-    let diagDer = document.getElementById('diag-derecha');
-    let diagIzq = document.getElementById('diag-izquierda');
-
-    let anteIzq = document.getElementById('ante-izquierda');
-    let anteDer = document.getElementById('ante-derecha');
-
-    let habiIzq = document.getElementById('habi-izquierda');
-    let habiDer = document.getElementById('habi-derecha');
-
-    let alerIzq = document.getElementById('aler-izquierda');
-    let alerDer = document.getElementById('aler-derecha');
+function atras(valor){
 
     switch (valor) {
         case 1:
-            if (indiceDiagnostico >= detalleDiagnostico.length -1) {
-                diagDer.disabled = true;
+            if (indiceDiagnostico <= 0) {
+                diagIzq.disabled = true;
+                
             } else {
-                diagDer.disabled = false;
-                indiceDiagnostico++
+                diagIzq.disabled = false;
+                indiceDiagnostico--
             }
+            diagDer.disabled=false
             cDiagnostico()
             break;
         case 2:
-            if (indiceAntecedente >= detalleAntecedente.length -1) {
-                anteDer.disabled = true;
-                console.log('entro al if ')
+            if (indiceAntecedente <= 0) {
+                anteIzq.disabled = true;
+                
             }else{
-                anteDer.disabled = false;
-                indiceAntecedente++
+                anteIzq.disabled = false;
+                indiceAntecedente--
             }
+            anteDer.disable=false
             cAntecedente()
             break;
         case 3:
-            if (indiceHabito >= detalleHabito.length -1) {
-                habiDer.disabled = true;
+            if (indiceHabito <= 0) {
+                habiIzq.disabled = true;
+                
             }else{
-                habiDer.disabled = false;
-                indiceHabito++
+                habiIzq.disabled = false;
+                indiceHabito--
             }
+            habiDer.disabled=false
             cHabito()
             break;
 
         case 4:
-            if (indiceAlergia >= nombreAlergia.length -1) {
-                alerDer.disabled = true;
+            if (indiceAlergia <= 0) {
+                alerIzq.disabled = true;
+                
             }else{
-                alerDer.disabled = false;
-                indiceAlergia++
+                alerIzq.disabled = false;
+                indiceAlergia--
             }
+            alerIzq.disabled=false
             cAlergia()
             break;
         default:
             break;
     }
+    log()
+}
 
+
+
+function adelante(valor) {
+   
+    switch (valor) {
+        case 1:
+            if (indiceDiagnostico >= detalleDiagnostico.length ) {
+                diagDer.disabled = true;
+                
+            } else {
+                diagDer.disabled = false;
+                indiceDiagnostico++
+            }
+            diagIzq.disabled=false
+            cDiagnostico()
+            break;
+        case 2:
+            if (indiceAntecedente >= detalleAntecedente.length ) {
+                anteDer.disabled = true;
+                
+            }else{
+                anteDer.disabled = false;
+                indiceAntecedente++
+            }
+            anteIzq.disabled=false
+            cAntecedente()
+            break;
+        case 3:
+            if (indiceHabito >= detalleHabito.length ) {
+                habiDer.disabled = true;
+                
+            }else{
+                habiDer.disabled = false;
+                indiceHabito++
+            }
+            habiIzq.disabled=false
+            cHabito()
+            break;
+
+        case 4:
+            if (indiceAlergia >= nombreAlergia.length ) {
+                alerDer.disabled = true;
+                
+            }else{
+                alerDer.disabled = false;
+                indiceAlergia++
+            }
+            alerIzq.disabled=false
+            cAlergia()
+            break;
+        default:
+            break;
+    }
+log()
 }
 
 function cDiagnostico() {
@@ -191,3 +274,4 @@ cDiagnostico()
 cAntecedente()
 cHabito()
 cAlergia()
+

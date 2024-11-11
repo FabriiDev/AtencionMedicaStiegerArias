@@ -105,7 +105,7 @@ block content
                     .card.bg-papel.sombra-titulo.w-100
                         .d-flex.justify-content-between.my-2
                             button(onclick='atras(4)').btn.btn-flecha.m-auto
-                                img(src="/icons/flecha-izquierda.png", alt="")#aler-izquierda
+                                img(src="/icons/flecha-izquierda.png", alt="")
                             .card-body.largo.fs-4.d-flex.justify-content-between.flex-column
                                 p.card-text.fst-italic#nombreAlergia Nombre: #{turno.nombre_alergia || "No hay alergias"}
                                 p.card-text.fst-italic#importanciaAlergia Importancia: 
@@ -117,10 +117,9 @@ block content
                                 img(src="/icons/flecha-derecha.png", alt="")
             
             .text-center.mt-3.p-3.d-flex.gap-3.justify-content-center
-                h1 Esto es un turno.estado #{turno.estado}
                 if turno.estado=='Pendiente'
                     a(href=`/turnos/createHCE${turno.numero_turno}` target="_blank").btn.btn-light.btn-lg Nuevo
-                        a(href="/#" target="_blank").btn.btn-light.btn-lg Editar
+                        
             #aca 
         else 
             .text-center.cont-todo.mt-5.width-90
