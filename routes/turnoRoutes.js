@@ -23,5 +23,6 @@ router.post("/guardarHCE",turnoController.guardarHCE)
 
 
 router.get("/createHCE:numeroTurno",turnoController.createHCE)
+router.get("/editarHCE:numeroTurno",turnoController.editHCE)
 router.get("/HCE:numeroTurno", turnoController.HCE);
 module.exports = router;

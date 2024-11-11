@@ -119,7 +119,8 @@ block content
             .text-center.mt-3.p-3.d-flex.gap-3.justify-content-center
                 if turno.estado=='Pendiente'
                     a(href=`/turnos/createHCE${turno.numero_turno}` target="_blank").btn.btn-light.btn-lg Nuevo
-                        
+                if (ultimo==1 && turno.estado=='Atendido')
+                    a(href=`/turnos/editarHCE${turno.numero_turno}` target="_blank").btn.btn-light.btn-lg Editar
             #aca 
         else 
             .text-center.cont-todo.mt-5.width-90

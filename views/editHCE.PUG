@@ -1,0 +1,160 @@
+extends layout
+
+block head 
+    
+    link(rel="stylesheet", href="/styles/general.css")
+    //- estilos del para el quill
+    link(href="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.snow.css" rel="stylesheet") 
+    //- estilos de alertas
+    link(rel="stylesheet", href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css")
+
+block header 
+    include templates/header.pug
+
+block content 
+H1 ESTO ES EL EDITAR----------------------------------------------------------------------------------------------------
+    .text-center.cont-todo.mt-5.width-90
+        .row 
+            .col 
+                .card
+                    .card-body
+                        .fecha.mt-3.d-flex.gap-3.mb-3.align-items-center.flex-column
+                            h3.car-title Paciente: #{turno.nombre_paciente} #{turno.apellido_paciente}
+                            div Turno: 
+                                select(disabled).border
+                                    option #{fechaFormateada}
+                        .d-flex.justify-content-center.align-items-center.text-center.gap-3
+                            h4.card-title Motivo:  
+                        .card-text.mb-3.text-center 
+                            | #{turno.motivo_consulta}
+        
+        //- Sección única de columna con 6 filas
+        .conteiner.text-center.cont-todo.mt-5
+            .row.mt-3
+                .col-12
+                    .d-flex.justify-content-around.align-items-center
+                        h5.card-title.fs-3.d-flex.gap-2.align-items-center.bg-light.p-3 Diagnostico
+                            .obligatorio.fs-4 (obligatorio)
+                    .card.bg-papel.mb-1
+                        .card-body.largo.d-flex.justify-content-center.flex-column
+                            p.card-text Estado 
+                                select#estadoDiagnostico
+                                    option(value="") Seleccione uno 
+                                    option(value='Preeliminar') Preeliminar 
+                                    option(value='Confirmado') Confirmado
+                            textarea.txt-area-style#diagnosticoDetalle
+                            button(onclick="cargarDiagnostico()").btn.w-25.text-center.m-auto.btn-primary#btnDiagnostico Cargar 
+
+            .row.mt-3
+                .col-12
+                    .d-flex.justify-content-around.align-items-center
+                        h5.card-title.fs-3.d-flex.gap-2.align-items-center.bg-light.p-3 Evolucion
+                            .obligatorio.fs-4 (obligatorio)
+                    .card.bg-papel.mb-1
+                        .card-body.largo.d-flex.justify-content-center.align-items-center.flex-column
+                            div(style="width: 80%;")#editor.bg-light
+                                | #{template}
+                            .d-flex.gap-5.mt-3.mb-3
+                                button.btn.m-auto.btn-light Cargar Template
+                                button.btn.m-auto.btn-outline-dark Crear Template
+                            button(onclick="cargarEvolucion()").btn.w-25.w-md-50.w-lg-25.text-center.m-auto.btn-primary#btnEvolucion Cargar 
+
+            .row.mt-3
+                .col-xl-3.col-lg-4.col-md-6.col-sm-12.mb-4
+                    .d-flex.justify-content-around.align-items-center
+                        h5.card-title.fs-3.d-flex.gap-2.align-items-center.bg-light.p-3 Medicamentos
+                    .card.bg-papel.mb-5
+                        .card-body.largo.d-flex.flex-column
+                            label.card-text Nombre: 
+                                select#selectMedicamento(name="medicamento")
+                                    option(value="" selected) Seleccione uno
+                                    each val in medicamentos
+                                        option(value=val.id_medicamento) #{val.nombre_medicamento}
+                                //-textarea(disabled).txt-area-style#detalleMedicamento
+                            button(onclick="cargarMedicamento()").btn.btn-primary.w-100.w-md-50.w-lg-25.text-center.m-auto.mb-3#btnMedicamento Cargar 
+
+            
+                .col-xl-3.col-lg-4.col-md-6.col-sm-12.mb-4
+                    .d-flex.justify-content-around.align-items-center
+                        h5.card-title.fs-3.d-flex.gap-2.align-items-center.bg-light.p-3 Antecedentes
+                        
+                    .card.bg-papel.mb-5
+                        .card-body.largo.d-flex.flex-column.align-items-center
+                            .card-text.mb-3 Descripcion: 
+                            textarea.txt-area-style#detalleAntecedentes
+                            .card-text.d-flex.justify-content-around.p-2.gap-2.flex-xxl-row.flex-xl-column
+                                .d-flex.ipt-fecha.gap-2.align-items-center.flex-column
+                                    | Desde: 
+                                    input(type="date" placeholder="15/05/24").ahi-nomas#desdeAntecedentes
+                                .d-flex.ipt-fecha.gap-2.flex-column
+                                    | Hasta: 
+                                    input(type="date" placeholder="01/06/24").ahi-nomas#hastaAntecedentes
+                            button(onclick="cargarAntecedentes()").btn.btn-primary.w-100.w-md-50.w-lg-25.text-center.m-auto.mb-3#btnAntecedentes Cargar 
+
+            
+                .col-xl-3.col-lg-4.col-md-6.col-sm-12.mb-4
+                    .d-flex.justify-content-around.align-items-center
+                        h5.card-title.fs-3.d-flex.gap-2.align-items-center.bg-light.p-3 Habitos
+                    .card.bg-papel.mb-5
+                        .card-body.largo.d-flex.flex-column.align-items-center
+                            .card-text.mb-3 Descripcion: 
+                            textarea.txt-area-style#detalleHabitos
+                            .card-text.d-flex.justify-content-around.p-2.gap-2.flex-xxl-row.flex-xl-column
+                                .d-flex.ipt-fecha.gap-2.align-items-center.flex-column
+                                    | Desde: 
+                                    input(type="date" placeholder="15/05/24").ahi-nomas#desdeHabitos
+                                .d-flex.ipt-fecha.gap-2.flex-column
+                                    | Hasta: 
+                                    input(type="date" placeholder="01/06/24").ahi-nomas#hastaHabitos
+                            button(onclick="cargarHabitos()").btn.btn-primary.w-100.w-md-50.w-lg-25.text-center.m-auto.mb-3#btnHabitos Cargar 
+
+            
+                .col-xl-3.col-lg-4.col-md-6.col-sm-12.mb-4
+                    .d-flex.justify-content-around.align-items-center 
+                        h5.card-title.fs-3.d-flex.gap-2.align-items-center.bg-light.p-3 Alergia
+                    .card.bg-papel.mb-5
+                        .card-body.largo.d-flex.flex-column.align-items-center
+                            .d-flex.gap-3.mb-4.flex-column 
+                                label.card-text 
+                                    | Nombre: 
+                                    input(type="text" placeholder="Polen")#nombreAlergia
+                            .d-flex.gap-3.flex-column
+                                label.card-text Importancia: 
+                                    select#importanciaAlergia.mb-4
+                                        option(value="") Seleccione una
+                                        option(value="Leve")  Leve
+                                        option(value="Normal")  Normal
+                                        option(value="Alta")  Alta
+                            .card-text.d-flex.justify-content-around.p-2.gap-2.flex-xxl-row.flex-xl-column
+                                .d-flex.ipt-fecha.gap-2.align-items-center.flex-column 
+                                    | Desde: 
+                                    input(type="date" placeholder="15/05/24" ).ahi-nomas#desdeAlergia
+                                .d-flex.ipt-fecha.gap-2.flex-column
+                                    | Hasta: 
+                                    input(type="date" placeholder="01/06/24" ).ahi-nomas#hastaAlergia
+                            button(onclick="cargarAlergia()").btn.btn-primary.w-100.w-md-50.w-lg-25.text-center.m-auto.mb-3#btnAlergia Cargar 
+    
+    .text-center.mt-3.mb-5
+        button(onclick="guardarHistorial()").btn.btn-success.btn-float.sombra-btn-guardar Guardar Historial
+    //- script de quill
+    script(src='https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.js')
+
+    script.
+        const numero = !{JSON.stringify(turno.numero_turno)};
+        const laTemplate = !{JSON.stringify(template)};
+        
+    
+
+    //- script de estilos de alerts
+    script(src="https://code.jquery.com/jquery-3.7.1.min.js")
+
+    //- muy importante el orden, jquery primero, toastr despues y ultimo el js nuestro
+
+    script(src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js") 
+    
+    script(src="https://cdn.jsdelivr.net/npm/sweetalert2@11") 
+
+    script(src='/js/createHCE.js') 
+    
+block footer 
+    include templates/footer.pug
