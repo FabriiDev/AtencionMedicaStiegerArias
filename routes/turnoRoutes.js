@@ -17,6 +17,7 @@ router.use(checkeo)
 router.get('/agenda', turnoController.Agenda)
 router.post('/pintarTurnos', turnoController.pintarTurnos)
 router.post('/DNI',turnoController.turnosPorDni)
+router.post('/actualizarHCE',turnoController.actualizarHCE)
 
 router.get("/HCErender", turnoController.HCErender);
 router.post("/guardarHCE",turnoController.guardarHCE)

@@ -30,13 +30,12 @@ class TurnoController {
     async HCE(req, res) {
 
         let turno = await turnoModel.numero_turno(req.params.numeroTurno)
-        console.log(turno)
         let flag = false;
         if (turno.matricula_medico == req.session.matricula) {
             flag = true;
         }
-        let ultimo=turno.es_ultima_atencion
-        res.render('HCE', { turno, flag,ultimo });
+        let ultimo = turno.es_ultima_atencion
+        res.render('HCE', { turno, flag, ultimo });
     }
 
     async HCErender(req, res) {
@@ -64,9 +63,8 @@ class TurnoController {
         let turno = await turnoModel.numero_turno(req.params.numeroTurno)
         const fechaFormateada = turno.fecha.toISOString().split('T')[0];
         let template = req.session.template
-
         let medicamentos = await turnoModel.medicamentos()
-        res.render('createHCE', { turno, template, fechaFormateada, medicamentos })
+        res.render('editHCE', { turno, template, fechaFormateada, medicamentos })
     }
 
 
@@ -122,17 +120,24 @@ class TurnoController {
                 }
             });
         }
-        //--------------------------------------------------------------------------------
-        console.log(historial)
         try {
             await turnoModel.transaccionHCE(historial)
         } catch (error) {
             console.log(error)
         }
-    
+        envio = { success: true }
+        res.send(envio)
+    }
 
-
-
+    async actualizarHCE(req, res) {
+        let envio = { success: false }//si hay tiempo mandar un mensaje segun el error o el if que dio el return
+        let historial = req.body.historial
+        try {
+            let ids = await turnoModel.traerids(historial.numero_turno)
+            await turnoModel.transaccionUpdateHCE(historial, ids[0][0])
+        } catch (error) {
+            console.log(error)
+        }
 
         envio = { success: true }
         res.send(envio)

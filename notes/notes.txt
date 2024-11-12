@@ -54,3 +54,7 @@ consultar texto enriquecido --> echo
 
 - Crear la opcion para que el medico pueda crear su template y guardarlas con el texto enriquecido en la db
 a esto le falta tambien los alerts, espero a hacer esa parte antes de crearlos... 
+
+
+
+desabilitar los botones de edicion solo si carga algo de manera exitosa

@@ -12,7 +12,6 @@ block header
     include templates/header.pug
 
 block content 
-H1 ESTO ES EL EDITAR----------------------------------------------------------------------------------------------------
     .text-center.cont-todo.mt-5.width-90
         .row 
             .col 
@@ -40,7 +39,7 @@ H1 ESTO ES EL EDITAR------------------------------------------------------------
                             p.card-text Estado 
                                 select#estadoDiagnostico
                                     option(value="") Seleccione uno 
-                                    option(value='Preeliminar') Preeliminar 
+                                    option(value='Preliminar') Preliminar 
                                     option(value='Confirmado') Confirmado
                             textarea.txt-area-style#diagnosticoDetalle
                             button(onclick="cargarDiagnostico()").btn.w-25.text-center.m-auto.btn-primary#btnDiagnostico Cargar 
@@ -55,8 +54,6 @@ H1 ESTO ES EL EDITAR------------------------------------------------------------
                             div(style="width: 80%;")#editor.bg-light
                                 | #{template}
                             .d-flex.gap-5.mt-3.mb-3
-                                button.btn.m-auto.btn-light Cargar Template
-                                button.btn.m-auto.btn-outline-dark Crear Template
                             button(onclick="cargarEvolucion()").btn.w-25.w-md-50.w-lg-25.text-center.m-auto.btn-primary#btnEvolucion Cargar 
 
             .row.mt-3
@@ -122,9 +119,9 @@ H1 ESTO ES EL EDITAR------------------------------------------------------------
                                 label.card-text Importancia: 
                                     select#importanciaAlergia.mb-4
                                         option(value="") Seleccione una
-                                        option(value="Leve")  Leve
-                                        option(value="Normal")  Normal
-                                        option(value="Alta")  Alta
+                                        option(value="leve")  Leve
+                                        option(value="normal")  Normal
+                                        option(value="alta")  Alta
                             .card-text.d-flex.justify-content-around.p-2.gap-2.flex-xxl-row.flex-xl-column
                                 .d-flex.ipt-fecha.gap-2.align-items-center.flex-column 
                                     | Desde: 
@@ -135,13 +132,16 @@ H1 ESTO ES EL EDITAR------------------------------------------------------------
                             button(onclick="cargarAlergia()").btn.btn-primary.w-100.w-md-50.w-lg-25.text-center.m-auto.mb-3#btnAlergia Cargar 
     
     .text-center.mt-3.mb-5
-        button(onclick="guardarHistorial()").btn.btn-success.btn-float.sombra-btn-guardar Guardar Historial
+        button(onclick="updateHistorial()").btn.btn-success.btn-float.sombra-btn-guardar Actualizar
     //- script de quill
     script(src='https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.js')
 
     script.
+        const Evolucion123 = !{JSON.stringify(turno.evolucion)};
         const numero = !{JSON.stringify(turno.numero_turno)};
         const laTemplate = !{JSON.stringify(template)};
+        let turnoS = !{JSON.stringify(turno)};
+        
         
     
 
@@ -154,7 +154,11 @@ H1 ESTO ES EL EDITAR------------------------------------------------------------
     
     script(src="https://cdn.jsdelivr.net/npm/sweetalert2@11") 
 
-    script(src='/js/createHCE.js') 
+    script(src='/js/editHCE.js') 
+
+
+    
+    
     
 block footer 
     include templates/footer.pug
