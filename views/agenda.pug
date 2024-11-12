@@ -2,6 +2,8 @@
 extends layout
 block head 
     link(rel="stylesheet", href="/styles/general.css")
+    link(rel="stylesheet", href="/styles/agenda.css")
+    link(href="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.snow.css" rel="stylesheet") 
 block header 
     include templates/header.pug
 block content
@@ -18,6 +20,15 @@ block content
                 .d-flex.align-items-center.gap-3.titulos-tur.text-light
                     | Elegir fecha 
                     input(type="date")#fecha
+
+                    button.btn.btn-light#btn-template Crear Template
+                    #modal.modal 
+                        .modal-content.fw-normal
+                            span.close#close &times;
+                            p.text-center.fw-semibold Crea tu template
+                            div#editor
+                            button.btn.btn-success.mt-4#guardar-template Enviar
+
             .table-responsive
                 table.table.table-striped.sombra-tabla.textos-tur
                     thead 
@@ -29,8 +40,11 @@ block content
                     tbody#pintarTablaTurnos
                         //- SEGUN ESTADO PINTAR, ROJO CANCELADO, VERDE ATENDIDO
 
-                
-    script(src="/js/agendaCliente.js")
+
+    script(src="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.min.js")  
+    script(src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js") 
+    script(src="https://cdn.jsdelivr.net/npm/sweetalert2@11")
+    script(src="/js/agendaCliente.js")  
 
 block footer 
     include templates/footer.pug

@@ -128,7 +128,7 @@ function atras(valor){
                 alerIzq.disabled = false;
                 indiceAlergia--
             }
-            alerIzq.disabled=false
+            alerDer.disabled=false
             cAlergia()
             break;
         default:
@@ -140,10 +140,9 @@ function atras(valor){
 
 
 function adelante(valor) {
-   
     switch (valor) {
         case 1:
-            if (indiceDiagnostico >= detalleDiagnostico.length ) {
+            if (indiceDiagnostico >= detalleDiagnostico.length -1) {
                 diagDer.disabled = true;
                 
             } else {
@@ -154,7 +153,7 @@ function adelante(valor) {
             cDiagnostico()
             break;
         case 2:
-            if (indiceAntecedente >= detalleAntecedente.length ) {
+            if (indiceAntecedente >= detalleAntecedente.length -1) {
                 anteDer.disabled = true;
                 
             }else{
@@ -165,7 +164,7 @@ function adelante(valor) {
             cAntecedente()
             break;
         case 3:
-            if (indiceHabito >= detalleHabito.length ) {
+            if (indiceHabito >= detalleHabito.length -1) {
                 habiDer.disabled = true;
                 
             }else{
@@ -177,7 +176,7 @@ function adelante(valor) {
             break;
 
         case 4:
-            if (indiceAlergia >= nombreAlergia.length ) {
+            if (indiceAlergia >= nombreAlergia.length -1) {
                 alerDer.disabled = true;
                 
             }else{

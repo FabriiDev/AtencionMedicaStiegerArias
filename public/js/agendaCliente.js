@@ -1,3 +1,11 @@
+// ------------------- libreria txt enriquesido --------------- 
+const quill = new Quill('#editor', {
+    theme: 'snow'
+});
+quill.clipboard.dangerouslyPasteHTML('');
+
+// ------------------------------------------------------------ 
+
 const inputFecha = document.getElementById('fecha');
 let hoy = new Date();
 let fechaSeleccionada = hoy.toLocaleDateString('en-CA'); // Formato YYYY-MM-DD
@@ -102,4 +110,33 @@ function pintarTabla(turnos){
             </tr>`;
 
     return pintarTablaTurnos;
+}
+
+
+//------------------------------ tempplate --------------------------
+
+
+document.getElementById('btn-template').onclick = function() {
+    document.getElementById('modal').style.display = 'block';
+}
+
+document.getElementById('close').onclick = function() {
+    document.getElementById('modal').style.display = 'none';
+}
+
+window.onclick = function(event) {
+    if (event.target == document.getElementById('modal')) {
+        document.getElementById('modal').style.display = 'none';
+    }
+}
+
+function capturarTemplate(){
+    const contenido = quill.root.innerHTML;
+    return contenido;
+}
+
+document.getElementById('guardar-template').onclick = function() {
+    const enHTML = capturarTemplate();
+    console.log('texto en HTML: ', enHTML)
+    document.getElementById('modal').style.display = 'none';
 }
