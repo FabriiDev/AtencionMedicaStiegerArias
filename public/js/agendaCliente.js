@@ -139,4 +139,35 @@ document.getElementById('guardar-template').onclick = function() {
     const enHTML = capturarTemplate();
     console.log('texto en HTML: ', enHTML)
     document.getElementById('modal').style.display = 'none';
+    updateTemplate()
+}
+
+
+function updateTemplate() {
+    let plantilla=capturarTemplate()
+    fetch('/crearTemplate', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            template: plantilla
+        })
+    })
+    .then(response => {
+        
+        return response.json();
+    })
+    .then(data => {
+
+        if (data.success) {
+
+            // document.getElementById('pintarTablaTurnos').innerHTML = pintarTabla(element);
+        } else {
+            console.error(data.message || 'fallo en template');
+        }
+    })
+    .catch(error => {
+        console.error('Error al cargar template', error);
+    });
 }

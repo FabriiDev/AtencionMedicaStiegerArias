@@ -20,6 +20,7 @@ router.get('/', medicoController.Index);
 // router.get('/agenda', medicoController.Agenda);
 router.get('/HCE', medicoController.HCE);
 router.get('/createHCE', medicoController.CreateHCE);
+router.post('/crearTemplate',medicoController.template);
 
 // login
 
