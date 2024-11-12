@@ -1,7 +1,14 @@
 /*
 #nombreMedicamento
 */
+// ------------------- libreria txt enriquesido --------------- 
+const quill = new Quill('#editor', {
+    theme: 'snow'
+});
+quill.clipboard.dangerouslyPasteHTML(evolucionEriquesida);
+quill.disable()
 
+// ------------------------------------------------------------ 
 
 let indiceDiagnostico = 0
 let estadoDiagnostico = []
@@ -100,7 +107,6 @@ function atras(valor){
         case 2:
             if (indiceAntecedente <= 0) {
                 anteIzq.disabled = true;
-                
             }else{
                 anteIzq.disabled = false;
                 indiceAntecedente--
@@ -160,7 +166,7 @@ function adelante(valor) {
                 anteDer.disabled = false;
                 indiceAntecedente++
             }
-            anteIzq.disabled=false
+            anteIzq.disabled=false;
             cAntecedente()
             break;
         case 3:

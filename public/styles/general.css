@@ -39,6 +39,10 @@ body{
 .largo{
     min-height: 300px !important;
 }
+
+.largo-quill{
+    min-height: 230px;
+}
 .esconder{
     display: none;
 }

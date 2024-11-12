@@ -3,7 +3,7 @@ extends layout
 
 block head 
     link(rel="stylesheet", href="/styles/general.css")
-    
+    link(href="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.snow.css" rel="stylesheet") 
 
 block header 
     include templates/header.pug
@@ -54,7 +54,7 @@ block content
                         | Evolucion 
                     .card.bg-papel.sombra-titulo.w-100
                         .card-body.largo.fs-4
-                            p.card-text.fst-italic Detalles: #{turno.evolucion || "No hay evolucion previa"}
+                            #editor.largo-quill Detalles: #{turno.evolucion || "No hay evolucion previa"}
 
                 .col-12.col-md-4
                     h5.card-title.titulos-tar.sombra-titulo.d-flex.justify-content-center.gap-2.fs-3
@@ -71,14 +71,14 @@ block content
                         | Antecedentes 
                     .card.bg-papel.sombra-titulo.w-100
                         .d-flex.justify-content-between.my-2
-                            button(onclick='atras(2)').btn.btn-flecha.m-auto#ante-izquierda.border.border-0
+                            button(onclick='atras(2)').btn.btn-flecha.m-auto.border.border-0#ante-izquierda
                                 img(src="/icons/flecha-izquierda.png", alt="").p-2
                             .card-body.largo.fs-4.d-flex.justify-content-between.flex-column
                                 p.card-text.fst-italic#detalleAntecedente  
                                 .card-text.d-flex.justify-content-between.fs-5
                                     p#desdeAntecedente 
                                     p#hastaAntecedente 
-                            button(onclick='adelante(2)').btn.btn-flecha.m-auto#ante-derecha.border.border-0
+                            button(onclick='adelante(2)').btn.btn-flecha.m-auto.border.border-0#ante-derecha
                                 img(src="/icons/flecha-derecha.png", alt="").p-2
 
                 .col-12.col-md-4
@@ -119,6 +119,8 @@ block content
             .text-center.mt-3.p-3.d-flex.gap-3.justify-content-center
                 if turno.estado=='Pendiente'
                     a(href=`/turnos/createHCE${turno.numero_turno}` target="_blank").btn.btn-light.btn-lg Nuevo
+                if ultimo==1
+                    a(href=`/turnos/editarHCE${turno.numero_turno}` target="_blank").btn.btn-light.btn-lg Editar
             #aca 
         else 
             .text-center.cont-todo.mt-5.width-90
@@ -155,7 +157,11 @@ block content
                     a(href=`/turnos/createHCE${turno.numero_turno}` target="_blank").btn.btn-light.btn-lg Nuevo
     script.
         let turnoS = !{JSON.stringify(turno)};
-    
+        let evolucionEriquesida = !{JSON.stringify(turno.evolucion)};
+    script(src="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.min.js")  
+    script(src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js") 
+    script(src="https://cdn.jsdelivr.net/npm/sweetalert2@11")
+
     script(src='/js/HCECliente.js')
     
 block footer 
