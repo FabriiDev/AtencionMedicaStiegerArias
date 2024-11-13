@@ -27,12 +27,46 @@ let desdeHabito = []
 let hastaHabito = []
 
 let indiceAlergia = 0
-let nombreAlergia=[]
+let nombreAlergia = []
 let importanciaAlergia = []
 let desdeAlergia = []
 let hastaAlergia = []
 
- /* Botones flecha */
+
+
+function separador() {
+
+    detalleDiagnostico = turnoS.diagnostico.split('|')
+    estadoDiagnostico = turnoS.estado_diagnostico.split('|')
+
+    nombreMedicamento = turnoS.nombre_medicamento.split('|')
+
+    detalleAntecedente = turnoS.antecedente.split('|')
+    desdeAntecedente = turnoS.fecha_desde_antecedente.split('|')
+    hastaAntecedente = turnoS.fecha_hasta_antecedente.split('|')
+
+    detalleHabito = turnoS.habito.split('|')
+    desdeHabito = turnoS.fecha_desde_habito.split('|')
+    hastaHabito = turnoS.fecha_hasta_habito.split('|')
+
+    nombreAlergia = turnoS.nombre_alergia.split('|')
+    importanciaAlergia = turnoS.importancia_alergia.split('|')
+    desdeAlergia = turnoS.fecha_desde_alergia.split('|')
+    hastaAlergia = turnoS.fecha_hasta_alergia.split('|')
+
+    console.log('cantidad datos')
+    console.log('detallediagnostico')
+    console.log(detalleDiagnostico.length)
+    console.log('estado')
+    console.log(estadoDiagnostico.length)
+
+
+}
+
+
+// -------------------------- carrousel y flechas ----------------------
+
+/* Botones flecha */
 let diagDer = document.getElementById('diag-derecha');
 let diagIzq = document.getElementById('diag-izquierda');
 
@@ -45,39 +79,89 @@ let habiDer = document.getElementById('habi-derecha');
 let alerIzq = document.getElementById('aler-izquierda');
 let alerDer = document.getElementById('aler-derecha');
 
+// -------------------- imagenes flecha NO BOTONES -----------------
+let flechaIconIzqDiag = document.getElementById('flecha-icon-izq-diag');
+let flechaIconDerDiag = document.getElementById('flecha-icon-der-diag');
 
+let flechaIconDerAnte = document.getElementById('flecha-icon-der-ante');
+let flechaIconIzqAnte = document.getElementById('flecha-icon-izq-ante');
 
+let flechaIconIzqHabi = document.getElementById('flecha-icon-izq-habi');
+let flechaIconDerHabi = document.getElementById('flecha-icon-der-habi');
 
-function separador() {
+let flechaIconDerAler = document.getElementById('flecha-icon-der-aler');
+let flechaIconIzqAler = document.getElementById('flecha-icon-izq-aler');
 
-    detalleDiagnostico = turnoS.diagnostico.split('|')
-    estadoDiagnostico = turnoS.estado_diagnostico.split('|')
+function flechasInicio() {
+    if (indiceDiagnostico <= 0) {
+        diagIzq.disabled = true;
+        flechaIconIzqDiag.src = '/icons/flecha-izquierda-disabled.png'
+        diagIzq.title = 'No hay anteriores'
+    } else {
+        diagIzq.disabled = false;
+        indiceDiagnostico--
+    }
 
-    nombreMedicamento=turnoS.nombre_medicamento.split('|')
+    if (indiceAntecedente <= 0) {
+        anteIzq.disabled = true;
+        flechaIconIzqAnte.src = '/icons/flecha-izquierda-disabled.png'
+    } else {
+        anteIzq.disabled = false;
+        indiceAntecedente--
+    }
 
-    detalleAntecedente=turnoS.antecedente.split('|')
-    desdeAntecedente=turnoS.fecha_desde_antecedente.split('|')
-    hastaAntecedente=turnoS.fecha_hasta_antecedente.split('|')
+    if (indiceHabito <= 0) {
+        habiIzq.disabled = true;
+        flechaIconIzqHabi.src = '/icons/flecha-izquierda-disabled.png'
+    } else {
+        habiIzq.disabled = false;
+        indiceHabito--
+    }
 
-    detalleHabito=turnoS.habito.split('|')
-    desdeHabito=turnoS.fecha_desde_habito.split('|')
-    hastaHabito=turnoS.fecha_hasta_habito.split('|')
+    if (indiceAlergia <= 0) {
+        alerIzq.disabled = true;
+        flechaIconIzqAler.src = '/icons/flecha-izquierda-disabled.png'
+    } else {
+        alerIzq.disabled = false;
+        indiceAlergia--
+    }
 
-    nombreAlergia=turnoS.nombre_alergia.split('|')
-    importanciaAlergia=turnoS.importancia_alergia.split('|')
-    desdeAlergia=turnoS.fecha_desde_alergia.split('|')
-    hastaAlergia=turnoS.fecha_hasta_alergia.split('|')
+    if (indiceDiagnostico >= detalleDiagnostico.length - 1) {
+        diagDer.disabled = true;
+        flechaIconDerDiag.src = '/icons/flecha-derecha-disabled.png'
+    } else {
+        diagDer.disabled = false;
+        indiceDiagnostico++
+    }
 
-    console.log('cantidad datos')
-    console.log('detallediagnostico')
-    console.log(detalleDiagnostico.length)
-    console.log('estado')
-    console.log(estadoDiagnostico.length)
+    if (indiceAntecedente >= detalleAntecedente.length - 1) {
+        anteDer.disabled = true;
+        flechaIconDerAnte.src = '/icons/flecha-derecha-disabled.png'
+    } else {
+        anteDer.disabled = false;
+        indiceAntecedente++
+    }
 
+    if (indiceHabito >= detalleHabito.length - 1) {
+        habiDer.disabled = true;
+        flechaIconDerHabi.src = '/icons/flecha-derecha-disabled.png'
+    } else {
+        habiDer.disabled = false;
+        indiceHabito++
+    }
 
+    if (indiceAlergia >= nombreAlergia.length - 1) {
+        alerDer.disabled = true;
+        flechaIconDerAler.src = '/icons/flecha-derecha-disabled.png'
+    } else {
+        alerDer.disabled = false;
+        indiceAlergia++
+    }
 }
 
-function log(){
+
+
+function log() {
     console.log('indices:')
     console.log('alergia:')
     console.log(indiceAlergia)
@@ -90,51 +174,57 @@ function log(){
 }
 separador()
 
-function atras(valor){
+function atras(valor) {
 
     switch (valor) {
         case 1:
             if (indiceDiagnostico <= 0) {
                 diagIzq.disabled = true;
-                
+                flechaIconIzqDiag.src = '/icons/flecha-izquierda-disabled.png'
+                diagIzq.title = 'No hay anteriores'
             } else {
                 diagIzq.disabled = false;
                 indiceDiagnostico--
             }
-            diagDer.disabled=false
+            diagDer.disabled = false
+            flechaIconDerDiag.src = '/icons/flecha-derecha.png'
             cDiagnostico()
             break;
         case 2:
             if (indiceAntecedente <= 0) {
                 anteIzq.disabled = true;
-            }else{
+                flechaIconIzqAnte.src = '/icons/flecha-izquierda-disabled.png'
+            } else {
                 anteIzq.disabled = false;
                 indiceAntecedente--
             }
-            anteDer.disable=false
+            anteDer.disabled = false
+            flechaIconDerAnte.src = '/icons/flecha-derecha.png'
             cAntecedente()
             break;
         case 3:
             if (indiceHabito <= 0) {
                 habiIzq.disabled = true;
-                
-            }else{
+                flechaIconIzqHabi.src = '/icons/flecha-izquierda-disabled.png'
+            } else {
                 habiIzq.disabled = false;
                 indiceHabito--
             }
-            habiDer.disabled=false
+            habiDer.disabled = false
+            flechaIconDerHabi.src = '/icons/flecha-derecha.png'
             cHabito()
             break;
 
         case 4:
             if (indiceAlergia <= 0) {
                 alerIzq.disabled = true;
-                
-            }else{
+                flechaIconIzqAler.src = '/icons/flecha-izquierda-disabled.png'
+            } else {
                 alerIzq.disabled = false;
                 indiceAlergia--
             }
-            alerDer.disabled=false
+            alerDer.disabled = false
+            flechaIconDerAler.src = '/icons/flecha-derecha.png'
             cAlergia()
             break;
         default:
@@ -148,81 +238,94 @@ function atras(valor){
 function adelante(valor) {
     switch (valor) {
         case 1:
-            if (indiceDiagnostico >= detalleDiagnostico.length -1) {
+            if (indiceDiagnostico >= detalleDiagnostico.length - 1) {
                 diagDer.disabled = true;
-                
+                flechaIconDerDiag.src = '/icons/flecha-derecha-disabled.png'
             } else {
                 diagDer.disabled = false;
                 indiceDiagnostico++
             }
-            diagIzq.disabled=false
+            diagIzq.disabled = false
+            flechaIconIzqDiag.src = '/icons/flecha-izquierda.png'
             cDiagnostico()
             break;
         case 2:
-            if (indiceAntecedente >= detalleAntecedente.length -1) {
+            if (indiceAntecedente >= detalleAntecedente.length - 1) {
                 anteDer.disabled = true;
-                
-            }else{
+                flechaIconDerAnte.src = '/icons/flecha-derecha-disabled.png'
+            } else {
                 anteDer.disabled = false;
                 indiceAntecedente++
             }
-            anteIzq.disabled=false;
+            anteIzq.disabled = false;
+            flechaIconIzqAnte.src = '/icons/flecha-izquierda.png'
             cAntecedente()
             break;
         case 3:
-            if (indiceHabito >= detalleHabito.length -1) {
+            if (indiceHabito >= detalleHabito.length - 1) {
                 habiDer.disabled = true;
-                
-            }else{
+                flechaIconDerHabi.src = '/icons/flecha-derecha-disabled.png'
+            } else {
                 habiDer.disabled = false;
                 indiceHabito++
             }
-            habiIzq.disabled=false
+            habiIzq.disabled = false
+            flechaIconIzqHabi.src = '/icons/flecha-izquierda.png'
             cHabito()
             break;
 
         case 4:
-            if (indiceAlergia >= nombreAlergia.length -1) {
+            if (indiceAlergia >= nombreAlergia.length - 1) {
                 alerDer.disabled = true;
-                
-            }else{
+                flechaIconDerAler.src = '/icons/flecha-derecha-disabled.png'
+            } else {
                 alerDer.disabled = false;
                 indiceAlergia++
             }
-            alerIzq.disabled=false
+            alerIzq.disabled = false
+            flechaIconIzqAler.src = '/icons/flecha-izquierda.png'
             cAlergia()
             break;
         default:
             break;
     }
-log()
+    log()
 }
 
 function cDiagnostico() {
-    document.getElementById('estadoDiagnostico').innerHTML = 'Detalle: '+ (detalleDiagnostico[indiceDiagnostico] || 'no hay datos');
-    
-    document.getElementById('detalleDiagnostico').innerHTML = 'Estado: '+(estadoDiagnostico[indiceDiagnostico] || 'Preliminar')
-    
+    document.getElementById('estadoDiagnostico').innerHTML = 'Detalle: ' + (detalleDiagnostico[indiceDiagnostico] || 'no hay datos');
+
+    document.getElementById('detalleDiagnostico').innerHTML = 'Estado: ' + (estadoDiagnostico[indiceDiagnostico] || 'Preliminar')
+
 }
 
-function cAntecedente(){
-    document.getElementById('detalleAntecedente').innerHTML='Detalle: '+ (detalleAntecedente[indiceAntecedente]  || 'No hay datos');
-    document.getElementById('desdeAntecedente').innerHTML='Desde: '+(desdeAntecedente[indiceAntecedente] || 'No hay datos');
-    document.getElementById('hastaAntecedente').innerHTML='Hasta: '+(hastaAntecedente[indiceAntecedente] || 'No hay datos');
+function cMedicamento(){
+    let ulMedicamento = document.getElementById('nombreMedicamento');
+    nombreMedicamento.forEach(element => {
+        let li = document.createElement('li');
+        li.textContent = element;
+        ulMedicamento.appendChild(li);
+    });
 }
 
-function cHabito(){
-    document.getElementById('detalleHabito').innerHTML='Detalle: '+(detalleHabito[indiceHabito]  || 'No hay datos');
-    document.getElementById('desdeHabito').innerHTML='Desde: '+(desdeHabito[indiceHabito]  || 'No hay datos');
-    document.getElementById('hastaHabito').innerHTML='Hasta: '+(hastaHabito[indiceHabito]  || 'No hay datos');
+function cAntecedente() {
+    document.getElementById('detalleAntecedente').innerHTML = 'Detalle: ' + (detalleAntecedente[indiceAntecedente] || 'No hay datos');
+    document.getElementById('desdeAntecedente').innerHTML = 'Desde: ' + (desdeAntecedente[indiceAntecedente] || 'No hay datos');
+    document.getElementById('hastaAntecedente').innerHTML = 'Hasta: ' + (hastaAntecedente[indiceAntecedente] || 'No hay datos');
+}
+
+function cHabito() {
+    document.getElementById('detalleHabito').innerHTML = 'Detalle: ' + (detalleHabito[indiceHabito] || 'No hay datos');
+    document.getElementById('desdeHabito').innerHTML = 'Desde: ' + (desdeHabito[indiceHabito] || 'No hay datos');
+    document.getElementById('hastaHabito').innerHTML = 'Hasta: ' + (hastaHabito[indiceHabito] || 'No hay datos');
 }
 
 
-function cAlergia(){
-    document.getElementById('nombreAlergia').innerHTML='Nombre: '+(nombreAlergia[indiceAlergia]  || 'No hay datos');
-    document.getElementById('importanciaAlergia').innerHTML='Importancia: '+(importanciaAlergia[indiceAlergia]  || 'No hay datos');
-    document.getElementById('desdeAlergia').innerHTML='Desde: '+(desdeAlergia[indiceAlergia]  || 'No hay datos');
-    document.getElementById('hastaAlergia').innerHTML='Hasta: '+(hastaAlergia[indiceAlergia]  || 'No hay datos');
+function cAlergia() {
+    document.getElementById('nombreAlergia').innerHTML = 'Nombre: ' + (nombreAlergia[indiceAlergia] || 'No hay datos');
+    document.getElementById('importanciaAlergia').innerHTML = 'Importancia: ' + (importanciaAlergia[indiceAlergia] || 'No hay datos');
+    document.getElementById('desdeAlergia').innerHTML = 'Desde: ' + (desdeAlergia[indiceAlergia] || 'No hay datos');
+    document.getElementById('hastaAlergia').innerHTML = 'Hasta: ' + (hastaAlergia[indiceAlergia] || 'No hay datos');
 }
 
 function cargardatos() {
@@ -275,8 +378,11 @@ select.addEventListener('change', function () {
 });
 
 cargardatos()
+
 cDiagnostico()
 cAntecedente()
 cHabito()
 cAlergia()
+cMedicamento()
+flechasInicio()
 
