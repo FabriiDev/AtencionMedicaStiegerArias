@@ -17,9 +17,6 @@ var historial = {
     numero_turno: numerito
 }
 
-console.log(numerito)
-console.log(numero)
-
 
 function clean() {
     historial = {

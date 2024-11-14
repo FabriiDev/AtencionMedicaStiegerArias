@@ -32,23 +32,65 @@ let hastaAlergia = []
 
 function separador() {
 
-    detalleDiagnostico = turnoS.diagnostico.split('|')
-    estadoDiagnostico = turnoS.estado_diagnostico.split('|')
+    try {
+        detalleDiagnostico = turnoS.diagnostico.split('|')
+        estadoDiagnostico = turnoS.estado_diagnostico.split('|')
+    } catch (error) {
 
-    nombreMedicamento = turnoS.nombre_medicamento.split('|')
+        document.getElementById('estadoDiagnostico').innerHTML = 'Detalle: No hay datos'
 
-    detalleAntecedente = turnoS.antecedente.split('|')
-    desdeAntecedente = turnoS.fecha_desde_antecedente.split('|')
-    hastaAntecedente = turnoS.fecha_hasta_antecedente.split('|')
+        document.getElementById('detalleDiagnostico').innerHTML = 'Estado: No hay datos'
+    }
 
-    detalleHabito = turnoS.habito.split('|')
-    desdeHabito = turnoS.fecha_desde_habito.split('|')
-    hastaHabito = turnoS.fecha_hasta_habito.split('|')
+    try {
+        nombreMedicamento = turnoS.nombre_medicamento.split('|')
+    } catch (error) {
+        document.getElementById('nombreMedicamento').innerHTML = 'No hay medicamentos asociados'
+    }
 
-    nombreAlergia = turnoS.nombre_alergia.split('|')
-    importanciaAlergia = turnoS.importancia_alergia.split('|')
-    desdeAlergia = turnoS.fecha_desde_alergia.split('|')
-    hastaAlergia = turnoS.fecha_hasta_alergia.split('|')
+    try {
+        detalleAntecedente = turnoS.antecedente.split('|')
+        desdeAntecedente = turnoS.fecha_desde_antecedente.split('|')
+        hastaAntecedente = turnoS.fecha_hasta_antecedente.split('|')
+
+    } catch (error) {
+        document.getElementById('detalleAntecedente').innerHTML = 'Detalle: No hay datos'
+        document.getElementById('desdeAntecedente').innerHTML = 'Desde: No hay datos'
+        document.getElementById('hastaAntecedente').innerHTML = 'Hasta: No hay datos';
+
+    }
+
+
+    try {
+        detalleHabito = turnoS.habito.split('|')
+        desdeHabito = turnoS.fecha_desde_habito.split('|')
+        hastaHabito = turnoS.fecha_hasta_habito.split('|')
+    } catch (error) {
+        document.getElementById('detalleHabito').innerHTML = 'Detalle: No hay datos';
+        document.getElementById('desdeHabito').innerHTML = 'Desde: No hay datos';
+        document.getElementById('hastaHabito').innerHTML = 'Hasta: No hay datos';
+
+    }
+
+    try {
+        nombreAlergia = turnoS.nombre_alergia.split('|')
+        importanciaAlergia = turnoS.importancia_alergia.split('|')
+        desdeAlergia = turnoS.fecha_desde_alergia.split('|')
+        hastaAlergia = turnoS.fecha_hasta_alergia.split('|')
+
+
+    } catch (error) {
+
+        document.getElementById('nombreAlergia').innerHTML = 'Nombre: No hay datos';
+        document.getElementById('importanciaAlergia').innerHTML = 'Importancia: No hay datos';
+        document.getElementById('desdeAlergia').innerHTML = 'Desde: No hay datos';
+        document.getElementById('hastaAlergia').innerHTML = 'Hasta: No hay datos';
+    }
+
+
+
+
+
 
 
 
@@ -156,7 +198,6 @@ function flechasInicio() {
 try {
     separador()
 } catch (error) {
-
 }
 
 
@@ -288,8 +329,8 @@ function cDiagnostico() {
 function cMedicamento() {
     let ulMedicamento = document.getElementById('nombreMedicamento');
     nombreMedicamento.forEach(element => {
-        let li = document.createElement('li') ;
-        if(element == '' || element == null){
+        let li = document.createElement('li');
+        if (element == '' || element == null) {
             element = 'No hay medicamentos asociados'
         }
         li.textContent = element;
@@ -353,7 +394,7 @@ function cargarSelect(turnos) {
 
         option.value = element.numero_turno
         option.innerHTML = fechaFormateada
-        if (fechaFormateada == '' || fechaFormateada == null ) {
+        if (fechaFormateada == '' || fechaFormateada == null) {
             option.innerHTML = 'No hay atenciones anteriores'
         }
         select.appendChild(option)
@@ -386,10 +427,10 @@ if (flagElse && turnoS.estado == 'Atendido') {
     cargardatos()
     flechasInicio()
 
-} else if(turnoS.estado == 'Atendido'){
+} else if (turnoS.estado == 'Atendido') {
     cDiagnostico()
     cargardatos()
-}else{
+} else {
     cargardatos()
 }
 

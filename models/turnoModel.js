@@ -121,7 +121,6 @@ ORDER BY fecha DESC`
     static async transaccionHCE(historial) {
         conn = await crearConexion()
         let nTurno = historial.numero_turno
-        console.log('numero de turno:' + nTurno)
         try {
             await conn.beginTransaction();
 

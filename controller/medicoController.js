@@ -53,8 +53,6 @@ class MedicoController {
     }
 
     async template(req, res) {
-        console.log('entro a la ruta')
-        console.log(req.body.template)
         try {
             await medicoModel.template(req.body.template, req.session.matricula)
 
