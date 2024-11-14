@@ -6,8 +6,6 @@ quill.clipboard.dangerouslyPasteHTML(laTemplate);
 
 // ------------------------------------------------------------ 
 let numerito = numero
-console.log('numerito:')
-console.log(numerito)
 var historial = {
     diagnosticos: [],
     evolucion: '',
@@ -49,7 +47,7 @@ function cargarDiagnostico() {
             "progressBar": true,
             "positionClass": "toast-top-center"
         });
-        console.log('diagnosticoCargar')
+        
         let data = { detalle: detalle, estado: estado }
         historial.diagnosticos.push(data)
     }
@@ -63,14 +61,10 @@ function cargarDiagnostico() {
 
 
 function cargarEvolucion() {
-    console.log('evolucionCargar')
-    /* con esto se toma el texto con el formato html
-    let conHTML = quill.root.innerHTML;
-    console.log('texto con formato HTML: ', detalle)
-    */
+
     let detalle = quill.getText();
     
-    console.log('normal: ', detalle)
+    
     //disabled= true al terminar
 
     if (detalle == '') {
@@ -106,9 +100,9 @@ function cargarMedicamento() {
             "progressBar": true,
             "positionClass": "toast-top-center"
         });
-        console.log('mesiCargar')
+        
         let data = { nombre: nombre, valor: parseInt(valor) }
-        console.log(valor)
+        
         historial.medicamentos.push(data)
     }
 
@@ -138,7 +132,7 @@ function cargarAntecedentes() {
             "progressBar": true,
             "positionClass": "toast-top-center"
         });
-        console.log('antesCargar')
+        
         let data = { detalle: detalle, fdesde: fdesde, fhasta: fhasta }
         historial.antecedentes.push(data)
     }
@@ -171,7 +165,7 @@ function cargarHabitos() {
             "progressBar": true,
             "positionClass": "toast-top-center"
         });
-        console.log('habitoCargar')
+        
         let data = { detalle: detalle, fdesde: fdesde, fhasta: fhasta }
         historial.habitos.push(data)
     }
@@ -205,7 +199,7 @@ function cargarAlergia() {
             "progressBar": true,
             "positionClass": "toast-top-center"
         });
-        console.log('alergiaCargar')
+        
         let data = { nombre: nombre, fdesde: fdesde, fhasta: fhasta, importancia: importancia }
         historial.alergias.push(data)
     }
@@ -217,8 +211,6 @@ function cargarAlergia() {
 }
 
 function guardarHistorial() {
-
-    console.log(historial)
 
     let obligatorios = false
     if (historial.diagnosticos[0] && historial.diagnosticos[0] != '' && historial.evolucion != '' && historial.diagnosticos[0].estado != "") {
@@ -245,7 +237,7 @@ function guardarHistorial() {
                     });
                     // redirigir a la agenda
                     // o mostrar el historial recien cargado? onda mandar al HCE 
-                    console.log(data)
+
 
                 } else {
                     alert("ocurrio un error al guardar el historial ");

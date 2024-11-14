@@ -50,11 +50,7 @@ function separador() {
     desdeAlergia = turnoS.fecha_desde_alergia.split('|')
     hastaAlergia = turnoS.fecha_hasta_alergia.split('|')
 
-    console.log('cantidad datos')
-    console.log('detallediagnostico')
-    console.log(detalleDiagnostico.length)
-    console.log('estado')
-    console.log(estadoDiagnostico.length)
+
 
 
 }
@@ -157,18 +153,12 @@ function flechasInicio() {
 
 
 
-function log() {
-    console.log('indices:')
-    console.log('alergia:')
-    console.log(indiceAlergia)
-    console.log('antecedente:')
-    console.log(indiceAntecedente)
-    console.log('diagnostico:')
-    console.log(indiceDiagnostico)
-    console.log('habito:')
-    console.log(indiceHabito)
+try {
+    separador()
+} catch (error) {
+
 }
-separador()
+
 
 function atras(valor) {
 
@@ -226,7 +216,7 @@ function atras(valor) {
         default:
             break;
     }
-    log()
+
 }
 
 
@@ -285,7 +275,7 @@ function adelante(valor) {
         default:
             break;
     }
-    log()
+
 }
 
 function cDiagnostico() {
@@ -295,7 +285,7 @@ function cDiagnostico() {
 
 }
 
-function cMedicamento(){
+function cMedicamento() {
     let ulMedicamento = document.getElementById('nombreMedicamento');
     nombreMedicamento.forEach(element => {
         let li = document.createElement('li');
@@ -339,7 +329,7 @@ function cargardatos() {
             if (data) {
                 let turnos = data.turno
                 //puedeCambiar = data.turno[0].numero_turno || 'a';
-                console.log(turnos)
+
                 cargarSelect(turnos)
 
             }
@@ -374,7 +364,7 @@ select.addEventListener('change', function () {
 });
 
 
-if(flagElse){
+if (flagElse) {
 
     const quill = new Quill('#editor', {
         theme: 'snow'
@@ -391,7 +381,7 @@ if(flagElse){
     cargardatos()
     flechasInicio()
 
-}else{
+} else {
     cDiagnostico()
     cargardatos()
 }

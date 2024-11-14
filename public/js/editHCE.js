@@ -189,7 +189,7 @@ function cargarMedicamento() {
             "positionClass": "toast-top-center"
         });
         let data = { nombre: nombre, valor: parseInt(valor) }
-        console.log(valor)
+
         historial.medicamentos.push(data)
         historial.id_receta = idreceta[idreceta.length - 1]
         document.getElementById('btnMedicamento').disabled = true
@@ -222,7 +222,7 @@ function cargarAntecedentes() {
             "progressBar": true,
             "positionClass": "toast-top-center"
         });
-        console.log('antesCargar')
+
         let data = { detalle: detalle, fdesde: fdesde, fhasta: fhasta }
         historial.antecedentes.push(data)
         document.getElementById('btnAntecedentes').disabled = true
@@ -255,7 +255,7 @@ function cargarHabitos() {
             "progressBar": true,
             "positionClass": "toast-top-center"
         });
-        console.log('habitoCargar')
+
         let data = { detalle: detalle, fdesde: fdesde, fhasta: fhasta }
         historial.habitos.push(data)
         document.getElementById('btnHabitos').disabled = true
@@ -291,7 +291,7 @@ function cargarAlergia() {
             "progressBar": true,
             "positionClass": "toast-top-center"
         });
-        console.log('alergiaCargar')
+
         let data = { nombre: nombre, fdesde: fdesde, fhasta: fhasta, importancia: importancia }
         historial.alergias.push(data)
         document.getElementById('btnAlergia').disabled = true
@@ -331,5 +331,10 @@ function updateHistorial() {
         .catch(error => console.error('Error:', error));
     clean()
 }
-separador()
+try {
+    separador()
+} catch (error) {
+    
+}
+
 mostrarDatos()
