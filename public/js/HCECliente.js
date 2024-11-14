@@ -288,7 +288,10 @@ function cDiagnostico() {
 function cMedicamento() {
     let ulMedicamento = document.getElementById('nombreMedicamento');
     nombreMedicamento.forEach(element => {
-        let li = document.createElement('li');
+        let li = document.createElement('li') ;
+        if(element == '' || element == null){
+            element = 'No hay medicamentos asociados'
+        }
         li.textContent = element;
         ulMedicamento.appendChild(li);
     });
@@ -350,6 +353,9 @@ function cargarSelect(turnos) {
 
         option.value = element.numero_turno
         option.innerHTML = fechaFormateada
+        if (fechaFormateada == '' || fechaFormateada == null ) {
+            option.innerHTML = 'No hay atenciones anteriores'
+        }
         select.appendChild(option)
         const url = window.location.href;
         let valorSeleccionado = url.split('HCE')[1];
@@ -364,8 +370,7 @@ select.addEventListener('change', function () {
 });
 
 
-if (flagElse) {
-
+if (flagElse && turnoS.estado == 'Atendido') {
     const quill = new Quill('#editor', {
         theme: 'snow'
     });
@@ -381,8 +386,10 @@ if (flagElse) {
     cargardatos()
     flechasInicio()
 
-} else {
+} else if(turnoS.estado == 'Atendido'){
     cDiagnostico()
+    cargardatos()
+}else{
     cargardatos()
 }
 

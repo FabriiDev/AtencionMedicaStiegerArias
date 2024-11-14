@@ -67,7 +67,7 @@ function cargarDiagnostico() {
 
 function cargarEvolucion() {
 
-    let detalle = quill.getText();
+    let detalle = quill.root.innerHTML;
     
     
     //disabled= true al terminar
