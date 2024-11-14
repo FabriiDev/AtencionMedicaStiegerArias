@@ -2,11 +2,7 @@
 #nombreMedicamento
 */
 // ------------------- libreria txt enriquesido --------------- 
-const quill = new Quill('#editor', {
-    theme: 'snow'
-});
-quill.clipboard.dangerouslyPasteHTML(evolucionEriquesida);
-quill.disable()
+
 
 // ------------------------------------------------------------ 
 
@@ -377,12 +373,28 @@ select.addEventListener('change', function () {
     window.location.href = `/turnos/HCE${nuevoValor}`
 });
 
-cargardatos()
 
-cDiagnostico()
-cAntecedente()
-cHabito()
-cAlergia()
-cMedicamento()
-flechasInicio()
+if(flagElse){
+
+    const quill = new Quill('#editor', {
+        theme: 'snow'
+    });
+    quill.clipboard.dangerouslyPasteHTML(evolucionEriquesida);
+    quill.disable()
+
+
+    cDiagnostico()
+    cAntecedente()
+    cHabito()
+    cAlergia()
+    cMedicamento()
+    cargardatos()
+    flechasInicio()
+
+}else{
+    cDiagnostico()
+    cargardatos()
+}
+
+
 

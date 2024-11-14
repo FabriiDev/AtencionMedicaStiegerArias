@@ -142,25 +142,31 @@ function cargarDiagnostico() {
         let data = { detalle: detalle, estado: estado }
         historial.diagnosticos.push(data)
         document.getElementById('btnDiagnostico').disabled = true
-    }
-
-
-
-    document.getElementById('diagnosticoDetalle').disabled = true
-    document.getElementById('estadoDiagnostico').disabled = true;
+        document.getElementById('diagnosticoDetalle').disabled = true
+        document.getElementById('estadoDiagnostico').disabled = true;
+    }    
 }
 
 
 function cargarEvolucion() {
-    /* con esto se toma el texto con el formato html
-    let conHTML = quill.root.innerHTML;
-    console.log('texto con formato HTML: ', detalle)
-    */
     let detalle = quill.root.innerHTML;
-    historial.evolucion = detalle
+    
     document.getElementById('btnEvolucion').disabled = true
-    quill.disable()
+    
     //disabled= true al terminar
+    if (detalle == '') {
+        toastr.error('Complete los campos', 'Servidor', {
+            "progressBar": true,
+            "positionClass": "toast-top-center"
+        });
+    } else {
+        toastr.success('Evolucion guardada con exito!', 'Servidor:', {
+            "progressBar": true,
+            "positionClass": "toast-top-center"
+        });
+        historial.evolucion = detalle
+        quill.disable()
+    }
 }
 
 function cargarMedicamento() {
@@ -186,10 +192,11 @@ function cargarMedicamento() {
         console.log(valor)
         historial.medicamentos.push(data)
         historial.id_receta = idreceta[idreceta.length - 1]
+        document.getElementById('btnMedicamento').disabled = true
+        document.getElementById('selectMedicamento').disabled = true
     }
 
-    document.getElementById('btnMedicamento').disabled = true
-    document.getElementById('selectMedicamento').disabled = true
+
 }
 
 function cargarAntecedentes() {
@@ -218,13 +225,11 @@ function cargarAntecedentes() {
         console.log('antesCargar')
         let data = { detalle: detalle, fdesde: fdesde, fhasta: fhasta }
         historial.antecedentes.push(data)
+        document.getElementById('btnAntecedentes').disabled = true
+        document.getElementById('detalleAntecedentes').disabled = true
+        document.getElementById('desdeAntecedentes').disabled = true
+        document.getElementById('hastaAntecedentes').disabled = true
     }
-
-    document.getElementById('btnAntecedentes').disabled = true
-    document.getElementById('detalleAntecedentes').disabled = true
-    document.getElementById('desdeAntecedentes').disabled = true
-    document.getElementById('hastaAntecedentes').disabled = true
-
 }
 
 function cargarHabitos() {
@@ -253,12 +258,13 @@ function cargarHabitos() {
         console.log('habitoCargar')
         let data = { detalle: detalle, fdesde: fdesde, fhasta: fhasta }
         historial.habitos.push(data)
+        document.getElementById('btnHabitos').disabled = true
+        document.getElementById('detalleHabitos').disabled = true
+        document.getElementById('desdeHabitos').disabled = true
+        document.getElementById('hastaHabitos').disabled = true
     }
 
-    document.getElementById('btnHabitos').disabled = true
-    document.getElementById('detalleHabitos').disabled = true
-    document.getElementById('desdeHabitos').disabled = true
-    document.getElementById('hastaHabitos').disabled = true
+    
 }
 
 function cargarAlergia() {
@@ -288,13 +294,14 @@ function cargarAlergia() {
         console.log('alergiaCargar')
         let data = { nombre: nombre, fdesde: fdesde, fhasta: fhasta, importancia: importancia }
         historial.alergias.push(data)
+        document.getElementById('btnAlergia').disabled = true
+        document.getElementById('nombreAlergia').disabled = true
+        document.getElementById('desdeAlergia').disabled = true
+        document.getElementById('hastaAlergia').disabled = true
+        document.getElementById('importanciaAlergia').disabled = true
     }
 
-    document.getElementById('btnAlergia').disabled = true
-    document.getElementById('nombreAlergia').disabled = true
-    document.getElementById('desdeAlergia').disabled = true
-    document.getElementById('hastaAlergia').disabled = true
-    document.getElementById('importanciaAlergia').disabled = true
+    
 }
 
 function updateHistorial() {
@@ -314,7 +321,9 @@ function updateHistorial() {
                     "progressBar": true,
                     "positionClass": "toast-top-center"
                 });
-                // redirigir a la agenda
+                setTimeout(function() { 
+                    window.location.href = '/turnos/agenda'; 
+                }, 3000);
             } else {
                 alert("ocurrio un error al guardar el historial ");
             }

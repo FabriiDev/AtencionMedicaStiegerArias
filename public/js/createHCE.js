@@ -34,7 +34,7 @@ function clean() {
 function cargarDiagnostico() {
     let detalle = document.getElementById('diagnosticoDetalle').value
     let estado = document.getElementById('estadoDiagnostico').value
-    
+
     // controlar que complete los campos
     if (detalle == '' || estado == '') {
 
@@ -42,7 +42,7 @@ function cargarDiagnostico() {
             "progressBar": true,
             "positionClass": "toast-top-center"
         });
-        
+
 
     } else {
         toastr.success('Diagnositco guardado con exito!', 'Servidor:', {
@@ -54,7 +54,7 @@ function cargarDiagnostico() {
         historial.diagnosticos.push(data)
     }
 
-    
+
 
     document.getElementById('diagnosticoDetalle').value = "";
     document.getElementById('estadoDiagnostico').value = "";
@@ -69,16 +69,29 @@ function cargarEvolucion() {
     console.log('texto con formato HTML: ', detalle)
     */
     let detalle = quill.getText();
-    historial.evolucion = detalle
+    
     console.log('normal: ', detalle)
     //disabled= true al terminar
+
+    if (detalle == '') {
+        toastr.error('Complete los campos', 'Servidor', {
+            "progressBar": true,
+            "positionClass": "toast-top-center"
+        });
+    } else {
+        toastr.success('Evolucion guardada con exito!', 'Servidor:', {
+            "progressBar": true,
+            "positionClass": "toast-top-center"
+        });
+        historial.evolucion = detalle
+    }
 }
 
 function cargarMedicamento() {
-    
+
     let valor = document.getElementById('selectMedicamento').value
     let nombre = document.getElementById('selectMedicamento').options[document.getElementById('selectMedicamento').selectedIndex].text
-    
+
     // controlar que complete los campos
     if (valor == '') {
 
@@ -86,7 +99,7 @@ function cargarMedicamento() {
             "progressBar": true,
             "positionClass": "toast-top-center"
         });
-        
+
 
     } else {
         toastr.success('Medicamento guardado con exito!', 'Servidor:', {
@@ -98,7 +111,7 @@ function cargarMedicamento() {
         console.log(valor)
         historial.medicamentos.push(data)
     }
-    
+
     document.getElementById('selectMedicamento').value = "";
 }
 
@@ -113,13 +126,13 @@ function cargarAntecedentes() {
             "progressBar": true,
             "positionClass": "toast-top-center"
         });
-        
+
     } else if (fdesde > fhasta) { // logica para las fechas
         toastr.error('La fecha "Hasta" no puede ser menor que la fecha "Desde"', 'Servidor', {
             "progressBar": true,
             "positionClass": "toast-top-center"
         });
-        
+
     } else {
         toastr.success('Antecedente guardado con exito!', 'Servidor:', {
             "progressBar": true,
@@ -139,20 +152,20 @@ function cargarHabitos() {
     let detalle = document.getElementById('detalleHabitos').value
     let fdesde = document.getElementById('desdeHabitos').value
     let fhasta = document.getElementById('hastaHabitos').value
-    
+
     // controlar que complete los campos
     if (detalle == '' || fdesde == '' || fhasta == '') {
         toastr.error('Complete todos los campos', 'Servidor', {
             "progressBar": true,
             "positionClass": "toast-top-center"
         });
-        
+
     } else if (fdesde > fhasta) { // logica para las fechas
         toastr.error('La fecha "Hasta" no puede ser menor que la fecha "Desde"', 'Servidor', {
             "progressBar": true,
             "positionClass": "toast-top-center"
         });
-        
+
     } else {
         toastr.success('Habito guardado con exito!', 'Servidor:', {
             "progressBar": true,
@@ -173,20 +186,20 @@ function cargarAlergia() {
     let fdesde = document.getElementById('desdeAlergia').value
     let fhasta = document.getElementById('hastaAlergia').value
     let importancia = document.getElementById('importanciaAlergia').value
-    
-     // controlar que complete los campos
+
+    // controlar que complete los campos
     if (nombre == '' || fdesde == '' || fhasta == '' || importancia == '') {
         toastr.error('Complete todos los campos', 'Servidor', {
             "progressBar": true,
             "positionClass": "toast-top-center"
         });
-        
+
     } else if (fdesde > fhasta) { // logica para las fechas
         toastr.error('La fecha "Hasta" no puede ser menor que la fecha "Desde"', 'Servidor', {
             "progressBar": true,
             "positionClass": "toast-top-center"
         });
-        
+
     } else {
         toastr.success('Habito guardado con exito!', 'Servidor:', {
             "progressBar": true,
@@ -239,6 +252,9 @@ function guardarHistorial() {
                 }
             })
             .catch(error => console.error('Error:', error));
+            setTimeout(function() { 
+                window.location.href = '/turnos/agenda'; 
+            }, 3000);
     } else {
         toastr.error('El diagnostico y la evolucion, son obligatorios', 'Servidor', {
             "progressBar": true,

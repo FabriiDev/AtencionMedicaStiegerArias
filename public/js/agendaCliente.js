@@ -140,6 +140,18 @@ document.getElementById('guardar-template').onclick = function() {
     console.log('texto en HTML: ', enHTML)
     document.getElementById('modal').style.display = 'none';
     updateTemplate()
+    if (enHTML == '') {
+        toastr.error('Complete los campos', 'Servidor', {
+            "progressBar": true,
+            "positionClass": "toast-top-center"
+        });
+    } else {
+        toastr.success('Template guardada con exito!', 'Servidor:', {
+            "progressBar": true,
+            "positionClass": "toast-top-center"
+        });
+        updateTemplate()
+    }
 }
 
 
