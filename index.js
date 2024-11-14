@@ -1,7 +1,10 @@
+
 const express = require('express');
 const path = require('path');
-const port = process.env.PORT || 3003;
+
 const cookieSession = require('cookie-session') //• $ npm install cookie-session
+
+require('dotenv').config();
 let bcrypt;
 
 try {
@@ -14,6 +17,7 @@ const medicoRoutes = require('./routes/medicoRoutes');
 const turnoRoutes = require('./routes/turnoRoutes');
 
 
+const port = process.env.PORT || 3003;
 
 const app = express();
 
@@ -42,6 +46,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 // Usar las rutas de 'medico'
 app.use('/', medicoRoutes);
 app.use('/turnos', turnoRoutes);
+
+
 
 async function hashear() {
     let passHasheada = await bcrypt.hash('pass456', 8)

@@ -4,6 +4,7 @@ const quill = new Quill('#editor', {
 });
 quill.clipboard.dangerouslyPasteHTML(laTemplate);
 
+
 // ------------------------------------------------------------ 
 let numerito = numero
 var historial = {
@@ -15,6 +16,10 @@ var historial = {
     alergias: [],
     numero_turno: numerito
 }
+
+console.log(numerito)
+console.log(numero)
+
 
 function clean() {
     historial = {
@@ -78,6 +83,9 @@ function cargarEvolucion() {
             "positionClass": "toast-top-center"
         });
         historial.evolucion = detalle
+        quill.disable()
+        document.getElementById('btnEvolucion').disabled = true
+
     }
 }
 

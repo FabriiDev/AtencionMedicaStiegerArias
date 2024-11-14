@@ -60,8 +60,10 @@ class MedicoController {
 
         } catch (error) {
             console.log('error en la template' + error)
+            return
         }
-        res.send({ mensaje: 'template cargada exitosamente',success:true })
+        req.session.template = req.body.template
+        res.send({ mensaje: 'template cargada exitosamente', success: true })
     }
     //------------------------------------------------
 

@@ -55,6 +55,7 @@ class TurnoController {
         const fechaFormateada = turno.fecha.toISOString().split('T')[0];
         let template = req.session.template
 
+
         let medicamentos = await turnoModel.medicamentos()
         res.render('createHCE', { turno, template, fechaFormateada, medicamentos })
     }
@@ -124,6 +125,7 @@ class TurnoController {
             await turnoModel.transaccionHCE(historial)
         } catch (error) {
             console.log(error)
+            res.send(error)
         }
         envio = { success: true }
         res.send(envio)
