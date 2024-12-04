@@ -104,7 +104,7 @@ function pintarTabla(turnos){
     pintarTablaTurnos = `
             <tr>
                 <td>
-                    <a href="/turnos/HCE${turnos.numero_turno}" target="_blank"> ${turnos.apellido} ${turnos.nombre} </a>
+                    <a href="/turnos/HCE${turnos.dni_paciente}" target="_blank"> ${turnos.apellido} ${turnos.nombre} </a>
                 </td>
                 <td> ${turnos.hora} </td>
                 <td> ${turnos.motivo_consulta} </td>

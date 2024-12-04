@@ -91,10 +91,11 @@ ORDER BY fecha DESC`
             conn = await crearConexion();
 
             // Llama al procedimiento almacenado
-            const query = 'CALL obtener_turno_detalleTRES(?)';
+            const query = 'CALL todosLosTurnos(?)';
             const [result] = await conn.query(query, [numero_turno]);
             // Accede al primer elemento del primer array de resultados
-            const turno = result[0][0]; // Extrae el primer registro
+            const turno = result[0]; // Extrae el primer registro
+            console.log(turno)
             return turno || null; // Devuelve el objeto si existe, si no, null
         } catch (error) {
             console.log("Error al traer turnos: ", error);

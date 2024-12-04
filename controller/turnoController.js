@@ -14,6 +14,7 @@ class TurnoController {
             let fecha = req.body.fecha
             let turnos = await turnoModel.turnosPorDia(fecha, req.session.matricula);
             let jsonstring = JSON.stringify(turnos)
+            console.log(jsonstring)
             if (!fecha) {
                 return res.status(400).json({ success: false, error: 'la fecha debe ser seleccionada' })
             }
@@ -29,7 +30,7 @@ class TurnoController {
     }
     async HCE(req, res) {
 
-        let turno = await turnoModel.numero_turno(req.params.numeroTurno)
+        let turno = await turnoModel.numero_turno(req.params.dni)
         let flag = false;
         if (turno.matricula_medico == req.session.matricula) {
             flag = true;

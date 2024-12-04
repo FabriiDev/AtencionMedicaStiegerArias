@@ -28,74 +28,63 @@ let importanciaAlergia = []
 let desdeAlergia = []
 let hastaAlergia = []
 
-
-
-function separador() {
-
-    try {
-        detalleDiagnostico = turnoS.diagnostico.split('|')
-        estadoDiagnostico = turnoS.estado_diagnostico.split('|')
-    } catch (error) {
-
-        document.getElementById('estadoDiagnostico').innerHTML = 'Detalle: No hay datos'
-
-        document.getElementById('detalleDiagnostico').innerHTML = 'Estado: No hay datos'
-    }
-
-    try {
-        nombreMedicamento = turnoS.nombre_medicamento.split('|')
-    } catch (error) {
-        document.getElementById('nombreMedicamento').innerHTML = 'No hay medicamentos asociados'
-    }
-
-    try {
-        detalleAntecedente = turnoS.antecedente.split('|')
-        desdeAntecedente = turnoS.fecha_desde_antecedente.split('|')
-        hastaAntecedente = turnoS.fecha_hasta_antecedente.split('|')
-
-    } catch (error) {
-        document.getElementById('detalleAntecedente').innerHTML = 'Detalle: No hay datos'
-        document.getElementById('desdeAntecedente').innerHTML = 'Desde: No hay datos'
-        document.getElementById('hastaAntecedente').innerHTML = 'Hasta: No hay datos';
-
-    }
-
-
-    try {
-        detalleHabito = turnoS.habito.split('|')
-        desdeHabito = turnoS.fecha_desde_habito.split('|')
-        hastaHabito = turnoS.fecha_hasta_habito.split('|')
-    } catch (error) {
-        document.getElementById('detalleHabito').innerHTML = 'Detalle: No hay datos';
-        document.getElementById('desdeHabito').innerHTML = 'Desde: No hay datos';
-        document.getElementById('hastaHabito').innerHTML = 'Hasta: No hay datos';
-
-    }
-
-    try {
-        nombreAlergia = turnoS.nombre_alergia.split('|')
-        importanciaAlergia = turnoS.importancia_alergia.split('|')
-        desdeAlergia = turnoS.fecha_desde_alergia.split('|')
-        hastaAlergia = turnoS.fecha_hasta_alergia.split('|')
-
-
-    } catch (error) {
-
-        document.getElementById('nombreAlergia').innerHTML = 'Nombre: No hay datos';
-        document.getElementById('importanciaAlergia').innerHTML = 'Importancia: No hay datos';
-        document.getElementById('desdeAlergia').innerHTML = 'Desde: No hay datos';
-        document.getElementById('hastaAlergia').innerHTML = 'Hasta: No hay datos';
-    }
-
-
-
-
-
-
-
-
-
+function formatearFecha(fechaISO) {
+    const fecha = new Date(fechaISO);
+    const dia = String(fecha.getDate()).padStart(2, '0');
+    const mes = String(fecha.getMonth() + 1).padStart(2, '0'); // Los meses en JavaScript son 0-11
+    const anio = fecha.getFullYear();
+    return `${dia}/${mes}/${anio}`;
 }
+
+
+function separador(turnos) {
+    let turnoFormateado = [];
+
+    if (!turnos || turnos.length === 0) {
+        return turnoFormateado;
+    }
+
+    let paciente = {
+        nombre: turnos[0].nombre_paciente,
+        apellido: turnos[0].apellido_paciente,
+        dni: turnos[0].dni_paciente
+    };
+
+    for (const t of turnos) {
+        let turnoA = {
+            fecha: formatearFecha(t.fecha),
+            motivo: t.motivo_consulta,
+            idEspecialidad: t.id_especialidad,
+            nombreEspecialidad: t.nombre_especialidad,
+            paciente: paciente,
+            nombreMedico: t.nombre_medico,
+            apellidoMedico: t.apellido_medico,
+            matriculaMedico: t.matricula_medico,
+            editable: t.es_ultima_atencion,
+            diagnostico: t.diagnostico ? t.diagnostico.split('|') : [],
+            estadoDiagnostico: t.estado_diagnostico ? t.estado_diagnostico.split('|') : [],
+            evolucion: t.evolucion,
+            nombreAlergia: t.nombre_alergia ? t.nombre_alergia.split('|') : [],
+            importanciaAlergia: t.importancia_alergia ? t.importancia_alergia.split('|') : [],
+            alergiaDesde: t.fecha_desde_alergia ? t.fecha_desde_alergia.split('|') : [],
+            alergiaHasta: t.fecha_hasta_alergia ? t.fecha_hasta_alergia.split('|') : [],
+            habito: t.habito ? t.habito.split('|') : [],
+            habitoDesde: t.fecha_desde_habito ? t.fecha_desde_habito.split('|') : [],
+            habitoHasta: t.fecha_hasta_habito ? t.fecha_hasta_habito.split('|') : [],
+            idReceta: t.id_receta ? t.id_receta.split('|') : [],
+            txtReceta: t.txt_receta ? t.txt_receta.split('|') : [],
+            nombreMedicamento: t.nombre_medicamento ? t.nombre_medicamento.split('|') : [],
+            idMedicamento: t.id_medicamento ? t.id_medicamento.split('|') : []
+        };
+
+        turnoFormateado.push(turnoA);
+    }
+
+    return turnoFormateado;
+}
+console.log('tuqi')
+console.log(separador(turnos))
+
 
 
 try {
@@ -104,21 +93,23 @@ try {
 }
 console.log(turnos)
 let body = document.getElementById('table-body');
-function pintarTabla(){
-    let tabla = `<tr title="Modificar" class="editable">
+function pintarTabla() {
+    let tabla = ""
+    for (const element of turnos) {
+        tabla += `<tr title="Modificar" class="editable">
     <td>
-        <p>${turnos.fecha}</p>
+        <p>${element.fecha}</p>
     </td>
     <td>
-        <p>${turnos.motivo_consulta}</p>
+        <p>${element.motivo_consulta}</p>
     </td>
     <td>
-        <p>${turnos.apellido_medico}</p>
+        <p>${element.apellido_medico}</p>
         <p>Odontologo</p>
     </td>
     <td>
         <ol>
-            <li>El paciente tiene dolores de cabeza al estar más de 2 horas en la computadora</li>
+            <li>${element.diagnostico}</li>
         </ol>
     </td>
     <td>
@@ -154,8 +145,9 @@ function pintarTabla(){
     </td>
 </tr>
 `;
+    }
     document.getElementById('table-body').innerHTML += tabla;
-    
+
 }
 pintarTabla();
 
