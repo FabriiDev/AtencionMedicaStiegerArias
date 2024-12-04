@@ -58,3 +58,17 @@ a esto le falta tambien los alerts, espero a hacer esa parte antes de crearlos..
 
 
 desabilitar los botones de edicion solo si carga algo de manera exitosa
+
+---------------------------------------- NOTAS PARA EL FINAL ------------------------------------------------
+
+Gestión de los template --> BD AHORA <-- 
+
+Iniciar consulta en pacientes arribados --> AHORA <--
+
+Simplificar vista del HCE --> Listo
+
+Mejorar la interfaz de carga --> hacer
+
+Que elija y pueda sacar a la hora de cargar datos
+
+Iniciar y finalizar consulta -> guardar horas al iniciar y finalizar, o ver de contar tiempo

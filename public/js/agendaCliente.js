@@ -39,7 +39,7 @@ function turnosHoy() {
             for (const element of turnos) {
                 document.getElementById('pintarTablaTurnos').innerHTML += pintarTabla(element);
             }
-
+            
             // document.getElementById('pintarTablaTurnos').innerHTML = pintarTabla(element);
         } else {
             console.error(data.message || 'No se encontraron turnos');
@@ -49,6 +49,7 @@ function turnosHoy() {
     .catch(error => {
         console.error('Error al obtener turnos:', error);
     });
+    
 }
 turnosHoy();
 
@@ -88,6 +89,7 @@ inputFecha.addEventListener('change', (event) => {
 
 
 function pintarTabla(turnos){
+    console.log(turnos);
     let colorEstado;
     if(turnos.estado === 'Cancelado'){
         colorEstado = 'bg-danger';
@@ -107,6 +109,9 @@ function pintarTabla(turnos){
                 <td> ${turnos.hora} </td>
                 <td> ${turnos.motivo_consulta} </td>
                 <td class="${colorEstado}"> ${turnos.estado} </td>
+                <td> ${turnos.arribado} </td>
+                <td> ${turnos.nombre_especialidad} </td>
+                <td> <button>HCE</button> <button>Comenzar atencion</button></td>
             </tr>`;
 
     return pintarTablaTurnos;

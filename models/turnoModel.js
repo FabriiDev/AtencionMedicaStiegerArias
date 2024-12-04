@@ -23,10 +23,24 @@ class Turno {
     static async turnosPorDia(fecha, matricula) {
         conn = await crearConexion();
 
-        let query = `SELECT p.*,t.estado,t.hora,t.motivo_consulta,t.numero_turno
-                    FROM turno t
-                    JOIN paciente p ON p.dni_paciente=t.dni_paciente
-                    WHERE t.fecha=? and matricula_medico =?`;
+        let query = `SELECT DISTINCT
+    p.*,
+    t.estado,
+    t.hora,
+    t.motivo_consulta,
+    t.numero_turno,
+    espe.nombre_especialidad,
+    t.arribado
+FROM
+    turno t
+JOIN paciente p ON
+    p.dni_paciente = t.dni_paciente
+LEFT JOIN medico_especialidad m_e ON
+	t.id_especialidad = m_e.id_especialidad
+LEFT JOIN especialidad espe ON
+	espe.id_especialidad = m_e.id_especialidad
+WHERE
+    t.fecha = ? AND t.matricula_medico = ?;`;
         try {
             const [result] = await conn.query(query, [fecha, matricula]);
             return result.length ? result : null;
@@ -77,7 +91,7 @@ ORDER BY fecha DESC`
             conn = await crearConexion();
 
             // Llama al procedimiento almacenado
-            const query = 'CALL obtener_turno_detalleDOS(?)';
+            const query = 'CALL obtener_turno_detalleTRES(?)';
             const [result] = await conn.query(query, [numero_turno]);
             // Accede al primer elemento del primer array de resultados
             const turno = result[0][0]; // Extrae el primer registro

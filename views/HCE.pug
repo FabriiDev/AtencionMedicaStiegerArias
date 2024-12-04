@@ -9,160 +9,71 @@ block header
     include templates/header.pug
 
 block content
-    
-    .container-fluid.cont-todo.width-90
-        if  flag
+    .container-fluid.cont-todo 
+        - var flag = true;
+        if flag
             .text-center.cont-todo.mt-5
-                .row.g-3 
-                    .col-12.col-md-12
-                        .card.w-100 
+                .row.g-3
+                    .card.col-12.col-md-12.p-2.border-bottom.border-dark
+                        .w-100 
                             .card-body
                                 h3.card-title.fs-2.text-center.d-flex.align-items-center.justify-content-center.gap-2
                                     img(src="/icons/paciente.png", alt="").img-fluid
-                                    |Paciente: #{turno.nombre_paciente+" "+turno.apellido_paciente}
-                                div.text-center.fs-3.fw-semibold.mb-4.d-flex.align-items-center.justify-content-center.gap-2
-                                    img(src="/icons/doctor.png", alt="").img-fluid
-                                    |Doc: #{turno.nombre_medico+" "+turno.apellido_medico} 
-                                .d-flex.justify-content-center.align-items-center.gap-4
-                                    div Atenciones:
-                                    select.btn.btn-info.dropdown-toggle#selectTurnos
-                            .card-body
-                                h4.card-title Motivo 
-                                p.card-text.mb-3 
-                                    |#{turno.motivo_consulta} 
-                                    
-            if turno.estado=='Pendiente'
-                .d-flex.flex-column.justify-content-center.align-items-center
-                    P.text-center.mt-4.fs-2.text-danger.bg-light.p-4.fw-semibold.w-100 No hay historial para esta fecha
-                    a(href=`/turnos/createHCE${turno.numero_turno}` target="_blank").btn.btn-success.btn-lg.w-25 Nuevo
-            else if turno.estado=='Cancelado'
-                P.text-center.mt-4.fs-2.text-danger.bg-light.p-4.fw-semibold El turno ha sido cancelado.
-            else
-                .row.g-3.mt-5
-                    .col-12.col-md-4
-                        h5.card-title.titulos-tar.sombra-titulo.d-flex.justify-content-center.gap-2.fs-3
-                            img(src="/icons/diagnostico.png", alt="").img-fluid
-                            | Diagnostico 
-                        .card.bg-papel.sombra-titulo.w-100
-                            .d-flex.justify-content-between.my-2
-                                button(onclick='atras(1)').btn.m-auto.btn-flecha#diag-izquierda.border.border-0
-                                    img(src="/icons/flecha-izquierda.png", alt="").p-2#flecha-icon-izq-diag
-                                .card-body.largo.fs-4
-                                    p.card-text.fst-italic#estadoDiagnostico  
-                                    p.card-text.fst-italic#detalleDiagnostico 
-                                button(onclick='adelante(1)').btn.m-auto.btn-flecha#diag-derecha.border.border-0
-                                    img(src="/icons/flecha-derecha.png", alt="").p-2#flecha-icon-der-diag
-                            
-
-                    .col-12.col-md-4
-                        h5.card-title.titulos-tar.sombra-titulo.d-flex.justify-content-center.gap-2.fs-3
-                            img(src="/icons/evolucion.png", alt="")
-                            | Evolucion 
-                        .card.bg-papel.sombra-titulo.w-100
-                            .card-body.largo.fs-4
-                                #editor.largo-quill Detalles: #{turno.evolucion || "No hay evolucion previa"}
-
-                    .col-12.col-md-4
-                        h5.card-title.titulos-tar.sombra-titulo.d-flex.justify-content-center.gap-2.fs-3
-                            img(src="/icons/medicamentos.png", alt="")
-                            | Medicamentos 
-                        .card.bg-papel.sombra-titulo.w-100
-                            .card-body.largo.fs-4
-                                //- p.card-text.fst-italic#nombreMedicamento #{turno.nombre_medicamento || "No se se recetaron medicamentos"}
-                                ul#nombreMedicamento
-                .row.g-3.mt-5
-                    .col-12.col-md-4
-                        h5.card-title.titulos-tar.sombra-titulo.d-flex.justify-content-center.gap-2.fs-3
-                            img(src="/icons/antecedentes.png", alt="")
-                            | Antecedentes 
-                        .card.bg-papel.sombra-titulo.w-100
-                            .d-flex.justify-content-between.my-2
-                                button(onclick='atras(2)').btn.btn-flecha.m-auto.border.border-0#ante-izquierda
-                                    img(src="/icons/flecha-izquierda.png", alt="").p-2#flecha-icon-izq-ante
-                                .card-body.largo.fs-4.d-flex.justify-content-between.flex-column
-                                    p.card-text.fst-italic#detalleAntecedente  
-                                    .card-text.d-flex.justify-content-between.fs-5
-                                        p#desdeAntecedente 
-                                        p#hastaAntecedente 
-                                button(onclick='adelante(2)').btn.btn-flecha.m-auto.border.border-0#ante-derecha
-                                    img(src="/icons/flecha-derecha.png", alt="").p-2#flecha-icon-der-ante
-
-                    .col-12.col-md-4
-                        h5.card-title.titulos-tar.sombra-titulo.d-flex.justify-content-center.gap-2.fs-3
-                            img(src="/icons/habitos.png", alt="")
-                            | Habitos 
-                        .card.bg-papel.sombra-titulo.w-100
-                            .d-flex.justify-content-between.my-2
-                                button(onclick='atras(3)').btn.btn-flecha.m-auto#habi-izquierda.border.border-0
-                                    img(src="/icons/flecha-izquierda.png", alt="").p-2#flecha-icon-izq-habi
-                                .card-body.largo.fs-4.d-flex.justify-content-between.flex-column
-                                    p#detalleHabito.card-text.fst-italic Detalles: 
-                                        | #{turno.habito || "No hay habitos registrados"}
-                                    .card-text.d-flex.justify-content-between.fs-5
-                                        p#desdeHabito Desde: #{turno.fecha_desde_habito || "No hay registros"}
-                                        p#hastaHabito Hasta: #{turno.fecha_hasta_habito || "No hay registros"}
-                                button(onclick='adelante(3)').btn.btn-flecha.m-auto#habi-derecha.border.border-0
-                                    img(src="/icons/flecha-derecha.png", alt="").p-2#flecha-icon-der-habi
-
-                    .col-12.col-md-4
-                        h5.card-title.titulos-tar.sombra-titulo.d-flex.justify-content-center.gap-2.fs-3
-                            img(src="/icons/alergias.png", alt="")
-                            | Alergia 
-                        .card.bg-papel.sombra-titulo.w-100
-                            .d-flex.justify-content-between.my-2
-                                button(onclick='atras(4)').btn.btn-flecha.m-auto.border.border-0#aler-izquierda
-                                    img(src="/icons/flecha-izquierda.png", alt="").p-2#flecha-icon-izq-aler
-                                .card-body.largo.fs-4.d-flex.justify-content-between.flex-column
-                                    p.card-text.fst-italic#nombreAlergia Nombre: #{turno.nombre_alergia || "No hay alergias"}
-                                    p.card-text.fst-italic#importanciaAlergia Importancia: 
-                                        | #{turno.importancia_alergia || "No hay registros"}
-                                    .card-text.d-flex.justify-content-between.fs-5
-                                        p#desdeAlergia Desde: #{turno.fecha_desde_alergia || "No hay registros"} 
-                                        p#hastaAlergia Hasta: #{turno.fecha_hasta_alergia || "No hay registros"}
-                                button(onclick='adelante(4)').btn.btn-flecha.m-auto#aler-derecha.border.border-0
-                                    img(src="/icons/flecha-derecha.png", alt="").p-2#flecha-icon-der-aler
-                
-                .text-center.mt-3.p-3.d-flex.gap-3.justify-content-center
-                    //- if turno.estado=='Pendiente'
-                        a(href=`/turnos/createHCE${turno.numero_turno}` target="_blank").btn.btn-light.btn-lg Nuevo
-                    if ultimo==1
-                        a(href=`/turnos/editarHCE${turno.numero_turno}` target="_blank").btn.btn-light.btn-lg Editar
-                #aca 
-        else 
-            .text-center.cont-todo.mt-5.width-90
-                .row.g-3 
-                    .col-12.col-md-12
-                        .card.w-100 
-                            .card-body
-                                h3.card-title.fs-2.text-center.d-flex.align-items-center.justify-content-center.gap-2
-                                    img(src="/icons/paciente.png", alt="").img-fluid
-                                    |Paciente: Juan Perez
-                                div.text-center.fs-3.fw-semibold.mb-4.d-flex.align-items-center.justify-content-center.gap-2
-                                    img(src="/icons/doctor.png", alt="").img-fluid
-                                    |Doc: Alan Alvarez
-                                .d-flex.justify-content-center.align-items-center.gap-4
-                                    div Atenciones:
-                                    select.btn.btn-info.dropdown-toggle#selectTurnos
-                                        
-                            .card-body
-                                h4.card-title Motivo 
-                                p.card-text.mb-3 
-                                    |#{turno.motivo_consulta} 
-
-            .row.g-3.mt-5.cont-todo
-                .col-12.col-md-12
-                    h5.card-title.titulos-tar.sombra-titulo.d-flex.justify-content-center.gap-2.fs-3
-                        img(src="/icons/diagnostico.png", alt="").img-fluid
-                        | Diagnostico 
-                    .card.bg-papel.sombra-titulo.w-100
-                        .card-body.largo.fs-4.text-center
-                            p#estadoDiagnostico.card-text.fst-italic Estado: #{turno.estado_diagnostico} 
-                            p#detalleDiagnostico.card-text.fst-italic Detalles: #{turno.diagnostico || "No hay diagnostico previo"}
-            .text-center.mt-3.p-3.d-flex.gap-3.justify-content-center
-                if turno.estado=='Pendiente'
-                    a(href=`/turnos/createHCE${turno.numero_turno}` target="_blank").btn.btn-light.btn-lg Nuevo
+                                    |Historial clinico del paciente: Pablo Neruda
+            
+            table.table.table-striped-columns.sombra-tabla.table-borderer.border-dark.align-middle.mt-4
+                thead.text-center.table-info
+                    tr
+                        th Fecha
+                        th Motivo
+                        th Medico
+                        th Diagnostico
+                        th Evolucion
+                        th Alergias
+                        th Medicamentos 
+                        th Habitos 
+                        th Antecedentes
+                tbody.text-center.table-group-divider#table-body
+                    //-tr(title="Modificar").editable
+                        td 
+                            p 11/12/2014 
+                        td 
+                            p Dolor de cabeza
+                        td 
+                            p Carlos Nosecuanto
+                            p Odontologo
+                        td
+                            ol 
+                                li El paciente tiene dolores de cabeza al estar mas de 2 horas en la computadora
+                        td 
+                            p El pacientee esta evolucionando 
+                                strong correctamente, 
+                                | continuar tratamiento
+                        td 
+                            ol
+                                li Polen
+                            p 
+                                u Importancia:
+                                |  Leve
+                            .d-flex.gap-2
+                                p desde: 11/11/2022
+                                p hasta: 11/11/2022
+                        td 
+                            ol 
+                                li
+                                    p 
+                                        u
+                                            strong Ibuprofeno
+                                    p 1 cada 12 horas durante 20 dias
+                        td 
+                            ol
+                                li n/a
+                        td 
+                            ol
+                                li n/a
+                    
     script.
-        let turnoS = !{JSON.stringify(turno)};
+        let turnos = !{JSON.stringify(turno)};
         let evolucionEriquesida = !{JSON.stringify(turno.evolucion)};
         let flagElse = !{JSON.stringify(flag)};
     script(src="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.min.js")  

@@ -98,319 +98,69 @@ function separador() {
 }
 
 
-// -------------------------- carrousel y flechas ----------------------
-
-/* Botones flecha */
-let diagDer = document.getElementById('diag-derecha');
-let diagIzq = document.getElementById('diag-izquierda');
-
-let anteIzq = document.getElementById('ante-izquierda');
-let anteDer = document.getElementById('ante-derecha');
-
-let habiIzq = document.getElementById('habi-izquierda');
-let habiDer = document.getElementById('habi-derecha');
-
-let alerIzq = document.getElementById('aler-izquierda');
-let alerDer = document.getElementById('aler-derecha');
-
-// -------------------- imagenes flecha NO BOTONES -----------------
-let flechaIconIzqDiag = document.getElementById('flecha-icon-izq-diag');
-let flechaIconDerDiag = document.getElementById('flecha-icon-der-diag');
-
-let flechaIconDerAnte = document.getElementById('flecha-icon-der-ante');
-let flechaIconIzqAnte = document.getElementById('flecha-icon-izq-ante');
-
-let flechaIconIzqHabi = document.getElementById('flecha-icon-izq-habi');
-let flechaIconDerHabi = document.getElementById('flecha-icon-der-habi');
-
-let flechaIconDerAler = document.getElementById('flecha-icon-der-aler');
-let flechaIconIzqAler = document.getElementById('flecha-icon-izq-aler');
-
-function flechasInicio() {
-    if (indiceDiagnostico <= 0) {
-        diagIzq.disabled = true;
-        flechaIconIzqDiag.src = '/icons/flecha-izquierda-disabled.png'
-        diagIzq.title = 'No hay anteriores'
-    } else {
-        diagIzq.disabled = false;
-        indiceDiagnostico--
-    }
-
-    if (indiceAntecedente <= 0) {
-        anteIzq.disabled = true;
-        flechaIconIzqAnte.src = '/icons/flecha-izquierda-disabled.png'
-    } else {
-        anteIzq.disabled = false;
-        indiceAntecedente--
-    }
-
-    if (indiceHabito <= 0) {
-        habiIzq.disabled = true;
-        flechaIconIzqHabi.src = '/icons/flecha-izquierda-disabled.png'
-    } else {
-        habiIzq.disabled = false;
-        indiceHabito--
-    }
-
-    if (indiceAlergia <= 0) {
-        alerIzq.disabled = true;
-        flechaIconIzqAler.src = '/icons/flecha-izquierda-disabled.png'
-    } else {
-        alerIzq.disabled = false;
-        indiceAlergia--
-    }
-
-    if (indiceDiagnostico >= detalleDiagnostico.length - 1) {
-        diagDer.disabled = true;
-        flechaIconDerDiag.src = '/icons/flecha-derecha-disabled.png'
-    } else {
-        diagDer.disabled = false;
-        indiceDiagnostico++
-    }
-
-    if (indiceAntecedente >= detalleAntecedente.length - 1) {
-        anteDer.disabled = true;
-        flechaIconDerAnte.src = '/icons/flecha-derecha-disabled.png'
-    } else {
-        anteDer.disabled = false;
-        indiceAntecedente++
-    }
-
-    if (indiceHabito >= detalleHabito.length - 1) {
-        habiDer.disabled = true;
-        flechaIconDerHabi.src = '/icons/flecha-derecha-disabled.png'
-    } else {
-        habiDer.disabled = false;
-        indiceHabito++
-    }
-
-    if (indiceAlergia >= nombreAlergia.length - 1) {
-        alerDer.disabled = true;
-        flechaIconDerAler.src = '/icons/flecha-derecha-disabled.png'
-    } else {
-        alerDer.disabled = false;
-        indiceAlergia++
-    }
-}
-
-
-
 try {
     separador()
 } catch (error) {
 }
-
-
-function atras(valor) {
-
-    switch (valor) {
-        case 1:
-            if (indiceDiagnostico <= 0) {
-                diagIzq.disabled = true;
-                flechaIconIzqDiag.src = '/icons/flecha-izquierda-disabled.png'
-                diagIzq.title = 'No hay anteriores'
-            } else {
-                diagIzq.disabled = false;
-                indiceDiagnostico--
-            }
-            diagDer.disabled = false
-            flechaIconDerDiag.src = '/icons/flecha-derecha.png'
-            cDiagnostico()
-            break;
-        case 2:
-            if (indiceAntecedente <= 0) {
-                anteIzq.disabled = true;
-                flechaIconIzqAnte.src = '/icons/flecha-izquierda-disabled.png'
-            } else {
-                anteIzq.disabled = false;
-                indiceAntecedente--
-            }
-            anteDer.disabled = false
-            flechaIconDerAnte.src = '/icons/flecha-derecha.png'
-            cAntecedente()
-            break;
-        case 3:
-            if (indiceHabito <= 0) {
-                habiIzq.disabled = true;
-                flechaIconIzqHabi.src = '/icons/flecha-izquierda-disabled.png'
-            } else {
-                habiIzq.disabled = false;
-                indiceHabito--
-            }
-            habiDer.disabled = false
-            flechaIconDerHabi.src = '/icons/flecha-derecha.png'
-            cHabito()
-            break;
-
-        case 4:
-            if (indiceAlergia <= 0) {
-                alerIzq.disabled = true;
-                flechaIconIzqAler.src = '/icons/flecha-izquierda-disabled.png'
-            } else {
-                alerIzq.disabled = false;
-                indiceAlergia--
-            }
-            alerDer.disabled = false
-            flechaIconDerAler.src = '/icons/flecha-derecha.png'
-            cAlergia()
-            break;
-        default:
-            break;
-    }
-
+console.log(turnos)
+let body = document.getElementById('table-body');
+function pintarTabla(){
+    let tabla = `<tr title="Modificar" class="editable">
+    <td>
+        <p>${turnos.fecha}</p>
+    </td>
+    <td>
+        <p>${turnos.motivo_consulta}</p>
+    </td>
+    <td>
+        <p>${turnos.apellido_medico}</p>
+        <p>Odontologo</p>
+    </td>
+    <td>
+        <ol>
+            <li>El paciente tiene dolores de cabeza al estar más de 2 horas en la computadora</li>
+        </ol>
+    </td>
+    <td>
+        <p>El paciente está evolucionando <strong>correctamente</strong>, continuar tratamiento</p>
+    </td>
+    <td>
+        <ol>
+            <li>Polen</li>
+        </ol>
+        <p><u>Importancia:</u> Leve</p>
+        <div class="d-flex gap-2">
+            <p>desde: 11/11/2022</p>
+            <p>hasta: 11/11/2022</p>
+        </div>
+    </td>
+    <td>
+        <ol>
+            <li>
+                <p><u><strong>Ibuprofeno</strong></u></p>
+                <p>1 cada 12 horas durante 20 días</p>
+            </li>
+        </ol>
+    </td>
+    <td>
+        <ol>
+            <li>n/a</li>
+        </ol>
+    </td>
+    <td>
+        <ol>
+            <li>n/a</li>
+        </ol>
+    </td>
+</tr>
+`;
+    document.getElementById('table-body').innerHTML += tabla;
+    
 }
+pintarTabla();
 
 
-
-function adelante(valor) {
-    switch (valor) {
-        case 1:
-            if (indiceDiagnostico >= detalleDiagnostico.length - 1) {
-                diagDer.disabled = true;
-                flechaIconDerDiag.src = '/icons/flecha-derecha-disabled.png'
-            } else {
-                diagDer.disabled = false;
-                indiceDiagnostico++
-            }
-            diagIzq.disabled = false
-            flechaIconIzqDiag.src = '/icons/flecha-izquierda.png'
-            cDiagnostico()
-            break;
-        case 2:
-            if (indiceAntecedente >= detalleAntecedente.length - 1) {
-                anteDer.disabled = true;
-                flechaIconDerAnte.src = '/icons/flecha-derecha-disabled.png'
-            } else {
-                anteDer.disabled = false;
-                indiceAntecedente++
-            }
-            anteIzq.disabled = false;
-            flechaIconIzqAnte.src = '/icons/flecha-izquierda.png'
-            cAntecedente()
-            break;
-        case 3:
-            if (indiceHabito >= detalleHabito.length - 1) {
-                habiDer.disabled = true;
-                flechaIconDerHabi.src = '/icons/flecha-derecha-disabled.png'
-            } else {
-                habiDer.disabled = false;
-                indiceHabito++
-            }
-            habiIzq.disabled = false
-            flechaIconIzqHabi.src = '/icons/flecha-izquierda.png'
-            cHabito()
-            break;
-
-        case 4:
-            if (indiceAlergia >= nombreAlergia.length - 1) {
-                alerDer.disabled = true;
-                flechaIconDerAler.src = '/icons/flecha-derecha-disabled.png'
-            } else {
-                alerDer.disabled = false;
-                indiceAlergia++
-            }
-            alerIzq.disabled = false
-            flechaIconIzqAler.src = '/icons/flecha-izquierda.png'
-            cAlergia()
-            break;
-        default:
-            break;
-    }
-
-}
-
-function cDiagnostico() {
-    document.getElementById('estadoDiagnostico').innerHTML = 'Detalle: ' + (detalleDiagnostico[indiceDiagnostico] || 'no hay datos');
-
-    document.getElementById('detalleDiagnostico').innerHTML = 'Estado: ' + (estadoDiagnostico[indiceDiagnostico] || 'Preliminar')
-
-}
-
-function cMedicamento() {
-    let ulMedicamento = document.getElementById('nombreMedicamento');
-    nombreMedicamento.forEach(element => {
-        let li = document.createElement('li');
-        if (element == '' || element == null) {
-            element = 'No hay medicamentos asociados'
-        }
-        li.textContent = element;
-        ulMedicamento.appendChild(li);
-    });
-}
-
-function cAntecedente() {
-    document.getElementById('detalleAntecedente').innerHTML = 'Detalle: ' + (detalleAntecedente[indiceAntecedente] || 'No hay datos');
-    document.getElementById('desdeAntecedente').innerHTML = 'Desde: ' + (desdeAntecedente[indiceAntecedente] || 'No hay datos');
-    document.getElementById('hastaAntecedente').innerHTML = 'Hasta: ' + (hastaAntecedente[indiceAntecedente] || 'No hay datos');
-}
-
-function cHabito() {
-    document.getElementById('detalleHabito').innerHTML = 'Detalle: ' + (detalleHabito[indiceHabito] || 'No hay datos');
-    document.getElementById('desdeHabito').innerHTML = 'Desde: ' + (desdeHabito[indiceHabito] || 'No hay datos');
-    document.getElementById('hastaHabito').innerHTML = 'Hasta: ' + (hastaHabito[indiceHabito] || 'No hay datos');
-}
-
-
-function cAlergia() {
-    document.getElementById('nombreAlergia').innerHTML = 'Nombre: ' + (nombreAlergia[indiceAlergia] || 'No hay datos');
-    document.getElementById('importanciaAlergia').innerHTML = 'Importancia: ' + (importanciaAlergia[indiceAlergia] || 'No hay datos');
-    document.getElementById('desdeAlergia').innerHTML = 'Desde: ' + (desdeAlergia[indiceAlergia] || 'No hay datos');
-    document.getElementById('hastaAlergia').innerHTML = 'Hasta: ' + (hastaAlergia[indiceAlergia] || 'No hay datos');
-}
-
-function cargardatos() {
-    fetch('/turnos/DNI', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            dni: turnoS.dni_paciente
-        })
-    })
-        .then(response => response.json())
-        .then(data => {
-            if (data) {
-                let turnos = data.turno
-                //puedeCambiar = data.turno[0].numero_turno || 'a';
-
-                cargarSelect(turnos)
-
-            }
-        })
-        .catch(error => console.error('Error:', error));
-
-}
-
-
-select = document.getElementById('selectTurnos')
-
-function cargarSelect(turnos) {
-
-    for (const element of turnos) {
-        let option = document.createElement('option')
-        const fecha = new Date(element.fecha);
-        const fechaFormateada = fecha.toISOString().split('T')[0];
-
-        option.value = element.numero_turno
-        option.innerHTML = fechaFormateada
-        if (fechaFormateada == '' || fechaFormateada == null) {
-            option.innerHTML = 'No hay atenciones anteriores'
-        }
-        select.appendChild(option)
-        const url = window.location.href;
-        let valorSeleccionado = url.split('HCE')[1];
-        select.value = valorSeleccionado;
-    }
-
-}
-
-select.addEventListener('change', function () {
-    let nuevoValor = this.value;
-    window.location.href = `/turnos/HCE${nuevoValor}`
-});
-
-
+/*
 if (flagElse && turnoS.estado == 'Atendido') {
     const quill = new Quill('#editor', {
         theme: 'snow'
@@ -433,6 +183,6 @@ if (flagElse && turnoS.estado == 'Atendido') {
 } else {
     cargardatos()
 }
-
+*/
 
 
