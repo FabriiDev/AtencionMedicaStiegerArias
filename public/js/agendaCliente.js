@@ -26,30 +26,30 @@ function turnosHoy() {
             fecha: fechaSeleccionada
         })
     })
-    .then(response => {
-        
-        return response.json();
-    })
-    .then(data => {
+        .then(response => {
 
-        if (data.success) {
-            
-            const turnos = JSON.parse(data.jsonstring);
+            return response.json();
+        })
+        .then(data => {
 
-            for (const element of turnos) {
-                document.getElementById('pintarTablaTurnos').innerHTML += pintarTabla(element);
+            if (data.success) {
+
+                const turnos = JSON.parse(data.jsonstring);
+
+                for (const element of turnos) {
+                    document.getElementById('pintarTablaTurnos').innerHTML += pintarTabla(element);
+                }
+
+                // document.getElementById('pintarTablaTurnos').innerHTML = pintarTabla(element);
+            } else {
+                console.error(data.message || 'No se encontraron turnos');
+                document.getElementById('pintarTablaTurnos').innerHTML = `no se encontraron turnos para el ${fechaSeleccionada}`
             }
-            
-            // document.getElementById('pintarTablaTurnos').innerHTML = pintarTabla(element);
-        } else {
-            console.error(data.message || 'No se encontraron turnos');
-            document.getElementById('pintarTablaTurnos').innerHTML=`no se encontraron turnos para el ${fechaSeleccionada}`
-        }
-    })
-    .catch(error => {
-        console.error('Error al obtener turnos:', error);
-    });
-    
+        })
+        .catch(error => {
+            console.error('Error al obtener turnos:', error);
+        });
+
 }
 turnosHoy();
 
@@ -64,47 +64,47 @@ inputFecha.addEventListener('change', (event) => {
             fecha: fechaSeleccionada
         })
     })
-    .then(response => {
-        return response.json();
-    })
-    .then(data => {
-        if (data.success) {
-            //document.getElementById('fechaInicial').innerHTML = fechaSeleccionada;
-            const turnos = JSON.parse(data.jsonstring)
-            document.getElementById('pintarTablaTurnos').innerHTML=""
-            for (const element of turnos) {
-                document.getElementById('pintarTablaTurnos').innerHTML += pintarTabla(element);
+        .then(response => {
+            return response.json();
+        })
+        .then(data => {
+            if (data.success) {
+                //document.getElementById('fechaInicial').innerHTML = fechaSeleccionada;
+                const turnos = JSON.parse(data.jsonstring)
+                document.getElementById('pintarTablaTurnos').innerHTML = ""
+                for (const element of turnos) {
+                    document.getElementById('pintarTablaTurnos').innerHTML += pintarTabla(element);
+                }
+            } else {
+                //document.getElementById('fechaInicial').innerHTML = fechaSeleccionada;
+                console.error(data.message || 'No se encontraron turnos');
+                document.getElementById('pintarTablaTurnos').innerHTML = `no se encontraron turnos para el ${fechaSeleccionada}`
             }
-        } else {
-            //document.getElementById('fechaInicial').innerHTML = fechaSeleccionada;
-            console.error(data.message || 'No se encontraron turnos');
-            document.getElementById('pintarTablaTurnos').innerHTML=`no se encontraron turnos para el ${fechaSeleccionada}`
-        }
-    })
-    .catch(error => {
-        console.error('Error al obtener turnos:', error);
-    });
-        
+        })
+        .catch(error => {
+            console.error('Error al obtener turnos:', error);
+        });
+
 });
 
 
-function pintarTabla(turnos){
+function pintarTabla(turnos) {
     console.log(turnos);
     let colorEstado;
-    if(turnos.estado === 'Cancelado'){
+    if (turnos.estado === 'Cancelado') {
         colorEstado = 'text-danger';
-    }else if(turnos.estado === 'Atendido'){
+    } else if (turnos.estado === 'Atendido') {
         colorEstado = 'text-success';
-    }else{
+    } else {
         colorEstado = 'text-primary';
     }
     let colorArribado;
     let textoArribado;
     console.log('--------------')
-    if(turnos.arribado === 0){
+    if (turnos.arribado === 0) {
         colorArribado = 'text-danger';
         textoArribado = 'No'
-    }else{
+    } else {
         colorArribado = 'text-success';
         textoArribado = 'Si'
     }
@@ -112,11 +112,11 @@ function pintarTabla(turnos){
     let btnComenzarAtencion = '';
 
 
-    if(turnos.arribado == 1 && turnos.estado == 'Pendiente'){
+    if (turnos.arribado == 1 && turnos.estado == 'Pendiente') {
         btnComenzarAtencion = `<a href="/turnos/createHCE${turnos.numero_turno}" target="_blank">
         <button class="btn btn-success fw-semibold">Comenzar atencion</button>
         </a>`
-    }else{
+    } else {
         btnComenzarAtencion = '<p></p>';
     }
 
@@ -145,32 +145,32 @@ function pintarTabla(turnos){
 
 //------------------------------ template --------------------------
 
-document.getElementById('btn-template').onclick = function() {
+document.getElementById('btn-template').onclick = function () {
     document.getElementById('modal').style.display = 'block';
 }
 
-document.getElementById('close').onclick = function() {
+document.getElementById('close').onclick = function () {
     document.getElementById('modal').style.display = 'none';
 }
 
-window.onclick = function(event) {
+window.onclick = function (event) {
     if (event.target == document.getElementById('modal')) {
         document.getElementById('modal').style.display = 'none';
     }
 }
 
-function capturarTemplate(){
+function capturarTemplate() {
     const contenido = quill.root.innerHTML;
     return contenido;
 }
 
-document.getElementById('guardar-template').onclick = function() {
+let templateName=''
+document.getElementById('guardar-template').onclick = function () {
     const enHTML = capturarTemplate();
-    const templateName = document.getElementById('nombre-template').value;
+    templateName = document.getElementById('nombre-template').value;
     console.log('Nombre del Template: ', templateName);
     console.log('Texto en HTML: ', enHTML);
     document.getElementById('modal').style.display = 'none';
-    updateTemplate();
     if (enHTML === '' || templateName === '') {
         toastr.error('Complete los campos', 'Servidor', {
             "progressBar": true,
@@ -187,30 +187,31 @@ document.getElementById('guardar-template').onclick = function() {
 
 
 function updateTemplate() {
-    let plantilla=capturarTemplate()
+    let plantilla = capturarTemplate()
     fetch('/crearTemplate', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-            template: plantilla
+            template: plantilla,
+            nombre: templateName
         })
     })
-    .then(response => {
-        
-        return response.json();
-    })
-    .then(data => {
+        .then(response => {
 
-        if (data.success) {
+            return response.json();
+        })
+        .then(data => {
 
-            // document.getElementById('pintarTablaTurnos').innerHTML = pintarTabla(element);
-        } else {
-            console.error(data.message || 'fallo en template');
-        }
-    })
-    .catch(error => {
-        console.error('Error al cargar template', error);
-    });
+            if (data.success) {
+
+                // document.getElementById('pintarTablaTurnos').innerHTML = pintarTabla(element);
+            } else {
+                console.error(data.message || 'fallo en template');
+            }
+        })
+        .catch(error => {
+            console.error('Error al cargar template', error);
+        });
 }

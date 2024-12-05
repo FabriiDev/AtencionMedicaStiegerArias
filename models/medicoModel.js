@@ -48,18 +48,30 @@ WHERE
         }
     }
 
-//     static async template(template,matricula_medico) {
-//         const query = `UPDATE medico SET template = ? WHERE medico.matricula_medico = ?;`
-//         try {
-//             conn = await crearConexion();
-//             const [result] = await conn.query(query, [template,matricula_medico]);
-//             return result.length ? result[0] : null;
-//         } catch (error) {
-//             console.log('Error al loguear medico: ', error);
-//         } finally {
-//             if (conn) conn.end();
-//         }
-//     }
+    static async template(template, matricula_medico,nombre) {
+        const query = `INSERT INTO template(
+    nombre,
+    txt_template,
+    matricula_medico,
+    estado
+)
+VALUES(
+    ?,
+    ?,
+	?,
+	1
+    
+);`
+        try {
+            conn = await crearConexion();
+            const [result] = await conn.query(query, [nombre,template, matricula_medico]);
+            return result.length ? result[0] : null;
+        } catch (error) {
+            console.log('Error al loguear medico: ', error);
+        } finally {
+            if (conn) conn.end();
+        }
+    }
 }
 
 Medico.traerMedico()

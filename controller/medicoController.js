@@ -53,14 +53,15 @@ class MedicoController {
     }
 
     async template(req, res) {
+        console.log('tuqui tuqui tuqui tuqui tuqui tuqui tuqui')
+        console.log(req.body.template+req.body.nombre)
         try {
-            await medicoModel.template(req.body.template, req.session.matricula)
+            await medicoModel.template(req.body.template, req.session.matricula,req.body.nombre)
 
         } catch (error) {
             console.log('error en la template' + error)
             return
         }
-        req.session.template = req.body.template
         res.send({ mensaje: 'template cargada exitosamente', success: true })
     }
     //------------------------------------------------
