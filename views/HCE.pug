@@ -9,68 +9,30 @@ block header
     include templates/header.pug
 
 block content
-    .container-fluid.cont-todo 
-        - var flag = true;
-        if flag
-            .text-center.cont-todo.mt-5
-                .row.g-3
-                    .card.col-12.col-md-12.p-2.border-bottom.border-dark
-                        .w-100 
-                            .card-body
-                                h3.card-title.fs-2.text-center.d-flex.align-items-center.justify-content-center.gap-2
-                                    img(src="/icons/paciente.png", alt="").img-fluid
-                                    |Historial clinico del paciente: Pablo Neruda
-            
-            table.table.table-striped-columns.sombra-tabla.table-borderer.border-dark.align-middle.mt-4
-                thead.text-center.table-info
-                    tr
-                        th Fecha
-                        th Motivo
-                        th Medico
-                        th Diagnostico
-                        th Evolucion
-                        th Alergias
-                        th Medicamentos 
-                        th Habitos 
-                        th Antecedentes
-                tbody.text-center.table-group-divider#table-body
-                    //-tr(title="Modificar").editable
-                        td 
-                            p 11/12/2014 
-                        td 
-                            p Dolor de cabeza
-                        td 
-                            p Carlos Nosecuanto
-                            p Odontologo
-                        td
-                            ol 
-                                li El paciente tiene dolores de cabeza al estar mas de 2 horas en la computadora
-                        td 
-                            p El pacientee esta evolucionando 
-                                strong correctamente, 
-                                | continuar tratamiento
-                        td 
-                            ol
-                                li Polen
-                            p 
-                                u Importancia:
-                                |  Leve
-                            .d-flex.gap-2
-                                p desde: 11/11/2022
-                                p hasta: 11/11/2022
-                        td 
-                            ol 
-                                li
-                                    p 
-                                        u
-                                            strong Ibuprofeno
-                                    p 1 cada 12 horas durante 20 dias
-                        td 
-                            ol
-                                li n/a
-                        td 
-                            ol
-                                li n/a
+    .container-fluid.cont-todo.width-90
+        .text-center.cont-todo.mt-5
+            .row.g-3
+                .card.col-12.col-md-12.p-2.border-bottom.border-dark
+                    .w-100 
+                        .card-body
+                            h3.card-title.fs-2.text-center.d-flex.align-items-center.justify-content-center.gap-2
+                                img(src="/icons/paciente.png", alt="").img-fluid
+                                #nombre-paciente.color-primario-txt.fw-bold
+        
+        table.table.table-striped-columns.sombra-tabla.table-borderer.border-dark.align-middle.mt-4
+            thead.text-center.table-info.color-primario-bg
+                tr
+                    th Fecha
+                    th Motivo
+                    th Medico
+                    th Diagnostico
+                    th Evolucion
+                    th Alergias
+                    th Medicamentos 
+                    th Habitos 
+                    th Antecedentes
+            tbody.text-center.table-group-divider#table-body
+                    
                     
     script.
         let turnos = !{JSON.stringify(turno)};

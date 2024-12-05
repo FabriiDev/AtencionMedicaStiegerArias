@@ -1,19 +1,20 @@
 //- pag2.pug
 extends layout
 block head 
-    link(rel="stylesheet", href="/styles/general.css")
+    
     link(rel="stylesheet", href="/styles/agenda.css")
     //- estilos de alertas
     link(rel="stylesheet", href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css")
     //- estilos del para el quill
-    link(href="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.snow.css" rel="stylesheet") 
+    link(href="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.snow.css" rel="stylesheet")
+    link(rel="stylesheet", href="/styles/general.css")
 block header 
     include templates/header.pug
 block content
     .conteiner.cont-todo.width-90
         .title.text-center.mt-5 
-            h1.text-light Bienvenido #{nombre}!
-        .text-center.mt-3.text-light.fs-5 Agenda Diaria
+            h1.text-light.fw-bold Bienvenido #{nombre}!
+        
         //- clavar filtrado de fechas
         .conteiner.rounded.p-2
             .d-flex.justify-content-center.mb-4.gap-3
@@ -24,7 +25,8 @@ block content
                     | Elegir fecha 
                     input(type="date")#fecha
 
-                    button.btn.btn-light#btn-template Crear Template
+                    button.btn.btn-light#btn-template.color-primario-txt.fw-semibold Crear Template
+            .text-center.mt-1.text-light.fs-4.color-primario-bg.fw-semibold.p-3.border-bottom.border-light Agenda Diaria
                     #modal.modal 
                         .modal-content.fw-normal
                             span.close#close &times;
@@ -33,8 +35,8 @@ block content
                             button.btn.btn-success.mt-4#guardar-template Enviar
 
             .table-responsive
-                table.table.table-striped.sombra-tabla.textos-tur
-                    thead 
+                table.table.table-striped.sombra-tabla.color-primario-txt.fs-5.fw-semibold
+                    thead.table-info
                         tr
                             th Paciente
                             th Hora

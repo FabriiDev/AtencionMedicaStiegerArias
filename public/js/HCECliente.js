@@ -29,6 +29,9 @@ let desdeAlergia = []
 let hastaAlergia = []
 
 function formatearFecha(fechaISO) {
+    if (!fechaISO) {
+        return 'sin registros';
+    }
     const fecha = new Date(fechaISO);
     const dia = String(fecha.getDate()).padStart(2, '0');
     const mes = String(fecha.getMonth() + 1).padStart(2, '0'); // Los meses en JavaScript son 0-11
@@ -54,6 +57,7 @@ function separador(turnos) {
         let turnoA = {
             fecha: formatearFecha(t.fecha),
             motivo: t.motivo_consulta,
+            estadoTurno: t.estado,
             idEspecialidad: t.id_especialidad,
             nombreEspecialidad: t.nombre_especialidad,
             paciente: paciente,
@@ -61,20 +65,23 @@ function separador(turnos) {
             apellidoMedico: t.apellido_medico,
             matriculaMedico: t.matricula_medico,
             editable: t.es_ultima_atencion,
-            diagnostico: t.diagnostico ? t.diagnostico.split('|') : [],
-            estadoDiagnostico: t.estado_diagnostico ? t.estado_diagnostico.split('|') : [],
-            evolucion: t.evolucion,
-            nombreAlergia: t.nombre_alergia ? t.nombre_alergia.split('|') : [],
-            importanciaAlergia: t.importancia_alergia ? t.importancia_alergia.split('|') : [],
-            alergiaDesde: t.fecha_desde_alergia ? t.fecha_desde_alergia.split('|') : [],
-            alergiaHasta: t.fecha_hasta_alergia ? t.fecha_hasta_alergia.split('|') : [],
-            habito: t.habito ? t.habito.split('|') : [],
-            habitoDesde: t.fecha_desde_habito ? t.fecha_desde_habito.split('|') : [],
-            habitoHasta: t.fecha_hasta_habito ? t.fecha_hasta_habito.split('|') : [],
-            idReceta: t.id_receta ? t.id_receta.split('|') : [],
-            txtReceta: t.txt_receta ? t.txt_receta.split('|') : [],
-            nombreMedicamento: t.nombre_medicamento ? t.nombre_medicamento.split('|') : [],
-            idMedicamento: t.id_medicamento ? t.id_medicamento.split('|') : []
+            diagnostico: t.diagnostico ? t.diagnostico.split('|') : ['Sin diagnóstico'],
+            estadoDiagnostico: t.estado_diagnostico ? t.estado_diagnostico.split('|') : ['Sin estado de diagnóstico'],
+            evolucion: t.evolucion || 'Sin evolución registrada',
+            nombreAlergia: t.nombre_alergia ? t.nombre_alergia.split('|') : ['Sin alergias registradas'],
+            importanciaAlergia: t.importancia_alergia ? t.importancia_alergia.split('|') : ['No especificada'],
+            alergiaDesde: t.fecha_desde_alergia ? t.fecha_desde_alergia.split('|') : [''],
+            alergiaHasta: t.fecha_hasta_alergia ? t.fecha_hasta_alergia.split('|') : [''],
+            habito: t.habito ? t.habito.split('|') : ['Sin hábitos registrados'],
+            habitoDesde: t.fecha_desde_habito ? t.fecha_desde_habito.split('|') : [''],
+            habitoHasta: t.fecha_hasta_habito ? t.fecha_hasta_habito.split('|') : [''],
+            idReceta: t.id_receta ? t.id_receta.split('|') : ['Sin recetas'],
+            txtReceta: t.txt_receta ? t.txt_receta.split('|') : ['Sin contenido de receta'],
+            nombreMedicamento: t.nombre_medicamento ? t.nombre_medicamento.split('|') : ['Sin medicamentos'],
+            idMedicamento: t.id_medicamento ? t.id_medicamento.split('|') : ['Sin identificadores de medicamento'],
+            antecedente: t.antecedente ? t.antecedente.split('|') : ['Sin antecedentes registrados'],
+            antecedenteDesde: t.fecha_desde_antecedente ? t.fecha_desde_antecedente.split('|') : [''],
+            antecedenteHasta: t.fecha_hasta_antecedente ? t.fecha_hasta_antecedente.split('|') : ['']
         };
 
         turnoFormateado.push(turnoA);
@@ -87,69 +94,178 @@ console.log(separador(turnos))
 
 
 
+
 try {
     separador()
 } catch (error) {
 }
-console.log(turnos)
+//console.log(turnos)
 let body = document.getElementById('table-body');
-function pintarTabla() {
-    let tabla = ""
-    for (const element of turnos) {
-        tabla += `<tr title="Modificar" class="editable">
-    <td>
-        <p>${element.fecha}</p>
-    </td>
-    <td>
-        <p>${element.motivo_consulta}</p>
-    </td>
-    <td>
-        <p>${element.apellido_medico}</p>
-        <p>Odontologo</p>
-    </td>
-    <td>
-        <ol>
-            <li>${element.diagnostico}</li>
-        </ol>
-    </td>
-    <td>
-        <p>El paciente está evolucionando <strong>correctamente</strong>, continuar tratamiento</p>
-    </td>
-    <td>
-        <ol>
-            <li>Polen</li>
-        </ol>
-        <p><u>Importancia:</u> Leve</p>
-        <div class="d-flex gap-2">
-            <p>desde: 11/11/2022</p>
-            <p>hasta: 11/11/2022</p>
-        </div>
-    </td>
-    <td>
-        <ol>
-            <li>
-                <p><u><strong>Ibuprofeno</strong></u></p>
-                <p>1 cada 12 horas durante 20 días</p>
-            </li>
-        </ol>
-    </td>
-    <td>
-        <ol>
-            <li>n/a</li>
-        </ol>
-    </td>
-    <td>
-        <ol>
-            <li>n/a</li>
-        </ol>
-    </td>
-</tr>
-`;
-    }
-    document.getElementById('table-body').innerHTML += tabla;
 
+
+function pintarTabla() {
+    document.getElementById('nombre-paciente').innerHTML = `Historial clínico del paciente: ${turnos[0].nombre_paciente} ${turnos[0].apellido_paciente}`;
+
+    let tabla = "";
+    let primerTr = true; // Bandera para identificar el primer <tr>
+    for (const element of separador(turnos)) {
+
+        //--------------------------------- diagnosticos -------------------------------
+        const diagnosticosHTML = element.diagnostico.map((diagnostico, index) => `
+        <li>
+            <p>${diagnostico}</p>
+            <p>Estado: ${element.estadoDiagnostico[index] || 'Sin estado registrado'}</p>
+            <hr>
+        </li>
+        
+        `).join('');
+
+
+
+        // ------------------------------ medicamento ----------------------------
+        const medicamentosHTML = element.nombreMedicamento.map((medicamento, index) => `
+        <li>
+            <p><u><strong>${medicamento}</strong></u></p>
+            <p>${element.txtReceta[index] || 'Sin receta registrada'}</p>
+        </li>
+        <hr>
+        `).join('');
+
+        // ---------------------------- alergias ---------------------------------
+
+        const alergiasHTML = element.nombreAlergia.map((alergia, index) => `
+            <li>
+                ${alergia || 'Sin alergia registrada'}
+                <p>Importancia: ${element.importanciaAlergia[index] || 'No especificada'}</p>
+                <div class="d-flex gap-2">
+                    <p>Desde: ${formatearFecha(element.alergiaDesde[index]) || 'N/A'}</p>
+                    <p>Hasta: ${formatearFecha(element.alergiaHasta[index]) || 'Vigente'}</p>
+                </div>
+            </li>
+            <hr>
+        `).join('');
+
+        // -------------------------------- habitos --------------------------------
+
+        const habitosHTML = element.habito.map((habito, index) => `
+            <li>
+                ${habito || 'Sin hábitos registrados'}
+                <div class="d-flex gap-2">
+                    <p>Desde: ${formatearFecha(element.habitoDesde[index]) || 'N/A'}</p>
+                    <p>Hasta: ${formatearFecha(element.habitoHasta[index]) || 'Vigente'}</p>
+                </div>
+            </li>
+            <hr>
+        `).join('');
+
+        // ----------------------------- antecedentes --------------------------------
+
+        const antecedentesHTML = element.antecedente.map((antecedente, index) => `
+            <li>
+                ${antecedente}
+                <div class="d-flex gap-2">
+                    <p>Desde: ${formatearFecha(element.antecedenteDesde[index]) || 'N/A'}</p>
+                    <p>Hasta: ${formatearFecha(element.antecedenteHasta[index]) || 'Vigente'}</p>
+                </div>
+            </li>
+            <hr>
+        `).join('');
+
+
+        // ---------------------- tabla completa -------------------------------------
+
+        
+
+        if (element.estadoTurno == "Atendido") {
+            const trContent = `
+            <tr>
+                <td>
+                    <p class="color-primario-txt fw-semibold">${element.fecha}</p>
+                </td>
+                <td>
+                    <p class="color-primario-txt fw-semibold">${element.motivo}</p>
+                </td>
+                <td>
+                    <p class="color-primario-txt fw-semibold">${element.apellidoMedico} ${element.nombreMedico}</p>
+                    <p class="color-primario-txt fw-semibold">${element.nombreEspecialidad}</p>
+                </td>
+                <td>
+                    <ol class="color-primario-txt fw-semibold">${diagnosticosHTML}</ol></td>
+                <td>
+                    <p class="color-primario-txt">${element.evolucion}</p>
+                </td>
+                <td>
+                    <ol class="color-primario-txt fw-semibold">${alergiasHTML}</ol>
+                </td>
+                <td>
+                    <ol class="color-primario-txt fw-semibold">${medicamentosHTML}</ol>
+                </td>
+                <td>
+                    <ol class="color-primario-txt fw-semibold">${habitosHTML}</ol>
+                </td>
+                <td>
+                    <ol class="color-primario-txt fw-semibold">${antecedentesHTML}</ol>
+                </td>
+            </tr>
+        `;
+
+            if (primerTr) {
+                console.log('------------ editable -----------------')
+                tabla += `
+                <tr title="Modificar" class="editable">
+                    
+                        <td><a href="#" class="p-5"><p>${element.fecha}</p></a></td>
+                        <td><a href="#" class="p-5"><p>${element.motivo}</p></a></td>
+                        <td>
+                            <a href="#" class="p-5 fw-semibold">
+                                <p>${element.apellidoMedico} ${element.nombreMedico}</p>
+                                <p>${element.nombreEspecialidad}</p>
+                            </a>
+                        </td>
+                        <td>
+                            <a href="#" class="p-5 fw-semibold">
+                                <ol>${diagnosticosHTML}</ol>
+                            </a>
+                        </td>
+                        <td>
+                            <a href="#" class="p-5 evolink text-dark">
+                                <p>${element.evolucion}</p>
+                            </a>
+                        </td>
+                        <td>
+                            <a href="#" class="p-5 fw-semibold">
+                                <ol>${alergiasHTML}</ol>
+                                </a>
+                            </td>
+                        <td>
+                            <a href="#" class="p-5 fw-semibold">
+                                <ol>${medicamentosHTML}</ol>
+                                </a>
+                        </td>
+                        <td>
+                            <a href="#" class="p-5 fw-semibold">
+                                <ol>${habitosHTML}</ol>
+                            </a>
+                        </td>
+                        <td>
+                            <a href="#" class="p-5 fw-semibold">
+                                <ol>${antecedentesHTML}</ol>
+                            </a>
+                        </td>
+                    
+                </tr> `;
+                primerTr = false; 
+            } else {
+                tabla += `<tr title="Modificar">${trContent} </tr>`;
+            }
+        }
+
+    }
+
+    document.getElementById('table-body').innerHTML = tabla;
 }
 pintarTabla();
+
 
 
 /*

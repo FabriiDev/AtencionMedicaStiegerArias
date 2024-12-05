@@ -92,26 +92,50 @@ function pintarTabla(turnos){
     console.log(turnos);
     let colorEstado;
     if(turnos.estado === 'Cancelado'){
-        colorEstado = 'bg-danger';
+        colorEstado = 'text-danger';
     }else if(turnos.estado === 'Atendido'){
-        colorEstado = 'bg-success';
+        colorEstado = 'text-success';
     }else{
-        colorEstado = 'bg-primary';
+        colorEstado = 'text-primary';
+    }
+    let colorArribado;
+    let textoArribado;
+    console.log('--------------')
+    if(turnos.arribado === 0){
+        colorArribado = 'text-danger';
+        textoArribado = 'No'
+    }else{
+        colorArribado = 'text-success';
+        textoArribado = 'Si'
     }
 
-    
+    let btnComenzarAtencion = '';
+
+    if(turnos.arribado == 1 && turnos.estado == 'Pendiente'){
+        btnComenzarAtencion = `<a href="/turnos/HCE${turnos.dni_paciente}" target="_blank">
+        <button class="btn btn-success fw-semibold">Comenzar atencion</button>
+        </a>`
+    }else{
+        btnComenzarAtencion = '<p></p>';
+    }
 
     pintarTablaTurnos = `
             <tr>
-                <td>
-                    <a href="/turnos/HCE${turnos.dni_paciente}" target="_blank"> ${turnos.apellido} ${turnos.nombre} </a>
+                <td class="text-danger-emphasis pb-4 pt-5">
+                    ${turnos.apellido} ${turnos.nombre}
                 </td>
-                <td> ${turnos.hora} </td>
-                <td> ${turnos.motivo_consulta} </td>
-                <td class="${colorEstado}"> ${turnos.estado} </td>
-                <td> ${turnos.arribado} </td>
-                <td> ${turnos.nombre_especialidad} </td>
-                <td> <button>HCE</button> <button>Comenzar atencion</button></td>
+                <td class="text-danger-emphasis pb-4 pt-5"> ${turnos.hora} </td>
+                <td class="text-danger-emphasis pb-4 pt-5"> ${turnos.motivo_consulta} </td>
+                <td class="${colorEstado} pb-4 pt-5"> ${turnos.estado} </td>
+                <td class="${colorArribado} pb-4 pt-5"> ${textoArribado} </td>
+                <td class="text-danger-emphasis pb-4 pt-5""> ${turnos.nombre_especialidad} </td>
+
+                <td class="pb-4 pt-5 d-flex gap-3"> 
+                    <a href="/turnos/HCE${turnos.dni_paciente}" target="_blank"> 
+                        <button class="btn btn-HCE fw-semibold">HCE</button>
+                    </a> 
+                    ${btnComenzarAtencion}
+                </td>
             </tr>`;
 
     return pintarTablaTurnos;
