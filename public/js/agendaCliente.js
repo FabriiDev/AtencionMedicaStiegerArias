@@ -111,8 +111,9 @@ function pintarTabla(turnos){
 
     let btnComenzarAtencion = '';
 
+
     if(turnos.arribado == 1 && turnos.estado == 'Pendiente'){
-        btnComenzarAtencion = `<a href="/turnos/HCE${turnos.dni_paciente}" target="_blank">
+        btnComenzarAtencion = `<a href="/turnos/createHCE${turnos.numero_turno}" target="_blank">
         <button class="btn btn-success fw-semibold">Comenzar atencion</button>
         </a>`
     }else{

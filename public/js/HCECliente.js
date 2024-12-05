@@ -3,7 +3,7 @@
 */
 // ------------------- libreria txt enriquesido --------------- 
 
-
+console.log(matriculaMedico)
 // ------------------------------------------------------------ 
 
 let indiceDiagnostico = 0

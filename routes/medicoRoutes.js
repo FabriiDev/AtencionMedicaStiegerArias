@@ -22,6 +22,6 @@ router.get('/HCE', medicoController.HCE);
 router.get('/createHCE', medicoController.CreateHCE);
 router.post('/crearTemplate',medicoController.template);
 
-// login
+
 
 module.exports = router;

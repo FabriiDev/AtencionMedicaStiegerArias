@@ -31,13 +31,13 @@ class TurnoController {
     async HCE(req, res) {
 
         let turno = await turnoModel.numero_turno(req.params.dni)
-        let flag = false;
-        if (turno.matricula_medico == req.session.matricula) {
-            flag = true;
-        }
+        let medicoLogeado = req.session.matricula;
+
         let ultimo = turno.es_ultima_atencion
-        res.render('HCE', { turno, flag, ultimo });
+        res.render('HCE', { turno, medicoLogeado, ultimo });
     }
+
+
 
     async HCErender(req, res) {
         res.render('HCE');
@@ -53,12 +53,8 @@ class TurnoController {
 
     async createHCE(req, res) {
         let turno = await turnoModel.numero_turno(req.params.numeroTurno)
-        const fechaFormateada = turno.fecha.toISOString().split('T')[0];
-        let template = req.session.template
-
-
         let medicamentos = await turnoModel.medicamentos()
-        res.render('createHCE', { turno, template, fechaFormateada, medicamentos })
+        res.render('createHCE', { turno, medicamentos })
     }
 
     async editHCE(req, res) {
