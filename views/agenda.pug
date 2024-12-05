@@ -28,9 +28,12 @@ block content
                     button.btn.btn-light#btn-template.color-primario-txt.fw-semibold Crear Template
             .text-center.mt-1.text-light.fs-4.color-primario-bg.fw-semibold.p-3.border-bottom.border-light Agenda Diaria
                     #modal.modal 
-                        .modal-content.fw-normal
+                        .modal-content.fw-normal.d-flex.flex-column.gap-3
                             span.close#close &times;
                             p.text-center.fw-semibold Crea tu template
+                            label Nombre Template: 
+                            input(type="text")#nombre-template
+                            label Template: 
                             div#editor
                             button.btn.btn-success.mt-4#guardar-template Enviar
 

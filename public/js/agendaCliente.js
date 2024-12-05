@@ -143,8 +143,7 @@ function pintarTabla(turnos){
 }
 
 
-//------------------------------ tempplate --------------------------
-
+//------------------------------ template --------------------------
 
 document.getElementById('btn-template').onclick = function() {
     document.getElementById('modal').style.display = 'block';
@@ -167,20 +166,22 @@ function capturarTemplate(){
 
 document.getElementById('guardar-template').onclick = function() {
     const enHTML = capturarTemplate();
-    console.log('texto en HTML: ', enHTML)
+    const templateName = document.getElementById('nombre-template').value;
+    console.log('Nombre del Template: ', templateName);
+    console.log('Texto en HTML: ', enHTML);
     document.getElementById('modal').style.display = 'none';
-    updateTemplate()
-    if (enHTML == '') {
+    updateTemplate();
+    if (enHTML === '' || templateName === '') {
         toastr.error('Complete los campos', 'Servidor', {
             "progressBar": true,
             "positionClass": "toast-top-center"
         });
     } else {
-        toastr.success('Template guardada con exito!', 'Servidor:', {
+        toastr.success('Template guardada con éxito!', 'Servidor:', {
             "progressBar": true,
             "positionClass": "toast-top-center"
         });
-        updateTemplate()
+        updateTemplate();
     }
 }
 
