@@ -4,6 +4,10 @@ const quill = new Quill('#editor', {
 });
 quill.clipboard.dangerouslyPasteHTML('');
 
+const quillEditar = new Quill('#editor-editar', {
+    theme: 'snow'
+});
+
 // ------------------------------------------------------------ 
 
 const inputFecha = document.getElementById('fecha');
@@ -114,7 +118,7 @@ function pintarTabla(turnos) {
 
     if (turnos.arribado == 1 && turnos.estado == 'Pendiente') {
         btnComenzarAtencion = `<a href="/turnos/createHCE${turnos.numero_turno}" target="_blank">
-        <button class="btn btn-success fw-semibold">Comenzar atencion</button>
+        <button class="btn btn-HCE-invertido fw-semibold">Comenzar atencion</button>
         </a>`
     } else {
         btnComenzarAtencion = '<p></p>';
@@ -142,8 +146,57 @@ function pintarTabla(turnos) {
     return pintarTablaTurnos;
 }
 
+//------------------------------ template editar --------------------------
 
-//------------------------------ template --------------------------
+document.getElementById('btn-template-editar').onclick = function () {
+    document.getElementById('modal-editar').style.display = 'block';
+};
+
+document.getElementById('close-editar').onclick = function () {
+    document.getElementById('modal-editar').style.display = 'none';
+};
+
+window.onclick = function (event) {
+    if (event.target == document.getElementById('modal-editar')) {
+        document.getElementById('modal-editar').style.display = 'none';
+    }
+};
+
+// Capturar el contenido del editor para Editar Template
+function capturarTemplateEditar() {
+    const contenido = quillEditar.root.innerHTML; // Reutiliza el editor 'quill' inicializado en #editor
+    return contenido;
+}
+
+
+document.getElementById('guardar-template-editar').onclick = function () {
+    const enHTML = capturarTemplateEditar();
+    const templateNameEditar = document.getElementById('nombre-template-editar').value;
+    const habilitar = document.getElementById('habilitar-template').checked;
+
+    console.log('Nombre del Template: ', templateNameEditar);
+    console.log('Texto en HTML: ', enHTML);
+    console.log('Habilitado: ', habilitar);
+
+    document.getElementById('modal-editar').style.display = 'none';
+
+    if (enHTML === '' || templateNameEditar === '') {
+        toastr.error('Complete los campos', 'Servidor', {
+            progressBar: true,
+            positionClass: 'toast-top-center',
+        });
+    } else {
+        toastr.success('Template actualizado con éxito!', 'Servidor:', {
+            progressBar: true,
+            positionClass: 'toast-top-center',
+        });
+        actualizarTemplate(templateNameEditar, enHTML, habilitar);
+    }
+};
+
+
+
+//------------------------------ template crear --------------------------
 
 document.getElementById('btn-template').onclick = function () {
     document.getElementById('modal').style.display = 'block';

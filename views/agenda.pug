@@ -13,30 +13,48 @@ block header
 block content
     .conteiner.cont-todo.width-90
         .title.text-center.mt-5 
-            h1.text-light.fw-bold Bienvenido #{nombre}!
-        
-        //- clavar filtrado de fechas
-        .conteiner.rounded.p-2
-            .d-flex.justify-content-center.mb-4.gap-3
-                //-.rounded.p-2.bg-primary.text-light.titulos-tur.d-flex
-                    | turnos del:  
-                    #fechaInicial
-                .d-flex.align-items-center.gap-3.titulos-tur.text-light
-                    | Elegir fecha 
-                    input(type="date")#fecha
+            .bg-bienvenido.p-3
+                h1.color-primario-txt.fw-bold ¡Bienvenido #{nombre}!
+                .d-flex.gap-3.justify-content-center.p-3
+                    button.btn.btn-HCE-invertido#btn-template.color-primario-txt.fw-semibold Crear Template
+                    button.btn.btn-HCE#btn-template-editar.fw-semibold Editar Template
+                .conteiner.rounded.p-2
+                    .d-flex.justify-content-center.gap-3.align-items-start
+                        .d-flex.align-items-end.gap-3.titulos-tur.text-light
+                            p.color-primario-txt.mb-0 Elegir fecha 
+                            input(type="date")#fecha
 
-                    button.btn.btn-light#btn-template.color-primario-txt.fw-semibold Crear Template
-            .text-center.mt-1.text-light.fs-4.color-primario-bg.fw-semibold.p-3.border-bottom.border-light Agenda Diaria
-                    #modal.modal 
-                        .modal-content.fw-normal.d-flex.flex-column.gap-3
-                            span.close#close &times;
-                            p.text-center.fw-semibold Crea tu template
-                            label Nombre Template: 
-                            input(type="text")#nombre-template
-                            label Template: 
-                            div#editor
-                            button.btn.btn-success.mt-4#guardar-template Enviar
+                    //- ------------- MODAL PARA EL CREAR TEMPLATE --------------
+            #modal.modal 
+                .modal-content.fw-normal.d-flex.flex-column.gap-3
+                    span.close#close &times;
+                    p.text-center.fw-semibold Crea tu template
+                    label Nombre Template: 
+                    input(type="text")#nombre-template
+                    label Template: 
+                    div#editor
+                    button.btn.btn-success.mt-4#guardar-template Enviar
+            
+            //- ------------- MODAL PARA EL EDITAR TEMPLATE --------------
+            #modal-editar.modal
+                .modal-content.fw-normal.d-flex.flex-column.gap-3
+                    span.close#close-editar &times;
+                    p.text-center.fw-semibold Edita tu Template
+                    label Selecciona template 
+                    select
+                        option(value="" selected) Seleccione uno 
+                        option(value="") Template 2
+                        option(value="") Template 3 
+                    label Nuevo nombre del Template:
+                    input(type="text")#nombre-template-editar
+                    label Habilitar / Deshabilitar 
+                        input(type="checkbox")#habilitar-template
+                    label Template:
+                    div#editor-editar
+                    
+                    button.btn.btn-success.mt-4#guardar-template-editar Guardar
 
+            .text-center.text-light.fs-4.color-primario-bg.fw-semibold.p-3.border-bottom.border-light Agenda Diaria
             .table-responsive
                 table.table.table-striped.sombra-tabla.color-primario-txt.fs-5.fw-semibold
                     thead.table-info

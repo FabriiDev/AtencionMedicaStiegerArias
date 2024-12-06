@@ -4,7 +4,8 @@ block head
     
     link(rel="stylesheet", href="/styles/general.css")
     //- estilos del para el quill
-    link(href="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.snow.css" rel="stylesheet") 
+    link(href="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.snow.css" rel="stylesheet")
+    link(rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css")
     //- estilos de alertas
     link(rel="stylesheet", href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css")
 
@@ -13,133 +14,135 @@ block header
 
 block content 
     .text-center.cont-todo.mt-5.width-90
-        .row 
+        .row.mb-5
             .col 
                 .card
                     .card-body
                         .fecha.mt-3.d-flex.gap-3.mb-3.align-items-center.flex-column
-                            h3.car-title Paciente: #{turno.nombre_paciente} #{turno.apellido_paciente}
-                            div Turno: 
-                                select(disabled).border
-                                    option #{fechaFormateada}
+                            h3.car-title Paciente: Pedro Hernandez
+                            div Turno del: 11/11/2022
                         .d-flex.justify-content-center.align-items-center.text-center.gap-3
-                            h4.card-title Motivo:  
-                        .card-text.mb-3.text-center 
-                            | #{turno.motivo_consulta}
+                            h4.card-title Motivo: Dolor de cabeza
+
+                //- -------------------------- OBLIGATORIOS ----------------------- 
+        .color-primario-bg.d-flex.flex-column.align-items-start.p-5.gap-4.border-bottom.border-dark.text-light
+            h3 Diagnostico (obligatorio)
+            .d-flex.gap-2
+                label Estado: 
+                select
+                    option Preeliminar 
+                    option Confirmado
+            label.text-center Detalles: 
+            textarea.txt-area-create.text-left
+            button(onclick="otroDiagnositoc()").btn.btn-agregar-daignostico.fw-semibold Agregar otro
+
+        #nuevo-diagnostico
+
+        .d-flex.flex-column.align-items-start.p-5.gap-4.border-bottom.border-dark.color-primario-bg
+            h3.text-light Evolucion (obligatorio)
+            label.text-light Seleccione su template: 
+                select 
+                    option Seleccione una 
+                    option template 1
+                    option template 2
+                    option template 3
+            #editor.width-90.text-left.bg-light.text-dark
+
+            //- -------------------------- OPCIONALES -----------------------
+
+        h2.text-center.p-4.color-primario-txt.fw-bold.bg-opcionales.mb-0 Opcionales
         
-        //- Sección única de columna con 6 filas
-        .conteiner.text-center.cont-todo.mt-5
-            .row.mt-3
-                .col-12
-                    .d-flex.justify-content-around.align-items-center
-                        h5.card-title.fs-3.d-flex.gap-2.align-items-center.bg-light.p-3 Diagnostico
-                            .obligatorio.fs-4 (obligatorio)
-                    .card.bg-papel.mb-1
-                        .card-body.largo.d-flex.justify-content-center.flex-column
-                            p.card-text Estado 
-                                select#estadoDiagnostico
-                                    option(value="") Seleccione uno 
-                                    option(value='Preeliminar') Preeliminar 
-                                    option(value='Confirmado') Confirmado
-                            textarea.txt-area-style#diagnosticoDetalle
-                            button(onclick="cargarDiagnostico()").btn.w-25.text-center.m-auto.btn-primary#btnDiagnostico Cargar 
+        //- -------------------------- MEDICAMENTOS -------------------------
+        .d-flex.flex-column
+            .bg-light.d-flex.flex-column.align-items-start.p-3.gap-4
+                h3(onclick="toggleContent('ampliarMedicamento')").ml-5 Medicamentos
+                    i.fas.fa-chevron-down
+                .contenido-oculto.w-100.p-0#ampliarMedicamento
+                    .bg-light.d-flex.flex-column.align-items-start.gap-4.animacion
+                        .d-flex.gap-2
+                            label Seleccione medicamento: 
+                            select
+                                option Medicamento 1 
+                                option Medicamento 2 
+                                option Medicamento 3 
+                                option Medicamento 4 
+                                option Medicamento 5
+                        label Receta: 
+                        textarea.txt-area-create.text-left
+                        button(onclick="nuevoMedicamento()").btn.btn-HCE.fw-semibold Agregar otro
+            #nuevo-medicamento
 
-            .row.mt-3
-                .col-12
-                    .d-flex.justify-content-around.align-items-center
-                        h5.card-title.fs-3.d-flex.gap-2.align-items-center.bg-light.p-3 Evolucion
-                            .obligatorio.fs-4 (obligatorio)
-                    .card.bg-papel.mb-1
-                        .card-body.largo.d-flex.justify-content-center.align-items-center.flex-column
-                            div(style="width: 80%;")#editor.bg-light
-                                | #{template}
-                            .d-flex.gap-5.mt-3.mb-3
-                            button(onclick="cargarEvolucion()").btn.w-25.w-md-50.w-lg-25.text-center.m-auto.btn-primary#btnEvolucion Cargar 
+        //- -------------------------- ALERGIAS -------------------------
+        
+        .bg-light.d-flex.flex-column.align-items-start.p-3.gap-4
+            h3(onclick="toggleContent('ampliarAlergia')").text-center Alergias
+                i.fas.fa-chevron-down
+            .contenido-oculto.w-100.p-0#ampliarAlergia
+                .bg-light.d-flex.flex-column.align-items-start.gap-4.animacion
+                    label Nombre: 
+                    input(type="text")
+                    label Importancia 
+                        select 
+                            option Leve
+                            option Normal
+                            option Alta
+                    .d-flex.gap-4
+                        label Desde: 
+                            input(type="date", name="")
+                        label Hasta: 
+                            input(type="date", name="")
+                        label vigente
+                            input(type="checkbox")
+                    button(onclick="nuevaAlergia()").btn.btn-HCE.fw-semibold Agregar otro
+        #nueva-alergia
 
+        //- -------------------------- HABITOS -------------------------
+        
+        .bg-light.d-flex.flex-column.align-items-start.p-3.gap-4
+            h3(onclick="toggleContent('ampliarHabito')").text-center Habitos
+                i.fas.fa-chevron-down
+            .contenido-oculto.w-100.p-0#ampliarHabito
+                .bg-light.d-flex.flex-column.align-items-start.gap-4.animacion
+                    label Detalles: 
+                    textarea.txt-area-create.text-left
+                    .d-flex.gap-4
+                        label Desde: 
+                            input(type="date", name="")
+                        label Hasta: 
+                            input(type="date", name="")
+                        label vigente
+                            input(type="checkbox")
+                    button(onclick="nuevoHabito()").btn.btn-HCE.fw-semibold Agregar otro
+        #nuevo-habito
 
-            .row.mt-3
-                .col-xl-3.col-lg-4.col-md-6.col-sm-12.mb-4
-                    .d-flex.justify-content-around.align-items-center
-                        h5.card-title.fs-3.d-flex.gap-2.align-items-center.bg-light.p-3 Medicamentos
-                    .card.bg-papel.mb-5
-                        .card-body.largo.d-flex.flex-column
-                            label.card-text Nombre: 
-                                select#selectMedicamento(name="medicamento")
-                                    option(value="" selected) Seleccione uno
-                                    each val in medicamentos
-                                        option(value=val.id_medicamento) #{val.nombre_medicamento}
-                                //-textarea(disabled).txt-area-style#detalleMedicamento
-                            button(onclick="cargarMedicamento()").btn.btn-primary.w-100.w-md-50.w-lg-25.text-center.m-auto.mb-3#btnMedicamento Cargar 
+            //- -------------------------- ANTECEDENTES -------------------------
+        
+        .bg-light.d-flex.flex-column.align-items-start.p-3.gap-4
+            h3(onclick="toggleContent('ampliarAntecedente')").text-center Antecedentes
+                i.fas.fa-chevron-down
+            .contenido-oculto.w-100.p-0#ampliarAntecedente
+                .bg-light.d-flex.flex-column.align-items-start.gap-4.animacion
+                    label Detalles: 
+                    textarea.txt-area-create.text-left
+                    .d-flex.gap-4
+                        label Desde: 
+                            input(type="date", name="")
+                        label Hasta: 
+                            input(type="date", name="")
+                        label vigente
+                            input(type="checkbox")
+                    button(onclick="nuevoAntecedente()").btn.btn-HCE.fw-semibold Agregar otro
+        #nuevo-antecedente
 
-            
-                .col-xl-3.col-lg-4.col-md-6.col-sm-12.mb-4
-                    .d-flex.justify-content-around.align-items-center
-                        h5.card-title.fs-3.d-flex.gap-2.align-items-center.bg-light.p-3 Antecedentes
-                        
-                    .card.bg-papel.mb-5
-                        .card-body.largo.d-flex.flex-column.align-items-center
-                            .card-text.mb-3 Descripcion: 
-                            textarea.txt-area-style#detalleAntecedentes
-                            .card-text.d-flex.justify-content-around.p-2.gap-2.flex-xxl-row.flex-xl-column
-                                .d-flex.ipt-fecha.gap-2.align-items-center.flex-column
-                                    | Desde: 
-                                    input(type="date" placeholder="15/05/24").ahi-nomas#desdeAntecedentes
-                                .d-flex.ipt-fecha.gap-2.flex-column
-                                    | Hasta: 
-                                    input(type="date" placeholder="01/06/24").ahi-nomas#hastaAntecedentes
-                            button(onclick="cargarAntecedentes()").btn.btn-primary.w-100.w-md-50.w-lg-25.text-center.m-auto.mb-3#btnAntecedentes Cargar 
-
-            
-                .col-xl-3.col-lg-4.col-md-6.col-sm-12.mb-4
-                    .d-flex.justify-content-around.align-items-center
-                        h5.card-title.fs-3.d-flex.gap-2.align-items-center.bg-light.p-3 Habitos
-                    .card.bg-papel.mb-5
-                        .card-body.largo.d-flex.flex-column.align-items-center
-                            .card-text.mb-3 Descripcion: 
-                            textarea.txt-area-style#detalleHabitos
-                            .card-text.d-flex.justify-content-around.p-2.gap-2.flex-xxl-row.flex-xl-column
-                                .d-flex.ipt-fecha.gap-2.align-items-center.flex-column
-                                    | Desde: 
-                                    input(type="date" placeholder="15/05/24").ahi-nomas#desdeHabitos
-                                .d-flex.ipt-fecha.gap-2.flex-column
-                                    | Hasta: 
-                                    input(type="date" placeholder="01/06/24").ahi-nomas#hastaHabitos
-                            button(onclick="cargarHabitos()").btn.btn-primary.w-100.w-md-50.w-lg-25.text-center.m-auto.mb-3#btnHabitos Cargar 
-
-            
-                .col-xl-3.col-lg-4.col-md-6.col-sm-12.mb-4
-                    .d-flex.justify-content-around.align-items-center 
-                        h5.card-title.fs-3.d-flex.gap-2.align-items-center.bg-light.p-3 Alergia
-                    .card.bg-papel.mb-5
-                        .card-body.largo.d-flex.flex-column.align-items-center
-                            .d-flex.gap-3.mb-4.flex-column 
-                                label.card-text 
-                                    | Nombre: 
-                                    input(type="text" placeholder="Polen")#nombreAlergia
-                            .d-flex.gap-3.flex-column
-                                label.card-text Importancia: 
-                                    select#importanciaAlergia.mb-4
-                                        option(value="") Seleccione una
-                                        option(value="Leve")  Leve
-                                        option(value="Normal")  Normal
-                                        option(value="Alta")  Alta
-                            .card-text.d-flex.justify-content-around.p-2.gap-2.flex-xxl-row.flex-xl-column
-                                .d-flex.ipt-fecha.gap-2.align-items-center.flex-column 
-                                    | Desde: 
-                                    input(type="date" placeholder="15/05/24" ).ahi-nomas#desdeAlergia
-                                .d-flex.ipt-fecha.gap-2.flex-column
-                                    | Hasta: 
-                                    input(type="date" placeholder="01/06/24" ).ahi-nomas#hastaAlergia
-                            button(onclick="cargarAlergia()").btn.btn-primary.w-100.w-md-50.w-lg-25.text-center.m-auto.mb-3#btnAlergia Cargar 
-    
+            //- boton flotanter ----------------------
     .text-center.mt-3.mb-5
-        button(onclick="guardarHistorial()").btn.btn-success.btn-float.sombra-btn-guardar Guardar Historial
+        button(onclick="guardarHistorial()").btn.btn-success.btn-float.sombra-btn-guardar Finalizar Consulta
     //- script de quill
     script(src='https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.js')
 
     script.
-        const numero = !{JSON.stringify(turno.numero_turno)};
-        const laTemplate = !{JSON.stringify(template)};
+        //-const numero = !{JSON.stringify(turno.numero_turno)};
+        //-const laTemplate = !{JSON.stringify(template)};
         
     
 
