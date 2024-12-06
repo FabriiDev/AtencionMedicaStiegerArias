@@ -48,7 +48,7 @@ WHERE
         }
     }
 
-    static async template(template, matricula_medico,nombre) {
+    static async guardarTemplate(template, matricula_medico, nombre) {
         const query = `INSERT INTO template(
     nombre,
     txt_template,
@@ -64,7 +64,7 @@ VALUES(
 );`
         try {
             conn = await crearConexion();
-            const [result] = await conn.query(query, [nombre,template, matricula_medico]);
+            const [result] = await conn.query(query, [nombre, template, matricula_medico]);
             return result.length ? result[0] : null;
         } catch (error) {
             console.log('Error al loguear medico: ', error);
@@ -72,7 +72,23 @@ VALUES(
             if (conn) conn.end();
         }
     }
+
+
+    static async traerTemplatesXMatricula(matricula_medico) {
+        const query = `SELECT * FROM template WHERE matricula_medico=? AND estado=1;`
+        try {
+            conn = await crearConexion();
+            const [result] = await conn.query(query, [matricula_medico]);
+            return result.length ? result : null;
+        } catch (error) {
+            console.log('Error al loguear medico: ', error);
+        } finally {
+            if (conn) conn.end();
+        }
+    }
 }
+
+
 
 Medico.traerMedico()
 module.exports = Medico;

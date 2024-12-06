@@ -217,7 +217,7 @@ function capturarTemplate() {
     return contenido;
 }
 
-let templateName=''
+let templateName = ''
 document.getElementById('guardar-template').onclick = function () {
     const enHTML = capturarTemplate();
     templateName = document.getElementById('nombre-template').value;
@@ -268,3 +268,50 @@ function updateTemplate() {
             console.error('Error al cargar template', error);
         });
 }
+
+
+function cargarEditorTemplates(templates) {
+    let selectNombres = document.getElementById('nombres-templates-editar')
+    let nombreTemplate = document.getElementById('nombre-template-editar')
+    let habilitado = document.getElementById('habilitar-template')
+
+    console.log('templates en el cargar editor')
+    console.log(templates)
+
+    for (const element of templates) {
+        console.log(element)
+        let op = document.createElement('option')
+        op.innerHTML = element.nombre
+        op.value = element.id_template
+        selectNombres.appendChild(op)
+    }
+}
+
+
+async function traerTemplates() {
+    fetch('/cargarTemplates', {
+        method: 'get',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+        .then(response => {
+
+            return response.json();
+        })
+        .then(data => {
+           cargarEditorTemplates(data)
+
+
+        })
+        .catch(error => {
+            console.error('Error al traer templates', error);
+        });
+}
+
+
+
+traerTemplates()
+
+
+

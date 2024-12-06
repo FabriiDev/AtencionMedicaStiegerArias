@@ -52,11 +52,9 @@ class MedicoController {
         }
     }
 
-    async template(req, res) {
-        console.log('tuqui tuqui tuqui tuqui tuqui tuqui tuqui')
-        console.log(req.body.template+req.body.nombre)
+    async guardarTemplate(req, res) {
         try {
-            await medicoModel.template(req.body.template, req.session.matricula,req.body.nombre)
+            await medicoModel.guardarTemplate(req.body.template, req.session.matricula,req.body.nombre)
 
         } catch (error) {
             console.log('error en la template' + error)
@@ -66,6 +64,18 @@ class MedicoController {
     }
     //------------------------------------------------
 
+    async traerTemplates(req,res){
+        let plantillas
+        try{
+          plantillas= await medicoModel.traerTemplatesXMatricula(req.session.matricula)
+
+        }catch(error){
+            console.log(error)
+            res.send(error)
+            return
+        }
+        res.send(plantillas)
+    }
 
 }
 
