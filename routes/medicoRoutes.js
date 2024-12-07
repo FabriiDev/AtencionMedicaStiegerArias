@@ -20,8 +20,10 @@ router.get('/', medicoController.Index);
 // router.get('/agenda', medicoController.Agenda);
 router.get('/HCE', medicoController.HCE);
 router.get('/createHCE', medicoController.CreateHCE);
-router.post('/crearTemplate',medicoController.guardarTemplate);
 router.get('/cargarTemplates',medicoController.traerTemplates)
+
+router.post('/updateTemplate',medicoController.updateTemplate)
+router.post('/crearTemplate',medicoController.guardarTemplate);
 
 
 module.exports = router;

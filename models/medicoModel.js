@@ -81,11 +81,42 @@ VALUES(
             const [result] = await conn.query(query, [matricula_medico]);
             return result.length ? result : null;
         } catch (error) {
-            console.log('Error al loguear medico: ', error);
+            console.log('Error al traer Templates medico: ', error);
         } finally {
             if (conn) conn.end();
         }
     }
+
+
+    static async bajaLogicaTemplate(idTemplate, matricula_medico) {
+
+        const query = `UPDATE template SET estado=0 WHERE id_template=? AND matricula_medico=?`
+        try {
+            conn = await crearConexion();
+            const [result] = await conn.query(query, [idTemplate, matricula_medico]);
+            return result.length ? result : null;
+        } catch (error) {
+            console.log('Error al updatear template medico: ', error);
+        } finally {
+            if (conn) conn.end();
+        }
+    }
+
+
+    static async updateTemplate(idTemplate,nombreTemplate, matricula_medico, txtTemplate) {
+
+        const query = `UPDATE template SET txt_template=?,nombre=? WHERE id_template=? AND matricula_medico=?`
+        try {
+            conn = await crearConexion();
+            const [result] = await conn.query(query, [txtTemplate,nombreTemplate,idTemplate, matricula_medico]);
+            return result.length ? result : null;
+        } catch (error) {
+            console.log('Error al updatear template medico: ', error);
+        } finally {
+            if (conn) conn.end();
+        }
+    }
+
 }
 
 

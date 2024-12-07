@@ -93,7 +93,7 @@ inputFecha.addEventListener('change', (event) => {
 
 
 function pintarTabla(turnos) {
-    console.log(turnos);
+
     let colorEstado;
     if (turnos.estado === 'Cancelado') {
         colorEstado = 'text-danger';
@@ -274,12 +274,8 @@ function cargarEditorTemplates(templates) {
     let selectNombres = document.getElementById('nombres-templates-editar')
     let nombreTemplate = document.getElementById('nombre-template-editar')
     let habilitado = document.getElementById('habilitar-template')
-
-    console.log('templates en el cargar editor')
-    console.log(templates)
-
     for (const element of templates) {
-        console.log(element)
+
         let op = document.createElement('option')
         op.innerHTML = element.nombre
         op.value = element.id_template
@@ -300,44 +296,90 @@ async function traerTemplates() {
             throw new Error(`Error en la respuesta: ${response.status}`);
         }
         const data = await response.json();
-        cargarEditorTemplates(data); 
-        return data; 
+        cargarEditorTemplates(data);
+        return data;
     } catch (error) {
         console.error('Error al traer templates', error);
-        return null; 
+        return null;
     }
 }
 
-//traerTemplates();
+
 quillEditar.enable(false);
 let templates = []; // guardar los datos del template en array
 
 (async () => {
     templates = await traerTemplates() || [];
-    console.log('Templates', templates);
 })();
 
-
+//id que se manda al server
+let idServer
 document.getElementById('nombres-templates-editar').addEventListener('change', (event) => {
     const selectedValue = event.target.value; // value option
-    
+
     // compara el id_template con el value
     const datos = templates.find(template => template.id_template === Number(selectedValue));
 
     if (datos) {
-        activarCamposET();
-        document.getElementById('nombre-template-editar').value = datos.nombre;
+        activarCamposET(false);
+        document.getElementById('nombre-template-editar').value = datos.nombre
+        idServer=datos.id_template
         quillEditar.clipboard.dangerouslyPasteHTML(datos.txt_template);
     } else {
         console.warn('No se encontraron datos para el template seleccionado.');
+        activarCamposET(true);
     }
 });
 
 
 
-function activarCamposET(){
-    document.getElementById('nombre-template-editar').disabled = false;
-    document.getElementById('guardar-template-editar').disabled = false;
-    document.getElementById('eliminar-template-editar').disabled = false;
+function activarCamposET(bool) {
+    document.getElementById('nombre-template-editar').disabled = bool;
+    document.getElementById('guardar-template-editar').disabled = bool;
+    document.getElementById('eliminar-template-editar').disabled = bool;
     quillEditar.enable(true);
 }
+
+function serverTemplate(activo,ids) {
+    let nombre = document.getElementById('nombre-template-editar').value
+    let contenido = quillEditar.root.innerHTML
+    fetch('/updateTemplate', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            template: contenido,
+            nombre: nombre,
+            activo: activo,
+            id:ids
+        })
+    })
+        .then(response => {
+
+            return response.json();
+        })
+        .then(data => {
+
+            if (data.success) {
+
+                // document.getElementById('pintarTablaTurnos').innerHTML = pintarTabla(element);
+            } else {
+                console.error(data.message || 'fallo en template');
+            }
+        })
+        .catch(error => {
+            console.error('Error al cargar template', error);
+        })
+}
+
+
+
+document.getElementById('eliminar-template-editar').addEventListener('click', (event) => {
+    serverTemplate(0,idServer)
+})
+
+
+document.getElementById('guardar-template-editar').addEventListener('click', (event) => {
+    serverTemplate(1,idServer)
+})
