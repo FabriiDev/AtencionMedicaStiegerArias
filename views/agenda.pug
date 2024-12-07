@@ -44,13 +44,11 @@ block content
                     select#nombres-templates-editar
                         option(value="" selected) Seleccione uno 
                     label Nuevo nombre del Template:
-                    input(type="text")#nombre-template-editar
-                    label Habilitar / Deshabilitar 
-                        input(type="checkbox")#habilitar-template
+                    input(type="text" disabled)#nombre-template-editar
                     label Template:
-                    div#editor-editar
-                    
-                    button.btn.btn-success.mt-4#guardar-template-editar Guardar
+                    div(disabled)#editor-editar
+                    button(disabled).btn.btn-danger.mt-4#eliminar-template-editar Eliminar
+                    button(disabled).btn.btn-success#guardar-template-editar Editar
 
             .text-center.text-light.fs-4.color-primario-bg.fw-semibold.p-3.border-bottom.border-light Agenda Diaria
             .table-responsive

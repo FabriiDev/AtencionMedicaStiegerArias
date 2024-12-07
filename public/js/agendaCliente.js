@@ -289,29 +289,55 @@ function cargarEditorTemplates(templates) {
 
 
 async function traerTemplates() {
-    fetch('/cargarTemplates', {
-        method: 'get',
-        headers: {
-            'Content-Type': 'application/json'
-        }
-    })
-        .then(response => {
-
-            return response.json();
-        })
-        .then(data => {
-           cargarEditorTemplates(data)
-
-
-        })
-        .catch(error => {
-            console.error('Error al traer templates', error);
+    try {
+        const response = await fetch('/cargarTemplates', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
         });
+        if (!response.ok) {
+            throw new Error(`Error en la respuesta: ${response.status}`);
+        }
+        const data = await response.json();
+        cargarEditorTemplates(data); 
+        return data; 
+    } catch (error) {
+        console.error('Error al traer templates', error);
+        return null; 
+    }
 }
 
+//traerTemplates();
+quillEditar.enable(false);
+let templates = []; // guardar los datos del template en array
+
+(async () => {
+    templates = await traerTemplates() || [];
+    console.log('Templates', templates);
+})();
 
 
-traerTemplates()
+document.getElementById('nombres-templates-editar').addEventListener('change', (event) => {
+    const selectedValue = event.target.value; // value option
+    
+    // compara el id_template con el value
+    const datos = templates.find(template => template.id_template === Number(selectedValue));
+
+    if (datos) {
+        activarCamposET();
+        document.getElementById('nombre-template-editar').value = datos.nombre;
+        quillEditar.clipboard.dangerouslyPasteHTML(datos.txt_template);
+    } else {
+        console.warn('No se encontraron datos para el template seleccionado.');
+    }
+});
 
 
 
+function activarCamposET(){
+    document.getElementById('nombre-template-editar').disabled = false;
+    document.getElementById('guardar-template-editar').disabled = false;
+    document.getElementById('eliminar-template-editar').disabled = false;
+    quillEditar.enable(true);
+}
