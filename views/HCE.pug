@@ -1,7 +1,8 @@
 
 extends layout
 
-block head 
+block head
+    link(rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined")
     link(rel="stylesheet", href="/styles/general.css")
     link(href="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.snow.css" rel="stylesheet") 
 
@@ -16,7 +17,8 @@ block content
                     .w-100 
                         .card-body
                             h3.card-title.fs-2.text-center.d-flex.align-items-center.justify-content-center.gap-2
-                                img(src="/icons/paciente.png", alt="").img-fluid
+                                //-img(src="/icons/paciente.png", alt="").img-fluid
+                                span(class="material-symbols-outlined") face
                                 #nombre-paciente.color-primario-txt.fw-bold
         
         table.table.table-striped-columns.sombra-tabla.table-borderer.border-dark.align-middle.mt-4
@@ -37,7 +39,7 @@ block content
     script.
         let turnos = !{JSON.stringify(turno)};
         //-let evolucionEriquesida = !{JSON.stringify(turno.evolucion)};
-        let matriculaMedico = !{JSON.stringify(medicoLogeado)};
+        let matriculaMedicoLog = !{JSON.stringify(medicoLogeado)};
     script(src="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.min.js")  
     script(src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js") 
     script(src="https://cdn.jsdelivr.net/npm/sweetalert2@11")

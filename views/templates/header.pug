@@ -2,17 +2,20 @@
 header
     nav.navbar.navbar-expand-lg.navbar-light.fondo-transparente.p-3.d-flex.align-items-center
         .container-fluid.gap-3.width-90
-            img(src="/icons/atencion-medica.png", alt="")
-            a.navbar-brand.mb-0.h1.mx-auto.text-light.fw-bold(href="#") Atencion Medica
+            span(class="material-symbols-outlined").logo-am.sombra-texto medical_information
+            a.sombra-texto.navbar-brand.mb-0.h1.mx-auto.text-light.fw-bold(href="#").fs-4 Atencion Medica
             button.navbar-toggler(type='button', data-bs-toggle='collapse', data-bs-target='#navbarNav', aria-controls='navbarNav', aria-expanded='false', aria-label='Toggle navigation')
                 span.navbar-toggler-icon
             .collapse.navbar-collapse#navbarNav
-                .mx-auto.d-flex.justify-content-start.align-items-center.gap-3
-                    a.btn.btn-outline-primary.d-flex.gap-2#btn-agenda
-                        img(src="/icons/agenda.png", alt="")
-                        |Agenda
-                    a.btn.btn-outline-danger.d-flex.gap-2#btn-logout
-                        img(src="/icons/exit.png", alt="")
+                .mx-auto.d-flex.align-items-center.gap-5
+                    a.btn.btn-agenda.d-flex.gap-2#btn-agenda.link-offset-2.link-underline.link-underline-opacity-0.text-light.fw-semibold
+                        //-span(class="material-symbols-outlined icono-agenda") description
+                        | Agenda
+                    a.btn.btn-agenda.d-flex.gap-2#btn-agenda.link-offset-2.link-underline.link-underline-opacity-0.text-light.fw-semibold
+                        //-span(class="material-symbols-outlined icono-agenda") description
+                        | Pacientes
+                    a.btn.btn-logout.d-flex.gap-2.link-offset-2.link-underline.link-underline-opacity-0.text-light.fw-semibold#btn-logout
+                        //-span(class="material-symbols-outlined icono-logout") logout
                         | Cerrar Sesión
     script(src="https://code.jquery.com/jquery-3.7.1.min.js")
 

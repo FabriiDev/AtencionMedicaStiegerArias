@@ -154,6 +154,7 @@ document.getElementById('btn-template-editar').onclick = function () {
 
 document.getElementById('close-editar').onclick = function () {
     document.getElementById('modal-editar').style.display = 'none';
+    limpiarCamposET();
 };
 
 window.onclick = function (event) {
@@ -328,16 +329,22 @@ document.getElementById('nombres-templates-editar').addEventListener('change', (
     } else {
         console.warn('No se encontraron datos para el template seleccionado.');
         activarCamposET(true);
+        limpiarCamposET();
     }
 });
 
-
+function limpiarCamposET(){
+    document.getElementById('nombre-template-editar').value = '';
+    quillEditar.root.innerHTML = '';
+    document.getElementById('nombres-templates-editar').value = '';
+    activarCamposET(true);
+}
 
 function activarCamposET(bool) {
     document.getElementById('nombre-template-editar').disabled = bool;
     document.getElementById('guardar-template-editar').disabled = bool;
     document.getElementById('eliminar-template-editar').disabled = bool;
-    quillEditar.enable(true);
+    quillEditar.enable(!bool);
 }
 
 function serverTemplate(activo,ids) {
@@ -377,9 +384,11 @@ function serverTemplate(activo,ids) {
 
 document.getElementById('eliminar-template-editar').addEventListener('click', (event) => {
     serverTemplate(0,idServer)
+    limpiarCamposET();
 })
 
 
 document.getElementById('guardar-template-editar').addEventListener('click', (event) => {
-    serverTemplate(1,idServer)
+    serverTemplate(1,idServer);
+    limpiarCamposET();
 })

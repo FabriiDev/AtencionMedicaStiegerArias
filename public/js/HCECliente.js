@@ -3,7 +3,8 @@
 */
 // ------------------- libreria txt enriquesido --------------- 
 
-console.log(matriculaMedico)
+console.log(matriculaMedicoLog)
+medicoLogueado = matriculaMedicoLog;
 // ------------------------------------------------------------ 
 
 let indiceDiagnostico = 0
@@ -174,90 +175,157 @@ function pintarTabla() {
 
         // ---------------------- tabla completa -------------------------------------
 
-        
-
+        let trContent;
+        console.log('----------------');
+        console.log('Matricula medico server: ' + element.matriculaMedico);
+        console.log('Matricula medico logueado: ' + medicoLogueado);
+        console.log('----------------');
         if (element.estadoTurno == "Atendido") {
-            const trContent = `
-            <tr>
-                <td>
-                    <p class="color-primario-txt fw-semibold">${element.fecha}</p>
-                </td>
-                <td>
-                    <p class="color-primario-txt fw-semibold">${element.motivo}</p>
-                </td>
-                <td>
-                    <p class="color-primario-txt fw-semibold">${element.apellidoMedico} ${element.nombreMedico}</p>
-                    <p class="color-primario-txt fw-semibold">${element.nombreEspecialidad}</p>
-                </td>
-                <td>
-                    <ol class="color-primario-txt fw-semibold">${diagnosticosHTML}</ol></td>
-                <td>
-                    <p class="color-primario-txt">${element.evolucion}</p>
-                </td>
-                <td>
-                    <ol class="color-primario-txt fw-semibold">${alergiasHTML}</ol>
-                </td>
-                <td>
-                    <ol class="color-primario-txt fw-semibold">${medicamentosHTML}</ol>
-                </td>
-                <td>
-                    <ol class="color-primario-txt fw-semibold">${habitosHTML}</ol>
-                </td>
-                <td>
-                    <ol class="color-primario-txt fw-semibold">${antecedentesHTML}</ol>
-                </td>
-            </tr>
-        `;
+            if(element.matriculaMedico == medicoLogueado){
 
-            if (primerTr) {
-                console.log('------------ editable -----------------')
-                tabla += `
-                <tr title="Modificar" class="editable">
-                    
-                        <td><a href="#" class="p-5"><p>${element.fecha}</p></a></td>
-                        <td><a href="#" class="p-5"><p>${element.motivo}</p></a></td>
-                        <td>
-                            <a href="#" class="p-5 fw-semibold">
-                                <p>${element.apellidoMedico} ${element.nombreMedico}</p>
-                                <p>${element.nombreEspecialidad}</p>
-                            </a>
-                        </td>
-                        <td>
-                            <a href="#" class="p-5 fw-semibold">
-                                <ol>${diagnosticosHTML}</ol>
-                            </a>
-                        </td>
-                        <td>
-                            <a href="#" class="p-5 evolink text-dark">
-                                <p>${element.evolucion}</p>
-                            </a>
-                        </td>
-                        <td>
-                            <a href="#" class="p-5 fw-semibold">
-                                <ol>${alergiasHTML}</ol>
+                //------------------ pintar tabla ---------------------
+                trContent = `
+                <tr>
+                <td>
+                <p class="color-primario-txt fw-semibold">${element.fecha}</p>
+                </td>
+                <td>
+                <p class="color-primario-txt fw-semibold">${element.motivo}</p>
+                </td>
+                <td>
+                <p class="color-primario-txt fw-semibold">${element.apellidoMedico} ${element.nombreMedico}</p>
+                <p class="color-primario-txt fw-semibold">${element.nombreEspecialidad}</p>
+                </td>
+                <td>
+                <ol class="color-primario-txt fw-semibold">${diagnosticosHTML}</ol></td>
+                <td>
+                <p class="color-primario-txt">${element.evolucion}</p>
+                </td>
+                <td>
+                <ol class="color-primario-txt fw-semibold">${alergiasHTML}</ol>
+                </td>
+                <td>
+                <ol class="color-primario-txt fw-semibold">${medicamentosHTML}</ol>
+                </td>
+                <td>
+                <ol class="color-primario-txt fw-semibold">${habitosHTML}</ol>
+                </td>
+                <td>
+                <ol class="color-primario-txt fw-semibold">${antecedentesHTML}</ol>
+                </td>
+                </tr>
+                `;
+
+                // ---------------------------------- editable ----------------------
+
+                if (primerTr) {
+                    tabla += `
+                    <tr title="Modificar" class="editable">
+                        
+                            <td><a href="#" class="p-5"><p>${element.fecha}</p></a></td>
+                            <td><a href="#" class="p-5"><p>${element.motivo}</p></a></td>
+                            <td>
+                                <a href="#" class="p-5 fw-semibold">
+                                    <p>${element.apellidoMedico} ${element.nombreMedico}</p>
+                                    <p>${element.nombreEspecialidad}</p>
                                 </a>
                             </td>
-                        <td>
-                            <a href="#" class="p-5 fw-semibold">
-                                <ol>${medicamentosHTML}</ol>
+                            <td>
+                                <a href="#" class="p-5 fw-semibold">
+                                    <ol>${diagnosticosHTML}</ol>
                                 </a>
-                        </td>
-                        <td>
-                            <a href="#" class="p-5 fw-semibold">
-                                <ol>${habitosHTML}</ol>
-                            </a>
-                        </td>
-                        <td>
-                            <a href="#" class="p-5 fw-semibold">
-                                <ol>${antecedentesHTML}</ol>
-                            </a>
-                        </td>
-                    
-                </tr> `;
-                primerTr = false; 
+                            </td>
+                            <td>
+                                <a href="#" class="p-5 evolink text-dark">
+                                    <p>${element.evolucion}</p>
+                                </a>
+                            </td>
+                            <td>
+                                <a href="#" class="p-5 fw-semibold">
+                                    <ol>${alergiasHTML}</ol>
+                                    </a>
+                                </td>
+                            <td>
+                                <a href="#" class="p-5 fw-semibold">
+                                    <ol>${medicamentosHTML}</ol>
+                                    </a>
+                            </td>
+                            <td>
+                                <a href="#" class="p-5 fw-semibold">
+                                    <ol>${habitosHTML}</ol>
+                                </a>
+                            </td>
+                            <td>
+                                <a href="#" class="p-5 fw-semibold">
+                                    <ol>${antecedentesHTML}</ol>
+                                </a>
+                            </td>
+                        
+                    </tr> `;
+                    primerTr = false; 
+                } else {
+                    tabla += `<tr title="Modificar">${trContent} </tr>`;
+                    document.getElementById('table-body').innerHTML = tabla;
+                }
+                
             } else {
+                // aca si lo atendio otro medico
+                primerTr = false;
+                trContent = `
+                <tr class="text-center">
+                <td>
+                <p class="color-primario-txt fw-semibold">${element.fecha}</p>
+                </td>
+                <td>
+                <p class="color-primario-txt fw-semibold">${element.motivo}</p>
+                </td>
+                <td>
+                <p class="color-primario-txt fw-semibold">${element.apellidoMedico} ${element.nombreMedico}</p>
+                <p class="color-primario-txt fw-semibold">${element.nombreEspecialidad}</p>
+                </td>
+                <td>
+                <ol class="color-primario-txt fw-semibold">${diagnosticosHTML}</ol></td>
+                <td>
+                <span style="cursor: help;" title="No puedes ver el contenido"  id="privado-icono" class="material-symbols-outlined">
+                    visibility_lock
+                    </span>
+                
+                    
+                </td>
+                <td>
+                <span style="cursor: help;" title="No puedes ver el contenido" id="privado-icono" class="material-symbols-outlined">
+                    visibility_lock
+                    </span>
+                    
+                
+                </td>
+                <td>
+                <span style="cursor: help;" title="No puedes ver el contenido" id="privado-icono" class="material-symbols-outlined">
+                    visibility_lock
+                    </span>
+                
+                
+                </td>
+                <td>
+                <span style="cursor: help;" title="No puedes ver el contenido" id="privado-icono" class="material-symbols-outlined">
+                    visibility_lock
+                    </span>
+                
+                
+                </td>
+                <td>
+                <span style="cursor: help;" title="No puedes ver el contenido" id="privado-icono" class="material-symbols-outlined">
+                    visibility_lock
+                    </span>
+                
+                
+                </td>
+                </tr>
+                `;
                 tabla += `<tr title="Modificar">${trContent} </tr>`;
+                document.getElementById('table-body').innerHTML = tabla;
             }
+            
         }
 
     }

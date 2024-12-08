@@ -72,3 +72,6 @@ Mejorar la interfaz de carga --> hacer
 Que elija y pueda sacar a la hora de cargar datos
 
 Iniciar y finalizar consulta -> guardar horas al iniciar y finalizar, o ver de contar tiempo
+
+----> 08/12
+-- revizar logica de la tabla template, deberia la matricula del medico ser primary key tambien
