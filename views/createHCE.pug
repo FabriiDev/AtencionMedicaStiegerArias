@@ -41,11 +41,8 @@ block content
         .d-flex.flex-column.align-items-start.p-5.gap-4.border-bottom.border-dark.color-primario-bg
             h3.text-light Evolucion (obligatorio)
             label.text-light Seleccione su template: 
-                select 
-                    option Seleccione una 
-                    option template 1
-                    option template 2
-                    option template 3
+                select#selectTemplates 
+                    option(selected value="") seleccione uno
             #editor.width-90.text-left.bg-light.text-dark
 
             //- -------------------------- OPCIONALES -----------------------

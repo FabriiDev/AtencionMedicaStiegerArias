@@ -4,7 +4,7 @@ const quill = new Quill('#editor', {
 });
 //quill.clipboard.dangerouslyPasteHTML(laTemplate);
 
-function otroDiagnositoc(){
+function otroDiagnositoc() {
     let nuevoDiagnostico = document.getElementById('nuevo-diagnostico');
     let i = 1;
     let pintar = `
@@ -33,22 +33,58 @@ function eliminarDiagnostico(numero) {
     if (diagnostico) { diagnostico.remove(); }
 }
 
-function llenarSelect(){
+function evolucionTemplates() {
+    fetch('/cargarTemplates')
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('la respuesta no fue 200');
+            }
+            return response.json();
+        })
+        .then(data => {
+
+            let select = document.getElementById('selectTemplates')
+            if (data) {
+                for (const element of data) {
+                    let option = document.createElement('option')
+                    option.innerHTML = element.nombre
+                    option.value = element.txt_template
+                    select.appendChild(option)
+                }
+            }
+
+
+        })
+        .catch(error => {
+            console.error('errror al cargar templates:', error);
+        });
+
+}
+
+evolucionTemplates()
+
+document.getElementById('selectTemplates').addEventListener('change', () => {
+    let textoEnriquesido=document.getElementById('selectTemplates').value
+    quill.clipboard.dangerouslyPasteHTML(textoEnriquesido)
+})
+
+
+function llenarSelectMedicamento() {
     let todosMedicamentos
     for (const element of medicamentos) {
         todosMedicamentos = `
         <option value="${element.id_medicamento}">${element.nombre_medicamento}</option>
     `;
-    document.getElementById('selectMedicamento').innerHTML += todosMedicamentos;
+        document.getElementById('selectMedicamento').innerHTML += todosMedicamentos;
     }
-    
-}
-llenarSelect();
 
-function nuevoMedicamento(){
+}
+llenarSelectMedicamento();
+
+function nuevoMedicamento() {
     let nuevoMedicamento = document.getElementById('nuevo-medicamento');
     let i = 1;
-    
+
 
     let pintar = `
     <div id="idMedicamento${i}" class="animacion bg-light d-flex flex-column align-items-start p-5 gap-4 border border-dark">
@@ -73,7 +109,7 @@ function eliminarMedicamento(numero) {
     if (medicamento) { medicamento.remove(); }
 }
 
-function nuevaAlergia(){
+function nuevaAlergia() {
     let nuevaAlergia = document.getElementById('nueva-alergia');
     let i = 1;
     let pintar = `
@@ -140,7 +176,7 @@ function eliminarHabito(numero) {
     if (habito) { habito.remove(); }
 }
 
-function nuevoAntecedente(){
+function nuevoAntecedente() {
     let nuevoAnteccedente = document.getElementById('nuevo-antecedente');
     let i = 1;
     let pintar = `
