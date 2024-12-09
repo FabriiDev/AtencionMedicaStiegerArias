@@ -14,7 +14,6 @@ class TurnoController {
             let fecha = req.body.fecha
             let turnos = await turnoModel.turnosPorDia(fecha, req.session.matricula);
             let jsonstring = JSON.stringify(turnos)
-            console.log(jsonstring)
             if (!fecha) {
                 return res.status(400).json({ success: false, error: 'la fecha debe ser seleccionada' })
             }
@@ -30,7 +29,7 @@ class TurnoController {
     }
     async HCE(req, res) {
 
-        let turno = await turnoModel.numero_turno(req.params.dni)
+        let turno = await turnoModel.turnosDni(req.params.dni)
         let medicoLogeado = req.session.matricula;
 
         let ultimo = turno.es_ultima_atencion
@@ -70,8 +69,9 @@ class TurnoController {
     async guardarHCE(req, res) {
         let envio = { success: false }//si hay tiempo mandar un mensaje segun el error o el if que dio el return
         let historial = req.body.historial
+        console.log(historial)
 
-        historial.diagnosticos.forEach(element => {
+        historial.diagnostico.forEach(element => {
             if (element.estado == '' || element.detalle == '') {
                 //si falta cualquiera de los dos se sale de la ruta y se envia el valor de succes por default:false
                 res.send(envio)

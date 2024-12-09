@@ -14,7 +14,7 @@ function otroDiagnositoc() {
         <div class="d-flex gap-2">
             <label>Estado: </label>
             <select class="select-diagnostico">
-                <option>Preeliminar </option>
+                <option>Preliminar </option>
                 <option>Confirmado</option>
         </select>
         </div>
@@ -399,6 +399,27 @@ function toggleContent(id) {
     }
 }
 
+//------------------------------------------------------cargadatossinpug-----------------------------------------------------
+function formatearFecha(fechaISO) {
+    if (!fechaISO) {
+        return 'sin registros';
+    }
+    const fecha = new Date(fechaISO);
+    const dia = String(fecha.getDate()).padStart(2, '0');
+    const mes = String(fecha.getMonth() + 1).padStart(2, '0'); // Los meses en JavaScript son 0-11
+    const anio = fecha.getFullYear();
+    return `${dia}/${mes}/${anio}`;
+}
+
+
+document.getElementById('fecha').innerHTML = 'turno del: ' + formatearFecha(turnazo[0].fecha)
+
+
+
+
+
+
+//----------------------------------------------------------------------------------------------------------------------------
 
 
 // --------------> btn guardar
@@ -432,14 +453,15 @@ function guardarHistorial() {
                 return;
             }
 
-            capturarValoresMedicamentos();
+            let med = capturarValoresMedicamentos();
 
-            capturarValoresAlergias();
+            let ale = capturarValoresAlergias();
 
-            cargarValoresHabitos();
+            let hab = cargarValoresHabitos();
 
-            cargarValoresAntecedentes();
+            let ante = cargarValoresAntecedentes();
 
+            postServer(vcd, ec, med, ale, hab, ante)
             toastr.success('Regresando a la agenda', 'Consulta finalizada con exito', {
                 progressBar: true,
                 positionClass: 'toast-top-center',
@@ -447,10 +469,49 @@ function guardarHistorial() {
                     window.location.href = '/turnos/agenda';
                 }
             });
-            
+
         }
     });
 
+}
+
+
+
+function postServer(diagnostico, evolucion, medicamentos, alergias, habitos, antecedentes) {
+    let historial={
+        diagnostico: diagnostico,
+        evolucion: evolucion,
+        medicamentos: medicamentos,
+        alergias: alergias,
+        habitos: habitos,
+        antecedentes: antecedentes,
+        numero_turno:turnazo[0].numero_turno
+    }
+    fetch(`/turnos/guardarHCE`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            historial:historial
+        })
+    })
+        .then(response => {
+
+            return response.json();
+        })
+        .then(data => {
+
+            if (data.success) {
+
+                // document.getElementById('pintarTablaTurnos').innerHTML = pintarTabla(element);
+            } else {
+                console.error(data.message || 'fallo en template');
+            }
+        })
+        .catch(error => {
+            console.error('Error al cargar template', error);
+        })
 }
 
 // ---------------------##################################--------------------------------------- 

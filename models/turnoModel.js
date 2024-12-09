@@ -91,8 +91,27 @@ ORDER BY fecha DESC`
             conn = await crearConexion();
 
             // Llama al procedimiento almacenado
-            const query = 'CALL todosLosTurnos(?)';
+            const query = 'CALL obtener_turno_detalleTRES(?)';
             const [result] = await conn.query(query, [numero_turno]);
+            // Accede al primer elemento del primer array de resultados
+            const turno = result[0]; // Extrae el primer registro
+            console.log(turno)
+            return turno || null; // Devuelve el objeto si existe, si no, null
+        } catch (error) {
+            console.log("Error al traer turnos: ", error);
+        } finally {
+            if (conn) conn.end();
+        }
+    }
+
+    static async turnosDni(dni) {
+        let conn;
+        try {
+            conn = await crearConexion();
+
+            // Llama al procedimiento almacenado
+            const query = 'CALL todosLosTurnos(?)';
+            const [result] = await conn.query(query, [dni]);
             // Accede al primer elemento del primer array de resultados
             const turno = result[0]; // Extrae el primer registro
             console.log(turno)
@@ -141,10 +160,12 @@ ORDER BY fecha DESC`
 
             await conn.query(`UPDATE turno SET estado = 'Atendido' WHERE turno.numero_turno = ?;`, [nTurno])
             // Ejecutar los procedimientos almacenados
-            for (const data of historial.diagnosticos) {
-                await conn.query(' CALL insertar_Diagnostico(?,?,?)', [data.detalle, data.estado, nTurno]);
+            
+            for (const data of historial.diagnostico) {
+                await conn.query(' CALL insertar_Diagnostico(?,?,?)', [data.detalles, data.estado, nTurno]);
             }
-
+            console.log('""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""')
+            console.log(historial.evolucion)
             await conn.query(' CALL insertar_Evolucion(?,?)', [historial.evolucion, nTurno]);
 
             for (const data of historial.medicamentos) {
@@ -152,15 +173,15 @@ ORDER BY fecha DESC`
             }
 
             for (const data of historial.antecedentes) {
-                await conn.query(' CALL insertar_Antecedentes(?,?,?,?)', [data.detalle, nTurno, data.fdesde, data.fhasta]);
+                await conn.query(' CALL insertar_Antecedentes(?,?,?,?)', [data.textoAntecedente, nTurno, data.desdeAntecedente, data.hastaAntecedente]);
             }
 
             for (const data of historial.habitos) {
-                await conn.query(' CALL insertar_Habito(?,?,?,?)', [data.detalle, nTurno, data.fdesde, data.fhasta]);
+                await conn.query(' CALL insertar_Habito(?,?,?,?)', [data.textoHabito, nTurno, data.desdeHabito, data.hastaHabito]);
             }
 
             for (const data of historial.alergias) {
-                await conn.query(' CALL insertar_Alergia(?,?,?,?,?)', [data.nombre, data.importancia, data.fdesde, data.fhasta, nTurno]);
+                await conn.query(' CALL insertar_Alergia(?,?,?,?,?)', [data.nombreAlergia, data.importanciaAlergia, data.desdeAlergia, data.hastaAlergia, nTurno]);
             }
             // Confirmar la transacción
             await conn.commit();

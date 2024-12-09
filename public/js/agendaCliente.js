@@ -132,9 +132,8 @@ function pintarTabla(turnos) {
 
 
     if (turnos.arribado == 1 && turnos.estado == 'Pendiente') {
-        btnComenzarAtencion = `<a href="#">
-        <button class="btn btn-HCE-invertido fw-semibold" onclick="alertaComenzarAtencion(${turnos.numero_turno})" >Comenzar atencion</button>
-        </a>`
+        btnComenzarAtencion = `
+        <button class="btn btn-HCE-invertido fw-semibold" onclick="alertaComenzarAtencion(${turnos.numero_turno})" >Comenzar atencion</button>`
     } else {
         btnComenzarAtencion = '<p></p>';
     }

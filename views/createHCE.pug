@@ -19,11 +19,11 @@ block content
                 .bg-bienvenido.fw-bold.p-4
                     .card-body
                         .fecha.mt-3.d-flex.gap-3.mb-3.align-items-center.flex-column
-                            h3.car-title Paciente: PONER NOMBRE DINAMICOOO
-                            div Turno del: 11/11/2022
+                            h3.car-title Paciente: #{turno[0].nombre_paciente} #{turno[0].apellido_paciente}
+                            div#fecha Turno del: 11/11/2022
                         .d-flex.justify-content-center.align-items-center.text-center.gap-3
-                            h4.card-title Motivo: Dolor de cabeza
-                        button.btn.btn-HCE-invertido.mt-3.fw-semibold Ver historial
+                            h4.card-title Motivo: #{turno[0].motivo_consulta}
+                        a(href="/turnos/HCE"+turno[0].dni_paciente target="_blank").btn.btn-HCE-invertido.mt-3.fw-semibold Ver historial
 
                 //- -------------------------- OBLIGATORIOS ----------------------- 
         .color-primario-bg.d-flex.flex-column.align-items-start.p-5.gap-4.border-bottom.border-dark.text-light.capturarValorDiagnostico
@@ -31,7 +31,7 @@ block content
             .d-flex.gap-2
                 label Estado: 
                 select.select-diagnostico
-                    option Preeliminar 
+                    option Preliminar 
                     option Confirmado
             label.text-center Detalles: 
             textarea.txt-area-create.text-left.txt-area-diagnostico
