@@ -56,6 +56,7 @@ function separador(turnos) {
 
     for (const t of turnos) {
         let turnoA = {
+            numero:t.numero_turno,
             fecha: formatearFecha(t.fecha),
             motivo: t.motivo_consulta,
             estadoTurno: t.estado,
@@ -222,41 +223,41 @@ function pintarTabla() {
                     tabla += `
                     <tr title="Modificar" class="editable">
                         
-                            <td><a href="#" class="p-5"><p>${element.fecha}</p></a></td>
-                            <td><a href="#" class="p-5"><p>${element.motivo}</p></a></td>
+                            <td><a href="/turnos/editarHCE${element.numero}" class="p-5"><p>${element.fecha}</p></a></td>
+                            <td><a href="/turnos/editarHCE${element.numero}" class="p-5"><p>${element.motivo}</p></a></td>
                             <td>
-                                <a href="#" class="p-5 fw-semibold">
-                                    <p>${element.apellidoMedico} ${element.nombreMedico}</p>
+                                <a href="/turnos/editarHCE${element.numero}" class="p-5 fw-semibold">
+                                    <p>${element.apellidoMedico} ${element.nombreMedico}</p>    
                                     <p>${element.nombreEspecialidad}</p>
                                 </a>
                             </td>
                             <td>
-                                <a href="#" class="p-5 fw-semibold">
+                                <a href="/turnos/editarHCE${element.numero}" class="p-5 fw-semibold">
                                     <ol>${diagnosticosHTML}</ol>
                                 </a>
                             </td>
                             <td>
-                                <a href="#" class="p-5 evolink text-dark">
+                                <a href="/turnos/editarHCE${element.numero}" class="p-5 evolink text-dark">
                                     <p>${element.evolucion}</p>
                                 </a>
                             </td>
                             <td>
-                                <a href="#" class="p-5 fw-semibold">
+                                <a href="/turnos/editarHCE${element.numero}" class="p-5 fw-semibold">
                                     <ol>${alergiasHTML}</ol>
                                     </a>
                                 </td>
                             <td>
-                                <a href="#" class="p-5 fw-semibold">
+                                <a href="/turnos/editarHCE${element.numero}" class="p-5 fw-semibold">
                                     <ol>${medicamentosHTML}</ol>
                                     </a>
                             </td>
                             <td>
-                                <a href="#" class="p-5 fw-semibold">
+                                <a href="/turnos/editarHCE${element.numero}" class="p-5 fw-semibold">
                                     <ol>${habitosHTML}</ol>
                                 </a>
                             </td>
                             <td>
-                                <a href="#" class="p-5 fw-semibold">
+                                <a href="/turnos/editarHCE${element.numero}" class="p-5 fw-semibold">
                                     <ol>${antecedentesHTML}</ol>
                                 </a>
                             </td>

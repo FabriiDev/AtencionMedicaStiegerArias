@@ -52,7 +52,7 @@ block content
                     .card.bg-papel.mb-1
                         .card-body.largo.d-flex.justify-content-center.align-items-center.flex-column
                             div(style="width: 80%;")#editor.bg-light
-                                | #{template}
+                                | 
                             .d-flex.gap-5.mt-3.mb-3
                             button(onclick="cargarEvolucion()").btn.w-25.w-md-50.w-lg-25.text-center.m-auto.btn-primary#btnEvolucion Cargar 
 
@@ -139,7 +139,6 @@ block content
     script.
         const Evolucion123 = !{JSON.stringify(turno.evolucion)};
         const numero = !{JSON.stringify(turno.numero_turno)};
-        const laTemplate = !{JSON.stringify(template)};
         let turnoS = !{JSON.stringify(turno)};
         
         

@@ -58,10 +58,9 @@ class TurnoController {
 
     async editHCE(req, res) {
         let turno = await turnoModel.numero_turno(req.params.numeroTurno)
-        const fechaFormateada = turno.fecha.toISOString().split('T')[0];
-        let template = req.session.template
+        const fechaFormateada = turno[0].fecha.toISOString().split('T')[0];
         let medicamentos = await turnoModel.medicamentos()
-        res.render('editHCE', { turno, template, fechaFormateada, medicamentos })
+        res.render('editHCE', { turno, fechaFormateada, medicamentos })
     }
 
 
