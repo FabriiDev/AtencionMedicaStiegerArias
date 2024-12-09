@@ -3,19 +3,15 @@ document.getElementById('btn-agenda').addEventListener('click', function(event) 
     if (window.location.pathname.includes('createHCE')) {
         event.preventDefault(); // Evita que el botón realice su acción predeterminada
         Swal.fire({
-            title: '¿Estás seguro que deseas volver a la agenda?',
-            text: "Se perderán los todos cambios",
-            icon: 'warning',
+            title: 'Debes finalizar la atencion',
+            text: "Finaliza la atencion para regresar a la agenda",
+            icon: 'info',
             showCancelButton: true,
-            confirmButtonColor: '#3085d6',
+            showConfirmButton: false, // Oculta el botón de confirmación
             cancelButtonColor: '#d33',
-            confirmButtonText: 'Sí, volver'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                toastr.info('Redirigiendo al inicio...');
-                window.location.href = '/turnos/agenda'; 
-            }
+            cancelButtonText: 'Cerrar'
         });
+        
     }else{
         window.location.href = '/turnos/agenda';
     }
@@ -23,6 +19,19 @@ document.getElementById('btn-agenda').addEventListener('click', function(event) 
 
 document.getElementById('btn-logout').addEventListener('click', function(event) {
     event.preventDefault(); // Evita que el botón realice su acción predeterminada
+    if (window.location.pathname.includes('createHCE')) {
+        event.preventDefault(); // Evita que el botón realice su acción predeterminada
+        Swal.fire({
+            title: 'Debes finalizar la atencion',
+            text: "Finaliza la atencion para cerrar sesion",
+            icon: 'info',
+            showCancelButton: true,
+            showConfirmButton: false, // Oculta el botón de confirmación
+            cancelButtonColor: '#d33',
+            cancelButtonText: 'Cerrar'
+        });
+        
+    }else
     Swal.fire({
         title: '¿Estás seguro?',
         text: "¡No podrás revertir esto!",

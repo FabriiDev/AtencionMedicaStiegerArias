@@ -43,7 +43,7 @@ function turnosHoy() {
                 for (const element of turnos) {
                     document.getElementById('pintarTablaTurnos').innerHTML += pintarTabla(element);
                 }
-
+                
                 // document.getElementById('pintarTablaTurnos').innerHTML = pintarTabla(element);
             } else {
                 console.error(data.message || 'No se encontraron turnos');
@@ -91,6 +91,21 @@ inputFecha.addEventListener('change', (event) => {
 
 });
 
+function alertaComenzarAtencion(nroTurno) {
+    Swal.fire({
+        title: '¿Deseas comenzar la atencion?',
+        text: "¡Empezara a correr el tiempo!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Sí, comenzar atencion'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            window.location.href = `/turnos/createHCE${nroTurno}`; 
+        }
+    });
+}
 
 function pintarTabla(turnos) {
 
@@ -117,8 +132,8 @@ function pintarTabla(turnos) {
 
 
     if (turnos.arribado == 1 && turnos.estado == 'Pendiente') {
-        btnComenzarAtencion = `<a href="/turnos/createHCE${turnos.numero_turno}" target="_blank">
-        <button class="btn btn-HCE-invertido fw-semibold">Comenzar atencion</button>
+        btnComenzarAtencion = `<a href="#">
+        <button class="btn btn-HCE-invertido fw-semibold" onclick="alertaComenzarAtencion(${turnos.numero_turno})" >Comenzar atencion</button>
         </a>`
     } else {
         btnComenzarAtencion = '<p></p>';
@@ -229,11 +244,15 @@ document.getElementById('guardar-template').onclick = function () {
         toastr.error('Complete los campos', 'Servidor', {
             "progressBar": true,
             "positionClass": "toast-top-center"
+            
         });
     } else {
-        toastr.success('Template guardada con éxito!', 'Servidor:', {
+        toastr.success('Guardando nueva template', 'Por favor, espere un momento:', {
             "progressBar": true,
-            "positionClass": "toast-top-center"
+            "positionClass": "toast-top-center",
+            onHidden: function () {
+                window.location.href = '/turnos/agenda';
+            }
         });
         updateTemplate();
     }
@@ -383,12 +402,41 @@ function serverTemplate(activo,ids) {
 
 
 document.getElementById('eliminar-template-editar').addEventListener('click', (event) => {
-    serverTemplate(0,idServer)
-    limpiarCamposET();
+    Swal.fire({
+        title: '¿Estas seguro que deseas eliminar esta template?',
+        text: "¡No podras recuperarla!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Sí, eliminar template'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            serverTemplate(0,idServer)
+            limpiarCamposET();
+            toastr.success('Borrando el template', 'Por favor espera un momento', {
+                progressBar: true,
+                positionClass: 'toast-top-center',
+                onHidden: function () {
+                    window.location.href = '/turnos/agenda';
+                }
+            });
+            
+        }
+    });
+    
 })
 
 
 document.getElementById('guardar-template-editar').addEventListener('click', (event) => {
+    toastr.success('Guardando template', 'Por favor espera un momento', {
+        progressBar: true,
+        positionClass: 'toast-top-center',
+        onHidden: function () {
+            window.location.href = '/turnos/agenda';
+        }
+    });
+    
     serverTemplate(1,idServer);
     limpiarCamposET();
 })

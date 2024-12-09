@@ -1,7 +1,7 @@
 extends layout
 
 block head 
-    
+    link(rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined")
     link(rel="stylesheet", href="/styles/general.css")
     //- estilos del para el quill
     link(href="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.snow.css" rel="stylesheet")
@@ -14,26 +14,27 @@ block header
 
 block content 
     .text-center.cont-todo.mt-5.width-90
-        .row.mb-5
+        .row
             .col 
-                .card
+                .bg-bienvenido.fw-bold.p-4
                     .card-body
                         .fecha.mt-3.d-flex.gap-3.mb-3.align-items-center.flex-column
-                            h3.car-title Paciente: Pedro Hernandez
+                            h3.car-title Paciente: PONER NOMBRE DINAMICOOO
                             div Turno del: 11/11/2022
                         .d-flex.justify-content-center.align-items-center.text-center.gap-3
                             h4.card-title Motivo: Dolor de cabeza
+                        button.btn.btn-HCE-invertido.mt-3.fw-semibold Ver historial
 
                 //- -------------------------- OBLIGATORIOS ----------------------- 
-        .color-primario-bg.d-flex.flex-column.align-items-start.p-5.gap-4.border-bottom.border-dark.text-light
+        .color-primario-bg.d-flex.flex-column.align-items-start.p-5.gap-4.border-bottom.border-dark.text-light.capturarValorDiagnostico
             h3 Diagnostico (obligatorio)
             .d-flex.gap-2
                 label Estado: 
-                select
+                select.select-diagnostico
                     option Preeliminar 
                     option Confirmado
             label.text-center Detalles: 
-            textarea.txt-area-create.text-left
+            textarea.txt-area-create.text-left.txt-area-diagnostico
             button(onclick="otroDiagnositoc()").btn.btn-agregar-daignostico.fw-semibold Agregar otro
 
         #nuevo-diagnostico
@@ -47,43 +48,43 @@ block content
 
             //- -------------------------- OPCIONALES -----------------------
 
-        h2.text-center.p-4.color-primario-txt.fw-bold.bg-opcionales.mb-0 Opcionales
+        h2.text-center.p-4.color-primario-txt.fw-bold.bg-light.mb-0 Opcionales
         
         //- -------------------------- MEDICAMENTOS -------------------------
         .d-flex.flex-column
-            .bg-light.d-flex.flex-column.align-items-start.p-3.gap-4
-                h3(onclick="toggleContent('ampliarMedicamento')").ml-5 Medicamentos
-                    i.fas.fa-chevron-down
+            .bg-opcionales.d-flex.flex-column.align-items-start.p-3.gap-4.capturarValorMedicamento
+                h3(onclick="toggleContent('ampliarMedicamento')").text-center.d-flex.align-items-center.cont-flecha-abrir Medicamentos
+                    span(class="material-symbols-outlined").flecha-abrir stat_minus_1
                 .contenido-oculto.w-100.p-0#ampliarMedicamento
-                    .bg-light.d-flex.flex-column.align-items-start.gap-4.animacion
+                    .d-flex.flex-column.align-items-start.gap-4.animacion
                         .d-flex.gap-2
                             label Seleccione medicamento: 
-                            select#selectMedicamento
+                            select#selectMedicamento.select-medicamento
                                 option(selected value="") seleccione uno
                         label Receta: 
-                        textarea.txt-area-create.text-left
+                        textarea.txt-area-create.text-left.txt-area-medicamento
                         button(onclick="nuevoMedicamento()").btn.btn-HCE.fw-semibold Agregar otro
             #nuevo-medicamento
 
         //- -------------------------- ALERGIAS -------------------------
         
-        .bg-light.d-flex.flex-column.align-items-start.p-3.gap-4
-            h3(onclick="toggleContent('ampliarAlergia')").text-center Alergias
-                i.fas.fa-chevron-down
+        .bg-opcionales.d-flex.flex-column.align-items-start.p-3.gap-4.capturarValorAlergias
+            h3(onclick="toggleContent('ampliarAlergia')").text-center.d-flex.align-items-center.cont-flecha-abrir Alergias
+                span(class="material-symbols-outlined").flecha-abrir stat_minus_1
             .contenido-oculto.w-100.p-0#ampliarAlergia
-                .bg-light.d-flex.flex-column.align-items-start.gap-4.animacion
+                .d-flex.flex-column.align-items-start.gap-4.animacion
                     label Nombre: 
-                    input(type="text")
+                    input(type="text").nombre-alergia
                     label Importancia 
-                        select 
+                        select.select-alergia
                             option Leve
                             option Normal
                             option Alta
                     .d-flex.gap-4
                         label Desde: 
-                            input(type="date", name="")
+                            input(type="date", name="").desde-alergia
                         label Hasta: 
-                            input(type="date", name="")
+                            input(type="date", name="").hasta-alergia
                         label vigente
                             input(type="checkbox")
                     button(onclick="nuevaAlergia()").btn.btn-HCE.fw-semibold Agregar otro
@@ -91,18 +92,18 @@ block content
 
         //- -------------------------- HABITOS -------------------------
         
-        .bg-light.d-flex.flex-column.align-items-start.p-3.gap-4
-            h3(onclick="toggleContent('ampliarHabito')").text-center Habitos
-                i.fas.fa-chevron-down
+        .bg-opcionales.d-flex.flex-column.align-items-start.p-3.gap-4.capturarValorHabitos
+            h3(onclick="toggleContent('ampliarHabito')").text-center.d-flex.align-items-center.cont-flecha-abrir  Habitos
+                span(class="material-symbols-outlined").flecha-abrir stat_minus_1
             .contenido-oculto.w-100.p-0#ampliarHabito
-                .bg-light.d-flex.flex-column.align-items-start.gap-4.animacion
+                .d-flex.flex-column.align-items-start.gap-4.animacion
                     label Detalles: 
-                    textarea.txt-area-create.text-left
+                    textarea.txt-area-create.text-left.texto-habito
                     .d-flex.gap-4
                         label Desde: 
-                            input(type="date", name="")
+                            input(type="date", name="").desde-habito
                         label Hasta: 
-                            input(type="date", name="")
+                            input(type="date", name="").hasta-habito
                         label vigente
                             input(type="checkbox")
                     button(onclick="nuevoHabito()").btn.btn-HCE.fw-semibold Agregar otro
@@ -110,18 +111,18 @@ block content
 
             //- -------------------------- ANTECEDENTES -------------------------
         
-        .bg-light.d-flex.flex-column.align-items-start.p-3.gap-4
-            h3(onclick="toggleContent('ampliarAntecedente')").text-center Antecedentes
-                i.fas.fa-chevron-down
+        .bg-opcionales.d-flex.flex-column.align-items-start.p-3.gap-4.capturarValorAntecedente
+            h3(onclick="toggleContent('ampliarAntecedente')").text-center.d-flex.align-items-center.cont-flecha-abrir  Antecedentes
+                div(class="material-symbols-outlined").flecha-abrir stat_minus_1
             .contenido-oculto.w-100.p-0#ampliarAntecedente
-                .bg-light.d-flex.flex-column.align-items-start.gap-4.animacion
+                .d-flex.flex-column.align-items-start.gap-4.animacion
                     label Detalles: 
-                    textarea.txt-area-create.text-left
+                    textarea.txt-area-create.text-left.texto-antecedente
                     .d-flex.gap-4
                         label Desde: 
-                            input(type="date", name="")
+                            input(type="date", name="").desde-antecedente
                         label Hasta: 
-                            input(type="date", name="")
+                            input(type="date", name="").hasta-antecedente
                         label vigente
                             input(type="checkbox")
                     button(onclick="nuevoAntecedente()").btn.btn-HCE.fw-semibold Agregar otro
@@ -137,7 +138,7 @@ block content
         //-const numero = !{JSON.stringify(turno.numero_turno)};
         //-const laTemplate = !{JSON.stringify(template)};
         const medicamentos = !{JSON.stringify(medicamentos)};
-    
+        let turnazo = !{JSON.stringify(turno)};
 
     //- script de estilos de alerts
     script(src="https://code.jquery.com/jquery-3.7.1.min.js")
