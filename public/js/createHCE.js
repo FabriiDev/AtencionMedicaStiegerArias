@@ -3,13 +3,14 @@ const quill = new Quill('#editor', {
     theme: 'snow'
 });
 //quill.clipboard.dangerouslyPasteHTML(laTemplate);
+let diagnosticoCounter = 1;
 console.log('tunrazos', turnazo);
 // ------------------------ diagnosticos ---------------------------------------
 function otroDiagnositoc() {
     let nuevoDiagnostico = document.getElementById('nuevo-diagnostico');
-    let i = 1;
+    let idDiagnostico = `idDiagnostico${diagnosticoCounter}`;
     let pintar = `
-    <div id="idDiagnostico${i}" class="capturarValorDiagnostico animacion color-primario-bg d-flex flex-column align-items-start p-5 gap-4 border-bottom border-dark text-light">
+    <div id="${idDiagnostico}" class="capturarValorDiagnostico animacion color-primario-bg d-flex flex-column align-items-start p-5 gap-4 border-bottom border-dark text-light">
         <h3>Diagnostico (obligatorio)</h3>
         <div class="d-flex gap-2">
             <label>Estado: </label>
@@ -22,15 +23,15 @@ function otroDiagnositoc() {
         </label>
         <textarea class="txt-area-create txt-area-diagnostico text-left"></textarea>
         
-        <button class="btn btn-danger" onclick="(eliminarDiagnostico(${i}))">Eliminar</button>
+        <button class="btn btn-danger" onclick="eliminarDiagnostico('${idDiagnostico}')">Eliminar</button>
     </div>
 `
-    i++;
+    diagnosticoCounter++;
     nuevoDiagnostico.innerHTML += pintar;
 }
 
-function eliminarDiagnostico(numero) {
-    let diagnostico = document.getElementById(`idDiagnostico${numero}`);
+function eliminarDiagnostico(idDiagnostico) {
+    let diagnostico = document.getElementById(idDiagnostico);
     if (diagnostico) { diagnostico.remove(); }
 }
 
