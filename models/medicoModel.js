@@ -119,10 +119,15 @@ VALUES(
 
 
     static async pacientesMedico(matricula_medico) {
-        const query = `SELECT p.dni_paciente,p.nombre,p.apellido,p.fecha_nacimiento,p.direccion,p.telefono
+        const query = `SELECT 
+    p.*, 
+    TIMESTAMPDIFF(YEAR, p.fecha_nacimiento, CURDATE()) AS edad
 FROM paciente p
-JOIN turno ON turno.dni_paciente = p.dni_paciente
-WHERE turno.matricula_medico = ?;`
+LEFT JOIN turno ON turno.dni_paciente = p.dni_paciente
+LEFT JOIN medico ON medico.matricula_medico = turno.matricula_medico
+WHERE turno.matricula_medico = 1
+GROUP BY p.dni_paciente;
+`
         try {
             conn = await crearConexion();
             const [result] = await conn.query(query, [matricula_medico]);

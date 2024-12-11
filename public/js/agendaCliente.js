@@ -47,7 +47,8 @@ function turnosHoy() {
                 // document.getElementById('pintarTablaTurnos').innerHTML = pintarTabla(element);
             } else {
                 console.error(data.message || 'No se encontraron turnos');
-                document.getElementById('pintarTablaTurnos').innerHTML = `no se encontraron turnos para el ${fechaSeleccionada}`
+                document.getElementById('pintarTablaTurnos').innerHTML = `
+                <tr class="color-primario-txt"> <td class="fw-semibold fs-3 text-danger" colspan='12'>No se encontraron turnos para el ${fechaSeleccionada}</td></tr> `
             }
         })
         .catch(error => {
@@ -82,7 +83,9 @@ inputFecha.addEventListener('change', (event) => {
             } else {
                 //document.getElementById('fechaInicial').innerHTML = fechaSeleccionada;
                 console.error(data.message || 'No se encontraron turnos');
-                document.getElementById('pintarTablaTurnos').innerHTML = `no se encontraron turnos para el ${fechaSeleccionada}`
+                document.getElementById('pintarTablaTurnos').innerHTML = `
+                <tr class="color-primario-txt"> <td class="fw-semibold fs-3 text-danger" colspan='12'>No se encontraron turnos para el ${fechaSeleccionada}</td></tr> 
+                `
             }
         })
         .catch(error => {
