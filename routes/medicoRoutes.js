@@ -21,6 +21,7 @@ router.get('/', medicoController.Index);
 router.get('/HCE', medicoController.HCE);
 router.get('/createHCE', medicoController.CreateHCE);
 router.get('/cargarTemplates',medicoController.traerTemplates)
+router.get('/pacientes',medicoController.pacientes)
 
 router.post('/updateTemplate',medicoController.updateTemplate)
 router.post('/crearTemplate',medicoController.guardarTemplate);

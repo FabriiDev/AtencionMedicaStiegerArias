@@ -8,13 +8,13 @@ header
                 span.navbar-toggler-icon
             .collapse.navbar-collapse#navbarNav
                 .mx-auto.d-flex.align-items-center.gap-5
-                    a.btn.btn-agenda.d-flex.gap-2#btn-agenda.link-offset-2.link-underline.link-underline-opacity-0.text-light.fw-semibold
+                    a(href='/turnos/agenda').btn.btn-agenda.d-flex.gap-2#btn-agenda.link-offset-2.link-underline.link-underline-opacity-0.text-light.fw-semibold
                         //-span(class="material-symbols-outlined icono-agenda") description
                         | Agenda
-                    a.btn.btn-agenda.d-flex.gap-2#btn-agenda.link-offset-2.link-underline.link-underline-opacity-0.text-light.fw-semibold
+                    a(href='/pacientes').btn.btn-agenda.d-flex.gap-2#btn-agenda.link-offset-2.link-underline.link-underline-opacity-0.text-light.fw-semibold
                         //-span(class="material-symbols-outlined icono-agenda") description
                         | Pacientes
-                    a.btn.btn-logout.d-flex.gap-2.link-offset-2.link-underline.link-underline-opacity-0.text-light.fw-semibold#btn-logout
+                    a(href='#').btn.btn-logout.d-flex.gap-2.link-offset-2.link-underline.link-underline-opacity-0.text-light.fw-semibold#btn-logout
                         //-span(class="material-symbols-outlined icono-logout") logout
                         | Cerrar Sesión
     script(src="https://code.jquery.com/jquery-3.7.1.min.js")

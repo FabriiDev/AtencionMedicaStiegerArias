@@ -1,0 +1,21 @@
+//- layout.pug
+doctype html
+html(lang="en")
+    head
+        meta(charset="UTF-8")
+        meta(name="viewport", content="width=device-width, initial-scale=1.0")
+        title Atencion medica
+        link(rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined")
+        link(rel="stylesheet", href="/styles/bootstrap.min.css")
+        block head // Bloque opcional para añadir más elementos en el <head>
+    body
+        block header 
+        include templates/header.pug
+        block content // Sección principal para el contenido de cada página
+        p #{pacientes}
+        block footer
+
+        script.
+            let pacientes = !{JSON.stringify(pacientes)};
+
+        script(src='/js/pacientes.js') 

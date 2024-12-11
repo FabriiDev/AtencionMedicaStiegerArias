@@ -96,6 +96,13 @@ class MedicoController {
 
         res.send({ succes: true })
     }
+
+    async pacientes(req,res){
+    let pacientes= await   medicoModel.pacientesMedico(req.session.matricula)
+    
+
+        res.render('paciente',{pacientes})
+    }
 }
 
 module.exports = new MedicoController;

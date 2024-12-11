@@ -57,10 +57,12 @@ class TurnoController {
     }
 
     async editHCE(req, res) {
-        let turno = await turnoModel.numero_turno(req.params.numeroTurno)
+        let numero=req.params.numeroTurno
+        let turno = await turnoModel.numero_turno(numero)
         const fechaFormateada = turno[0].fecha.toISOString().split('T')[0];
         let medicamentos = await turnoModel.medicamentos()
-        res.render('editHCE', { turno, fechaFormateada, medicamentos })
+        
+        res.render('editHCE', { turno, fechaFormateada, medicamentos,numero })
     }
 
 
@@ -130,12 +132,14 @@ class TurnoController {
     async actualizarHCE(req, res) {
         let envio = { success: false }//si hay tiempo mandar un mensaje segun el error o el if que dio el return
         let historial = req.body.historial
-        try {
+        console.log('historial server-----------------------------------------')
+        console.log(historial)
+        /*try {
             let ids = await turnoModel.traerids(historial.numero_turno)
             await turnoModel.transaccionUpdateHCE(historial, ids[0][0])
         } catch (error) {
             console.log(error)
-        }
+        }*/
 
         envio = { success: true }
         res.send(envio)

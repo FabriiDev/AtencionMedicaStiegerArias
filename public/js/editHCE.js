@@ -32,7 +32,7 @@ function separador(turnos) {
 
     for (const t of turnos) {
         let turnoA = {
-            numero:t.numero_turno,
+            numero: t.numero_turno,
             fecha: formatearFecha(t.fecha),
             motivo: t.motivo_consulta,
             estadoTurno: t.estado,
@@ -68,9 +68,9 @@ function separador(turnos) {
     return turnoFormateado;
 }
 separador(turnos)
-console.log(turnos)
+
 // la fecha del turno ya viene formateada del sv
-document.getElementById('fecha').innerHTML = 'turno del: ' + turnoFormateado[0].fecha; 
+document.getElementById('fecha').innerHTML = 'turno del: ' + turnoFormateado[0].fecha;
 
 // ----------------- select medicamentos ----------------
 
@@ -125,17 +125,15 @@ function traerDiagnostico() {
     // estos cargan en los bloques estaticos de pug
     document.querySelector('.select-diagnostico').value = turnoFormateado[0].estadoDiagnostico[0];
     document.querySelector('.txt-area-diagnostico').innerHTML = turnoFormateado[0].diagnostico[0];
-
-    console.log(turnoFormateado[0].diagnostico.length);
-    if(turnoFormateado[0].diagnostico.length > 1){
-        for(let i =1; i < turnoFormateado[0].diagnostico.length; i++) {
-            traerOtroDiagnostico(turnoFormateado[0].diagnostico[i],turnoFormateado[0].estadoDiagnostico[i])
+    if (turnoFormateado[0].diagnostico.length > 1) {
+        for (let i = 1; i < turnoFormateado[0].diagnostico.length; i++) {
+            traerOtroDiagnostico(turnoFormateado[0].diagnostico[i], turnoFormateado[0].estadoDiagnostico[i])
         }
     }
 }
 traerDiagnostico()
 
- // Contador global para IDs únicos
+// Contador global para IDs únicos
 
 function traerOtroDiagnostico(txt_diag, estDiag) {
     let pre = estDiag === 'Preliminar' ? 'selected' : '';
@@ -190,10 +188,7 @@ function eliminarDiagnosticoConConfirmacion(idDiagnostico) {
 function traerEvolucion() {
     quill.clipboard.dangerouslyPasteHTML(turnoFormateado[0].evolucion);
 }
-traerEvolucion() 
-console.log("-----------------------");
-console.log(turnoFormateado);
-console.log("-----------------------");
+traerEvolucion()
 
 // --------------------------------- medicamentos traidos ---------------------------
 
@@ -211,11 +206,10 @@ function traerMedicamento() {
 
     if (turnoFormateado[0].nombreMedicamento.length > 1) {
         for (let i = 1; i < turnoFormateado[0].nombreMedicamento.length; i++) {
-            console.log('aaaaaaaaaaaaaaaaaa ',turnoFormateado[0].txtReceta[i])
             traerOtroMedicamento(
                 turnoFormateado[0].nombreMedicamento[i],
                 turnoFormateado[0].txtReceta[i]
-                
+
             );
         }
     }
@@ -283,22 +277,21 @@ function traerAlergia() {
     let desdeAlergia = document.querySelector('.desde-alergia').value = turnoFormateado[0].alergiaDesde[0] || '';
     let hastaAlergia = document.querySelector('.hasta-alergia').value = turnoFormateado[0].alergiaHasta[0] || '';
 
-    if(turnoFormateado[0].nombreAlergia.length > 1){
-        for(let i = 1; i < turnoFormateado[0].nombreAlergia.length; i++) {
+    if (turnoFormateado[0].nombreAlergia.length > 1) {
+        for (let i = 1; i < turnoFormateado[0].nombreAlergia.length; i++) {
             // crashea si le mando las variables creados como parametros xd
-            traerOtraAlergia(turnoFormateado[0].nombreAlergia[i], turnoFormateado[0].importanciaAlergia[i], turnoFormateado[0].alergiaDesde[i], turnoFormateado[0].alergiaHasta[i] )
+            traerOtraAlergia(turnoFormateado[0].nombreAlergia[i], turnoFormateado[0].importanciaAlergia[i], turnoFormateado[0].alergiaDesde[i], turnoFormateado[0].alergiaHasta[i])
         }
     }
 }
 traerAlergia()
 
- // Contador global para IDs únicos
+// Contador global para IDs únicos
 
 function traerOtraAlergia(nombreAlergia, importanciaAlergia, desdeAlergia, hastaAlergia) {
     let lev = importanciaAlergia === 'leve' ? 'selected' : '';
     let nor = importanciaAlergia === 'normal' ? 'selected' : '';
     let alt = importanciaAlergia === 'alta' ? 'selected' : '';
-    console.log('se esta llamando a la funcion de alergia')
     let nuevaAlergia = document.getElementById('nueva-alergia');
     let idAlergia = `idAlergia${alergiaCounter}`; // Generar ID único
 
@@ -329,7 +322,7 @@ function traerOtraAlergia(nombreAlergia, importanciaAlergia, desdeAlergia, hasta
     </div>`
 
     nuevaAlergia.innerHTML += pintar;
-    alergiaCounter++; 
+    alergiaCounter++;
 }
 
 function eliminarAlergiaConConfirmacion(idAlergia) {
@@ -354,14 +347,14 @@ function eliminarAlergiaConConfirmacion(idAlergia) {
 
 // ------------------------------Habitos traidos ------------------------------
 
-function traerHabito(){
+function traerHabito() {
     toggleContent('ampliarHabito')
     document.querySelector('.texto-habito').innerHTML = turnoFormateado[0].habito[0];
     document.querySelector('.desde-habito').value = turnoFormateado[0].habitoDesde[0] || '';
     document.querySelector('.hasta-habito').value = turnoFormateado[0].habitoHasta[0] || '';
 
-    if(turnoFormateado[0].habito.length > 1){
-        for(let i = 1; i < turnoFormateado[0].habito.length; i++) {
+    if (turnoFormateado[0].habito.length > 1) {
+        for (let i = 1; i < turnoFormateado[0].habito.length; i++) {
             // crashea si le mando las variables creados como parametros xd
             traerOtroHabito(turnoFormateado[0].habito[i], turnoFormateado[0].habitoDesde[i], turnoFormateado[0].habitoHasta[i])
         }
@@ -369,7 +362,7 @@ function traerHabito(){
 }
 traerHabito()
 
-function traerOtroHabito(habito, desdeHabito, hastaHabito){
+function traerOtroHabito(habito, desdeHabito, hastaHabito) {
     let nuevoHabito = document.getElementById('nuevo-habito');
     let idHabito = `idHabito${habitoCounter}`;
     let pintar = `
@@ -416,14 +409,14 @@ function eliminarHabitoConConfirmacion(idHabito) {
 
 // ---------------------------------- Antecedentes traidos --------------------------------
 
-function traerAntecedente(){
+function traerAntecedente() {
     toggleContent('ampliarAntecedente')
     document.querySelector('.texto-antecedente').innerHTML = turnoFormateado[0].antecedente[0];
     document.querySelector('.desde-antecedente').value = turnoFormateado[0].antecedenteDesde[0] || '';
     document.querySelector('.hasta-antecedente').value = turnoFormateado[0].antecedenteHasta[0] || '';
 
-    if(turnoFormateado[0].antecedente.length > 1){
-        for(let i = 1; i < turnoFormateado[0].antecedente.length; i++) {
+    if (turnoFormateado[0].antecedente.length > 1) {
+        for (let i = 1; i < turnoFormateado[0].antecedente.length; i++) {
             // crashea si le mando las variables creados como parametros xd
             traerOtroAntecedente(turnoFormateado[0].antecedente[i], turnoFormateado[0].antecedenteDesde[i], turnoFormateado[0].antecedenteHasta[i])
         }
@@ -521,8 +514,6 @@ function capturarValoresDiagnosticos() {
         }
 
     });
-    console.log('Diagnostiocs cargados');
-    console.log(diagnosticosCargados);
     return diagnosticosCargados;
 }
 
@@ -565,8 +556,6 @@ document.getElementById('selectTemplates').addEventListener('change', () => {
 
 function capturarValorEvolucion() {
     let evolucionEnriquecida = quill.root.innerHTML;
-    console.log('Evolucion cargada');
-    console.log(evolucionEnriquecida);
     return evolucionEnriquecida;
 }
 
@@ -616,8 +605,6 @@ function capturarValoresMedicamentos() {
         }
 
     });
-    console.log('Medicamentos cargados');
-    console.log(medicamentosCargados);
     return medicamentosCargados;
 }
 
@@ -692,8 +679,6 @@ function capturarValoresAlergias() {
 
 
     });
-    console.log('alergias cargadass');
-    console.log(alergiasCargadas);
     return alergiasCargadas;
 }
 
@@ -760,8 +745,6 @@ function cargarValoresHabitos() {
 
 
     });
-    console.log('Habitos cargados');
-    console.log(habitosCargados);
     return habitosCargados;
 }
 
@@ -830,14 +813,13 @@ function cargarValoresAntecedentes() {
 
 
     });
-    console.log('Antecedentes cargados');
-    console.log(antecedentesCargados);
     return antecedentesCargados;
 }
 
 
 
-function guardarHistorial(){
+function guardarHistorial() {
+
     Swal.fire({
         title: '¿Deseas finalizar la edicion?',
         text: "¡La consulta se guardara con los cambios realizados!",
@@ -864,7 +846,7 @@ function guardarHistorial(){
                 });
                 return;
             }
-
+        
             let med = capturarValoresMedicamentos();
 
             let ale = capturarValoresAlergias();
@@ -873,23 +855,50 @@ function guardarHistorial(){
 
             let ante = cargarValoresAntecedentes();
 
-            //postServer(vcd, ec, med, ale, hab, ante)
+            let test=[vcd,ec,med,ale,hab,ante,numero]
+            console.log('----------------------------test------------------------')
+            console.log(test)
+            console.log('--------------------------------------------------------')
+            postServer(test)
             toastr.success('Regresando a la agenda', 'Consulta finalizada con exito', {
                 progressBar: true,
                 positionClass: 'toast-top-center',
-                onHidden: function () {
+                /*onHidden: function () {
                     window.location.href = '/turnos/agenda';
-                }
+                }*/
             });
 
         }
-    });
-}
+    });}
 
-
-
-
-
+    function postServer(historial) {
+        fetch(`/turnos/actualizarHCE`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                historial:historial
+            })
+        })
+            .then(response => {
+    
+                return response.json();
+            })
+            .then(data => {
+    
+                if (data.success) {
+    
+                } else {
+                    console.error(data.message || 'fallo en el server');
+                }
+            })
+            .catch(error => {
+                console.error('Error al updatear', error);
+            })
+        }
+        
+    
 
 // ------------------------------------ viejo -----------------------------
 /*

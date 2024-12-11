@@ -103,15 +103,32 @@ VALUES(
     }
 
 
-    static async updateTemplate(idTemplate,nombreTemplate, matricula_medico, txtTemplate) {
+    static async updateTemplate(idTemplate, nombreTemplate, matricula_medico, txtTemplate) {
 
         const query = `UPDATE template SET txt_template=?,nombre=? WHERE id_template=? AND matricula_medico=?`
         try {
             conn = await crearConexion();
-            const [result] = await conn.query(query, [txtTemplate,nombreTemplate,idTemplate, matricula_medico]);
+            const [result] = await conn.query(query, [txtTemplate, nombreTemplate, idTemplate, matricula_medico]);
             return result.length ? result : null;
         } catch (error) {
             console.log('Error al updatear template medico: ', error);
+        } finally {
+            if (conn) conn.end();
+        }
+    }
+
+
+    static async pacientesMedico(matricula_medico) {
+        const query = `SELECT p.dni_paciente,p.nombre,p.apellido,p.fecha_nacimiento,p.direccion,p.telefono
+FROM paciente p
+JOIN turno ON turno.dni_paciente = p.dni_paciente
+WHERE turno.matricula_medico = ?;`
+        try {
+            conn = await crearConexion();
+            const [result] = await conn.query(query, [matricula_medico]);
+            return result.length ? result : null;
+        } catch (error) {
+            console.log('Error al traer pacientes: ', error);
         } finally {
             if (conn) conn.end();
         }
