@@ -1,19 +1,35 @@
-//- layout.pug
-doctype html
-html(lang="en")
-    head
-        meta(charset="UTF-8")
-        meta(name="viewport", content="width=device-width, initial-scale=1.0")
-        title Atencion medica
-        link(rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined")
-        link(rel="stylesheet", href="/styles/bootstrap.min.css")
-        block head // Bloque opcional para añadir más elementos en el <head>
-    body
-        block header 
-        include templates/header.pug
-        block content // Sección principal para el contenido de cada página
-        p #{pacientes}
-        block footer
+extends layout
+block head 
+    
+    link(rel="stylesheet", href="/styles/agenda.css")
+    //- estilos de alertas
+    link(rel="stylesheet", href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css")
+    //- estilos del para el quill
+    link(href="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.snow.css" rel="stylesheet")
+    link(rel="stylesheet", href="/styles/general.css")
+block header 
+    include templates/header.pug
+block content
+    .width-90.title.text-center.mt-5
+        .bg-bienvenido.p-3
+            h1.color-primario-txt.fw-bold Buscar pacientes
+            .d-flex.gap-3.justify-content-center.p-3
+                label(for="") Nombre o Apellido: 
+                input(type="text")#busqueda.border.border-dark.rounded
+        .text-center.text-light.fs-4.color-primario-bg.fw-semibold.p-3.border-bottom.border-light Agenda Diaria
+            .table-responsive
+                table.table.table-striped.sombra-tabla.color-primario-txt.fs-5.fw-semibold
+                    thead.table-info
+                        tr
+                            th Nombre
+                            th Apellido
+                            th DNI
+                            th Direccion 
+                            th Edad
+                            th HCE
+                    tbody#pintarTablaPacientes
+                    
+
 
         script.
             let pacientes = !{JSON.stringify(pacientes)};

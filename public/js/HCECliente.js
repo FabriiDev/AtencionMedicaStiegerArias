@@ -110,6 +110,7 @@ function pintarTabla() {
 
     let tabla = "";
     let primerTr = true; // Bandera para identificar el primer <tr>
+    let almenosUnTurno = false;
     for (const element of separador(turnos)) {
 
         //--------------------------------- diagnosticos -------------------------------
@@ -182,6 +183,7 @@ function pintarTabla() {
         console.log('Matricula medico logueado: ' + medicoLogueado);
         console.log('----------------');
         if (element.estadoTurno == "Atendido") {
+            almenosUnTurno =true;
             if(element.matriculaMedico == medicoLogueado){
 
                 //------------------ pintar tabla ---------------------
@@ -330,7 +332,9 @@ function pintarTabla() {
         }
 
     }
-
+    if(!almenosUnTurno){
+        tabla += `<tr class="color-primario-txt"> <td class="fw-semibold fs-3 text-danger" colspan='12'>No hay atenciones registradas</td></tr>`;
+    }
     document.getElementById('table-body').innerHTML = tabla;
 }
 pintarTabla();
