@@ -858,8 +858,9 @@ function guardarHistorial() {
             let test=[vcd,ec,med,ale,hab,ante,numero]
             console.log('----------------------------test------------------------')
             console.log(test)
+            console.log(numero)
             console.log('--------------------------------------------------------')
-            postServer(test)
+            postServer(vcd,ec,med,ale,hab,ante,numero)
             toastr.success('Regresando a la agenda', 'Consulta finalizada con exito', {
                 progressBar: true,
                 positionClass: 'toast-top-center',
@@ -871,7 +872,17 @@ function guardarHistorial() {
         }
     });}
 
-    function postServer(historial) {
+    function postServer(diagnosticos,evolucion,medicamentos,alergias,habitos,antecedentes,numero) {
+        let historial={
+            diagnosticos: diagnosticos,
+            evolucion: evolucion,
+            medicamentos: medicamentos,
+            alergias: alergias,
+            habitos: habitos,
+            antecedentes: antecedentes,
+            numero_turno:numero}
+
+
         fetch(`/turnos/actualizarHCE`, {
             method: 'POST',
             headers: {

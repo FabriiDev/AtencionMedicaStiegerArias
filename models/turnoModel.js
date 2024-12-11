@@ -160,7 +160,7 @@ ORDER BY fecha DESC`
 
             await conn.query(`UPDATE turno SET estado = 'Atendido' WHERE turno.numero_turno = ?;`, [nTurno])
             // Ejecutar los procedimientos almacenados
-            
+
             for (const data of historial.diagnostico) {
                 await conn.query(' CALL insertar_Diagnostico(?,?,?)', [data.detalles, data.estado, nTurno]);
             }
@@ -203,51 +203,80 @@ ORDER BY fecha DESC`
 
         try {
             await conn.beginTransaction();
-
+            console.log(historial)
             try {
-                if (historial.diagnosticos[0].detalle != '' && historial.diagnosticos[0] != '' && ids.idD != 0) {
-                    await conn.query(`UPDATE diagnostico SET resumen_evolucion = ?, estado = ? WHERE id_diagnostico = ?`, [historial.diagnosticos[0].detalle, historial.diagnosticos[0].estado, ids.idD]);
+                for (const element of object) {
+                    if (historial.diagnosticos[0].detalles != '' && ids.idD != 0) {
+                        await conn.query(`UPDATE diagnostico SET resumen_evolucion = ?, estado = ? WHERE id_diagnostico = ?`, [historial.diagnosticos[0].detalles, historial.diagnosticos[0].estado, ids.idD]);
+                    }
+
                 }
-            } catch (error) {}
+
+            } catch (error) {
+                console.log(error)
+            }
 
             try {
                 if (historial.evolucion != '' && ids.idE != 0) {
                     await conn.query(`UPDATE evolucion SET resumen_evolucion=? WHERE id_evolucion=?`, [historial.evolucion, ids.idE]);
                 }
-            } catch (error) {}
-            
-            try {
-                if (historial.medicamentos[0].valor != 0 && ids.idR != 0) {
-                    await conn.query(`UPDATE receta SET numero_turno=?,id_medicamento=? WHERE id_receta=?`, [nTurno, historial.medicamentos[0].valor, ids.idR]);
-                } else if (historial.medicamentos[0].valor != 0) {
-                    await conn.query(' CALL insertar_receta(?,?)', [historial.medicamentos[0].valor, nTurno]);
-                }
-            } catch (error) {}
+            } catch (error) {
+                console.log(error)
+            }
 
             try {
-                if (historial.antecedentes[0].detalle != '' && historial.antecedentes[0].fdesde != '' && historial.antecedentes[0].fhasta != '' && ids.idAN != 0) {
-                    await conn.query('UPDATE antecedente SET descripcion=?,fecha_desde=?,fecha_hasta=? WHERE id_antecedente=?', [historial.antecedentes[0].detalle, historial.antecedentes[0].fdesde, historial.antecedentes[0].fhasta, ids.idAN]);
-                } else if (historial.antecedentes[0].detalle != '' && historial.antecedentes[0].fdesde != '' && historial.antecedentes[0].fhasta != '') {
-                    await conn.query(' CALL insertar_Antecedentes(?,?,?,?)', [historial.antecedentes[0].detalle, nTurno, historial.antecedentes[0].fdesde, historial.antecedentes[0].fhasta]);
+                if (historial.medicamentos.length > 0) {
+                    if (historial.medicamentos[0].idMedicamento != 0 && ids.idR != 0) {
+                        await conn.query(`UPDATE receta SET numero_turno=?,id_medicamento=?,txt_receta=? WHERE id_receta=?`, [nTurno, historial.medicamentos[0].idMedicamento, historial.medicamentos[0].textoMedicamento, ids.idR]);
+                    } else if (historial.medicamentos[0].idMedicamento != 0) {
+                        await conn.query(' CALL insertar_receta(?,?)', [historial.medicamentos[0].idMedicamento, nTurno, historial.medicamentos[0].textoMedicamento]);
+                    }
+
                 }
-            } catch (error) { }
+
+            } catch (error) {
+                console.log(error)
+            }
 
             try {
-                if (historial.habitos[0].detalle != '' && historial.habitos[0].fdesde != '' && historial.habitos[0].fhasta != '' && ids.idH != 0) {
-                    await conn.query('UPDATE habito SET descripcion=?,fecha_desde=?,fecha_hasta=? WHERE id_habito=?', [historial.habitos[0].detalle, historial.habitos[0].fdesde, historial.habitos[0].fhasta, ids.idH]);
-                } else if (historial.habitos[0].detalle != '' && historial.habitos[0].fdesde != '' && historial.habitos[0].fhasta != '') {
-                    await conn.query(' CALL insertar_Habito(?,?,?,?)', [historial.habitos[0].detalle, nTurno, historial.habitos[0].fdesde, historial.habitos[0].fhasta]);
+                if (historial.antecedentes.length > 0) {
+                    if (historial.antecedentes[0].textoAntecedente != '' && historial.antecedentes[0].desdeAntecedente != '' && historial.antecedentes[0].hastaAntecedente != '' && ids.idAN != 0) {
+                        await conn.query('UPDATE antecedente SET descripcion=?,fecha_desde=?,fecha_hasta=? WHERE id_antecedente=?', [historial.antecedentes[0].textoAntecedente, historial.antecedentes[0].desdeAntecedente, historial.antecedentes[0].hastaAntecedente, ids.idAN]);
+                    } else if (historial.antecedentes[0].textoAntecedente != '' && historial.antecedentes[0].desdeAntecedente != '' && historial.antecedentes[0].hastaAntecedente != '') {
+                        await conn.query(' CALL insertar_Antecedentes(?,?,?,?)', [historial.antecedentes[0].textoAntecedente, nTurno, historial.antecedentes[0].desdeAntecedente, historial.antecedentes[0].hastaAntecedente]);
+                    }
                 }
-            } catch (error) { }
+
+            } catch (error) {
+                console.log(error)
+            }
+
+            try {
+                if (historial.habitos.length > 0) {
+                    if (historial.habitos[0].textoHabito != '' && historial.habitos[0].desdeHabito != '' && historial.habitos[0].hastaHabito != '' && ids.idH != 0) {
+                        await conn.query('UPDATE habito SET descripcion=?,fecha_desde=?,fecha_hasta=? WHERE id_habito=?', [historial.habitos[0].textoHabito, historial.habitos[0].fdesde, historial.habitos[0].hastaHabito, ids.idH]);
+                    } else if (historial.habitos[0].textoHabito != '' && historial.habitos[0].desdeHabito != '' && historial.habitos[0].hastaHabito != '') {
+                        await conn.query(' CALL insertar_Habito(?,?,?,?)', [historial.habitos[0].textoHabito, nTurno, historial.habitos[0].desdeHabito, historial.habitos[0].hastaHabito]);
+                    }
+                }
+
+            } catch (error) {
+                console.log(error)
+            }
 
 
             try {
-                if (historial.alergias[0].nombre != '' && historial.alergias[0].importancia != '' && historial.alergias[0].fdesde != '' && historial.alergias[0].fhasta != '' && ids.idAL != 0) {
-                    await conn.query('UPDATE alergia SET nombre_alergia=?,importancia=?,fecha_desde=?,fecha_hasta=? WHERE `id_alergia`=?', [historial.alergias[0].nombre, historial.alergias[0].importancia, historial.alergias[0].fdesde, historial.alergias[0].fhasta, ids.idAL]);
-                } else if (historial.alergias[0].nombre != '' && historial.alergias[0].importancia != '' && historial.alergias[0].fdesde != '' && historial.alergias[0].fhasta != '') {
-                    await conn.query(' CALL insertar_Alergia(?,?,?,?,?)', [historial.alergias[0].nombre, historial.alergias[0].importancia, historial.alergias[0].fdesde, historial.alergias[0].fhasta, nTurno]);
+                if (historial.alergias.length > 0) {
+                    if (historial.alergias[0].nombreAlergia != '' && historial.alergias[0].importanciaAlergia != '' && historial.alergias[0].desdeAlergia != '' && historial.alergias[0].hastaAlergia != '' && ids.idAL != 0) {
+                        await conn.query('UPDATE alergia SET nombre_alergia=?,importancia=?,fecha_desde=?,fecha_hasta=? WHERE `id_alergia`=?', [historial.alergias[0].nombreAlergia, historial.alergias[0].importanciaAlergia, historial.alergias[0].fdesde, historial.alergias[0].hastaAlergia, ids.idAL]);
+                    } else if (historial.alergias[0].nombreAlergia != '' && historial.alergias[0].importanciaAlergia != '' && historial.alergias[0].desdeAlergia != '' && historial.alergias[0].fhasta != '') {
+                        await conn.query(' CALL insertar_Alergia(?,?,?,?,?)', [historial.alergias[0].nombreAlergia, historial.alergias[0].importanciaAlergia, historial.alergias[0].desdeAlergia, historial.alergias[0].hastaAlergia, nTurno]);
+                    }
                 }
-            } catch (error) { }
+
+            } catch (error) {
+                console.log(error)
+            }
             // Confirmar la transacción
             await conn.commit();
             console.log('Transacción completada con éxito');

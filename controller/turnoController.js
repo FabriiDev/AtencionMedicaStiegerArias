@@ -132,14 +132,12 @@ class TurnoController {
     async actualizarHCE(req, res) {
         let envio = { success: false }//si hay tiempo mandar un mensaje segun el error o el if que dio el return
         let historial = req.body.historial
-        console.log('historial server-----------------------------------------')
-        console.log(historial)
-        /*try {
+        try {
             let ids = await turnoModel.traerids(historial.numero_turno)
             await turnoModel.transaccionUpdateHCE(historial, ids[0][0])
         } catch (error) {
             console.log(error)
-        }*/
+        }
 
         envio = { success: true }
         res.send(envio)
