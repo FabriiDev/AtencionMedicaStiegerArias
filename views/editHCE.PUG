@@ -28,6 +28,9 @@ block content
                 //- -------------------------- OBLIGATORIOS ----------------------- 
         .color-primario-bg.d-flex.flex-column.align-items-start.p-5.gap-4.border-bottom.border-dark.text-light.capturarValorDiagnostico
             h3 Diagnostico (obligatorio)
+            if(turno[0].id_diagnostico)
+                - const idDiagFormateado = turno[0].id_diagnostico.split('|')[0]
+                    input(type="hidden" class="idDiag" value=idDiagFormateado)
             .d-flex.gap-2
                 label Estado: 
                 select.select-diagnostico
@@ -53,8 +56,12 @@ block content
         //- -------------------------- MEDICAMENTOS -------------------------
         .d-flex.flex-column
             .bg-opcionales.d-flex.flex-column.align-items-start.p-3.gap-4.capturarValorMedicamento
+                if(turno[0].id_receta)
+                    - const idRecetaFormateado = turno[0].id_receta.split('|')[0]
+                    input(type="hidden" class="idRec" value=idRecetaFormateado)
                 h3(onclick="toggleContent('ampliarMedicamento')").text-center.d-flex.align-items-center.cont-flecha-abrir Medicamentos
                     span(class="material-symbols-outlined").flecha-abrir stat_minus_1
+                
                 .contenido-oculto.w-100.p-0#ampliarMedicamento
                     .d-flex.flex-column.align-items-start.gap-4.animacion
                         .d-flex.gap-2
@@ -71,6 +78,9 @@ block content
         //- -------------------------- ALERGIAS -------------------------
         
         .bg-opcionales.d-flex.flex-column.align-items-start.p-3.gap-4.capturarValorAlergias
+            if(turno[0].id_alergia)
+                - const idAlerFormateado = turno[0].id_alergia.split('|')[0]
+                input(type="hidden" class="idAler" value=idAlerFormateado)
             h3(onclick="toggleContent('ampliarAlergia')").text-center.d-flex.align-items-center.cont-flecha-abrir Alergias
                 span(class="material-symbols-outlined").flecha-abrir stat_minus_1
             .contenido-oculto.w-100.p-0#ampliarAlergia
@@ -95,6 +105,9 @@ block content
         //- -------------------------- HABITOS -------------------------
         
         .bg-opcionales.d-flex.flex-column.align-items-start.p-3.gap-4.capturarValorHabitos
+            if(turno[0].id_habito)
+                - const idHabitoFormateado = turno[0].id_habito.split('|')[0]
+                    input(type="hidden" class="idHab" value=idHabitoFormateado)
             h3(onclick="toggleContent('ampliarHabito')").text-center.d-flex.align-items-center.cont-flecha-abrir  Habitos
                 span(class="material-symbols-outlined").flecha-abrir stat_minus_1
             .contenido-oculto.w-100.p-0#ampliarHabito
@@ -114,6 +127,9 @@ block content
             //- -------------------------- ANTECEDENTES -------------------------
         
         .bg-opcionales.d-flex.flex-column.align-items-start.p-3.gap-4.capturarValorAntecedente
+            if(turno[0].id_antecedente)
+                - const idAntecedenteFormateado = turno[0].id_habito.split('|')[0]
+                input(type="hidden" class="idAnte" value=idAntecedenteFormateado)
             h3(onclick="toggleContent('ampliarAntecedente')").text-center.d-flex.align-items-center.cont-flecha-abrir  Antecedentes
                 div(class="material-symbols-outlined").flecha-abrir stat_minus_1
             .contenido-oculto.w-100.p-0#ampliarAntecedente

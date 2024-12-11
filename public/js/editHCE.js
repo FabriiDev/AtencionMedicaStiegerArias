@@ -43,23 +43,29 @@ function separador(turnos) {
             apellidoMedico: t.apellido_medico,
             matriculaMedico: t.matricula_medico,
             editable: t.es_ultima_atencion,
-            diagnostico: t.diagnostico ? t.diagnostico.split('|') : ['Sin diagnóstico'],
-            estadoDiagnostico: t.estado_diagnostico ? t.estado_diagnostico.split('|') : ['Sin estado de diagnóstico'],
-            evolucion: t.evolucion || 'Sin evolución registrada',
-            nombreAlergia: t.nombre_alergia ? t.nombre_alergia.split('|') : ['Sin alergias registradas'],
-            importanciaAlergia: t.importancia_alergia ? t.importancia_alergia.split('|') : ['No especificada'],
+            diagnostico: t.diagnostico ? t.diagnostico.split('|') : [''],
+            estadoDiagnostico: t.estado_diagnostico ? t.estado_diagnostico.split('|') : [''],
+            evolucion: t.evolucion || '',
+            nombreAlergia: t.nombre_alergia ? t.nombre_alergia.split('|') : [''],
+            importanciaAlergia: t.importancia_alergia ? t.importancia_alergia.split('|') : [''],
             alergiaDesde: t.fecha_desde_alergia ? t.fecha_desde_alergia.split('|') : [''],
             alergiaHasta: t.fecha_hasta_alergia ? t.fecha_hasta_alergia.split('|') : [''],
-            habito: t.habito ? t.habito.split('|') : ['Sin hábitos registrados'],
+            habito: t.habito ? t.habito.split('|') : [''],
             habitoDesde: t.fecha_desde_habito ? t.fecha_desde_habito.split('|') : [''],
             habitoHasta: t.fecha_hasta_habito ? t.fecha_hasta_habito.split('|') : [''],
-            idReceta: t.id_receta ? t.id_receta.split('|') : ['Sin recetas'],
-            txtReceta: t.txt_receta ? t.txt_receta.split('|') : ['Sin contenido de receta'],
-            nombreMedicamento: t.nombre_medicamento ? t.nombre_medicamento.split('|') : ['Sin medicamentos'],
-            idMedicamento: t.id_medicamento ? t.id_medicamento.split('|') : ['Sin identificadores de medicamento'],
-            antecedente: t.antecedente ? t.antecedente.split('|') : ['Sin antecedentes registrados'],
+            idReceta: t.id_receta ? t.id_receta.split('|') : [''],
+            txtReceta: t.txt_receta ? t.txt_receta.split('|') : [''],
+            nombreMedicamento: t.nombre_medicamento ? t.nombre_medicamento.split('|') : [''],
+            idMedicamento: t.id_medicamento ? t.id_medicamento.split('|') : [''],
+            antecedente: t.antecedente ? t.antecedente.split('|') : [''],
             antecedenteDesde: t.fecha_desde_antecedente ? t.fecha_desde_antecedente.split('|') : [''],
-            antecedenteHasta: t.fecha_hasta_antecedente ? t.fecha_hasta_antecedente.split('|') : ['']
+            antecedenteHasta: t.fecha_hasta_antecedente ? t.fecha_hasta_antecedente.split('|') : [''],
+
+            idDiagnosticoDB: t.id_diagnostico ? t.id_diagnostico.split('|') : [''],
+            idRecetaDB: t.id_receta ? t.id_receta.split('|') : [''],
+            idAlergiaDB: t.id_alergia ? t.id_alergia.split('|') : [''],
+            idHabitoDB: t.id_habito ? t.id_habito.split('|') : [''],
+            idAntecedenteDB: t.id_antecedente ? t.id_antecedente.split('|') : ['']
         };
 
         turnoFormateado.push(turnoA);
@@ -67,7 +73,7 @@ function separador(turnos) {
 
     return turnoFormateado;
 }
-separador(turnos)
+console.log(separador(turnos))
 
 // la fecha del turno ya viene formateada del sv
 document.getElementById('fecha').innerHTML = 'turno del: ' + turnoFormateado[0].fecha;
@@ -125,9 +131,13 @@ function traerDiagnostico() {
     // estos cargan en los bloques estaticos de pug
     document.querySelector('.select-diagnostico').value = turnoFormateado[0].estadoDiagnostico[0];
     document.querySelector('.txt-area-diagnostico').innerHTML = turnoFormateado[0].diagnostico[0];
+    let idDiag = turnoFormateado[0].idDiagnosticoDB[0];
+    console.log('hola',idDiag);
     if (turnoFormateado[0].diagnostico.length > 1) {
         for (let i = 1; i < turnoFormateado[0].diagnostico.length; i++) {
-            traerOtroDiagnostico(turnoFormateado[0].diagnostico[i], turnoFormateado[0].estadoDiagnostico[i])
+            traerOtroDiagnostico(turnoFormateado[0].diagnostico[i], turnoFormateado[0].estadoDiagnostico[i],turnoFormateado[0].idDiagnosticoDB[i])
+            idDiag = turnoFormateado[0].idDiagnosticoDB[i]
+            console.log(idDiag);
         }
     }
 }
@@ -135,7 +145,7 @@ traerDiagnostico()
 
 // Contador global para IDs únicos
 
-function traerOtroDiagnostico(txt_diag, estDiag) {
+function traerOtroDiagnostico(txt_diag, estDiag, idDiag) {
     let pre = estDiag === 'Preliminar' ? 'selected' : '';
     let conf = estDiag === 'Confirmado' ? 'selected' : '';
 
@@ -145,6 +155,7 @@ function traerOtroDiagnostico(txt_diag, estDiag) {
     let pintar = `
     <div id="${idDiagnostico}" class="capturarValorDiagnostico animacion color-primario-bg d-flex flex-column align-items-start p-5 gap-4 border-bottom border-dark text-light">
         <h3>Diagnostico (obligatorio)</h3>
+        <input type="hidden" class="idDiag" value="${idDiag}">
         <div class="d-flex gap-2">
             <label>Estado: </label>
             <select class="select-diagnostico">
@@ -154,6 +165,7 @@ function traerOtroDiagnostico(txt_diag, estDiag) {
         </div>
         <label class="text-center">Detalles:</label>
         <textarea class="txt-area-create txt-area-diagnostico text-left">${txt_diag}</textarea>
+        
         <button class="btn btn-danger" onclick="eliminarDiagnosticoConConfirmacion('${idDiagnostico}')">Eliminar</button>
     </div>
     `;
@@ -195,7 +207,8 @@ traerEvolucion()
 function traerMedicamento() {
     // Estos cargan en los bloques estáticos de pug
     toggleContent('ampliarMedicamento');
-
+    let idMedDB = turnoFormateado[0].idRecetaDB[0];
+    console.log('id pos 0 medicamento', idMedDB);
     let nombreMedicamento = turnoFormateado[0].nombreMedicamento[0];
     let medicamento = medicamentos.find(med => med.nombre_medicamento === nombreMedicamento);
     if (medicamento) {
@@ -206,9 +219,12 @@ function traerMedicamento() {
 
     if (turnoFormateado[0].nombreMedicamento.length > 1) {
         for (let i = 1; i < turnoFormateado[0].nombreMedicamento.length; i++) {
+            idMedDB = turnoFormateado[0].idRecetaDB[i];
+            console.log(`id pos ${i} medicamento`, idMedDB);
             traerOtroMedicamento(
                 turnoFormateado[0].nombreMedicamento[i],
-                turnoFormateado[0].txtReceta[i]
+                turnoFormateado[0].txtReceta[i],
+                turnoFormateado[0].idRecetaDB[i]
 
             );
         }
@@ -218,12 +234,13 @@ function traerMedicamento() {
 traerMedicamento()
 //llenarSelectMedicamento();
 
-function traerOtroMedicamento(nombreMedicamento, txtReceta) {
+function traerOtroMedicamento(nombreMedicamento, txtReceta,idRec) {
     let nuevoMedicamento = document.getElementById('nuevo-medicamento');
     let idMedicamento = `idMedicamento${medicamentoCounter}`;
     let pintar = `
     <div id="${idMedicamento}" class="capturarValorMedicamento animacion-entrada bg-light d-flex flex-column align-items-start p-5 gap-4 border border-dark">
         <h3 class="text-center">Medicamentos</h3>
+        <input type="hidden" class="idRec" value="${idRec}">
         <div class="d-flex gap-2">
             <label>Seleccione medicamento: 
             </label>
@@ -232,7 +249,7 @@ function traerOtroMedicamento(nombreMedicamento, txtReceta) {
             </select>
         </div>
         <label>Receta: </label>
-        <textarea class="txt-area-medicamento txt-area-create text-left">${txtReceta || 'Sin contenido de Receta'}</textarea>
+        <textarea class="txt-area-medicamento txt-area-create text-left">${txtReceta || ''}</textarea>
         <button onclick="eliminarMedicamentosConConfirmacion(${medicamentoCounter})" class="btn btn-danger fw-semibold">Eliminar</button>
     </div>`;
     medicamentoCounter++;
@@ -272,6 +289,8 @@ function eliminarMedicamentosConConfirmacion(idMedicamento) {
 function traerAlergia() {
     // estos cargan en los bloques estaticos de pug
     toggleContent('ampliarAlergia')
+    let idAlerDB = turnoFormateado[0].idAlergiaDB[0];
+    console.log('id pos 0 alergia '+idAlerDB);
     let nombreAlergia = document.querySelector('.nombre-alergia').value = turnoFormateado[0].nombreAlergia[0];
     let importanciaAlergia = document.querySelector('.select-alergia').value = turnoFormateado[0].importanciaAlergia[0];
     let desdeAlergia = document.querySelector('.desde-alergia').value = turnoFormateado[0].alergiaDesde[0] || '';
@@ -280,7 +299,9 @@ function traerAlergia() {
     if (turnoFormateado[0].nombreAlergia.length > 1) {
         for (let i = 1; i < turnoFormateado[0].nombreAlergia.length; i++) {
             // crashea si le mando las variables creados como parametros xd
-            traerOtraAlergia(turnoFormateado[0].nombreAlergia[i], turnoFormateado[0].importanciaAlergia[i], turnoFormateado[0].alergiaDesde[i], turnoFormateado[0].alergiaHasta[i])
+            idAlerDB = turnoFormateado[0].idAlergiaDB[i];
+            console.log(`id pos ${i} alergia `+idAlerDB);
+            traerOtraAlergia(turnoFormateado[0].nombreAlergia[i], turnoFormateado[0].importanciaAlergia[i], turnoFormateado[0].alergiaDesde[i], turnoFormateado[0].alergiaHasta[i],turnoFormateado[0].idAlergiaDB[i])
         }
     }
 }
@@ -288,7 +309,7 @@ traerAlergia()
 
 // Contador global para IDs únicos
 
-function traerOtraAlergia(nombreAlergia, importanciaAlergia, desdeAlergia, hastaAlergia) {
+function traerOtraAlergia(nombreAlergia, importanciaAlergia, desdeAlergia, hastaAlergia,idAler) {
     let lev = importanciaAlergia === 'leve' ? 'selected' : '';
     let nor = importanciaAlergia === 'normal' ? 'selected' : '';
     let alt = importanciaAlergia === 'alta' ? 'selected' : '';
@@ -298,6 +319,7 @@ function traerOtraAlergia(nombreAlergia, importanciaAlergia, desdeAlergia, hasta
     let pintar = `
     <div id="${idAlergia}" class="capturarValorAlergias animacion-entrada bg-light d-flex flex-column align-items-start p-5 gap-4 border border-dark">
         <h3 class="text-center">Alergias</h3>
+        <input type="hidden" class="idAler" value="${idAler}">
         <label>Nombre: </label>
         <input class="nombre-alergia" type="text" value="${nombreAlergia}" />
         <label>Importancia
@@ -349,6 +371,8 @@ function eliminarAlergiaConConfirmacion(idAlergia) {
 
 function traerHabito() {
     toggleContent('ampliarHabito')
+    let idHabDB = turnoFormateado[0].idHabitoDB[0];
+    console.log('id pos 0 habito '+idHabDB);
     document.querySelector('.texto-habito').innerHTML = turnoFormateado[0].habito[0];
     document.querySelector('.desde-habito').value = turnoFormateado[0].habitoDesde[0] || '';
     document.querySelector('.hasta-habito').value = turnoFormateado[0].habitoHasta[0] || '';
@@ -356,18 +380,21 @@ function traerHabito() {
     if (turnoFormateado[0].habito.length > 1) {
         for (let i = 1; i < turnoFormateado[0].habito.length; i++) {
             // crashea si le mando las variables creados como parametros xd
-            traerOtroHabito(turnoFormateado[0].habito[i], turnoFormateado[0].habitoDesde[i], turnoFormateado[0].habitoHasta[i])
+            idHabDB = turnoFormateado[0].idHabitoDB[i];
+            console.log(`id pos ${i} habito `+idHabDB);
+            traerOtroHabito(turnoFormateado[0].habito[i], turnoFormateado[0].habitoDesde[i], turnoFormateado[0].habitoHasta[i],turnoFormateado[0].idHabitoDB[i])
         }
     }
 }
 traerHabito()
 
-function traerOtroHabito(habito, desdeHabito, hastaHabito) {
+function traerOtroHabito(habito, desdeHabito, hastaHabito,idHab) {
     let nuevoHabito = document.getElementById('nuevo-habito');
     let idHabito = `idHabito${habitoCounter}`;
     let pintar = `
     <div id="${idHabito}" class="capturarValorHabitos animacion-entrada bg-light d-flex flex-column align-items-start p-5 gap-4 border border-dark">
         <h3 class="text-center">Habitos</h3>
+        <input type="hidden" class="idHab" value="${idHab}">
         <label>Detalles: </label>
         <textarea class="txt-area-create text-left texto-habito">${habito}</textarea>
         <div class="d-flex gap-4">
@@ -411,6 +438,8 @@ function eliminarHabitoConConfirmacion(idHabito) {
 
 function traerAntecedente() {
     toggleContent('ampliarAntecedente')
+    let idAntDB = turnoFormateado[0].idAntecedenteDB[0];
+    console.log('id pos 0 antecedente '+idAntDB);
     document.querySelector('.texto-antecedente').innerHTML = turnoFormateado[0].antecedente[0];
     document.querySelector('.desde-antecedente').value = turnoFormateado[0].antecedenteDesde[0] || '';
     document.querySelector('.hasta-antecedente').value = turnoFormateado[0].antecedenteHasta[0] || '';
@@ -418,18 +447,21 @@ function traerAntecedente() {
     if (turnoFormateado[0].antecedente.length > 1) {
         for (let i = 1; i < turnoFormateado[0].antecedente.length; i++) {
             // crashea si le mando las variables creados como parametros xd
-            traerOtroAntecedente(turnoFormateado[0].antecedente[i], turnoFormateado[0].antecedenteDesde[i], turnoFormateado[0].antecedenteHasta[i])
+            idAntDB = turnoFormateado[0].idAntecedenteDB[i];
+            console.log(`id pos ${i} antecedente `+idAntDB);
+            traerOtroAntecedente(turnoFormateado[0].antecedente[i], turnoFormateado[0].antecedenteDesde[i], turnoFormateado[0].antecedenteHasta[i],turnoFormateado[0].idAntecedenteDB[i])
         }
     }
 }
 traerAntecedente()
 
-function traerOtroAntecedente(antecedente, desdeAntecedente, hastaAntecedente) {
+function traerOtroAntecedente(antecedente, desdeAntecedente, hastaAntecedente,idAnte) {
     let nuevoAnteccedente = document.getElementById('nuevo-antecedente');
     let idAntecedente = `idAntecedente${antecedenteCounter}`;
     let pintar = `
     <div id="${idAntecedente}" class="capturarValorAntecedente animacion-entrada bg-light d-flex flex-column align-items-start p-5 gap-4 border border-dark">
         <h3 class="text-center">Antecedente</h3>
+        <input type="hidden" class="idAnte" value="${idAnte}">
         <label>Detalles: </label>
         <textarea class="txt-area-create text-left texto-antecedente">${antecedente}</textarea>
         <div class="d-flex gap-4">
@@ -509,8 +541,10 @@ function capturarValoresDiagnosticos() {
     bloques.forEach((bloque) => {
         const estado = bloque.querySelector('.select-diagnostico').value;
         const detalles = bloque.querySelector('.txt-area-diagnostico').value;
+        const idDiagElement = bloque.querySelector('.idDiag');
+        const idDiag = idDiagElement ? idDiagElement.value || '' : '';
         if (estado != '' && detalles != '') {
-            diagnosticosCargados.push({ estado, detalles });
+            diagnosticosCargados.push({ estado, detalles, idDiag });
         }
 
     });
@@ -559,6 +593,8 @@ function capturarValorEvolucion() {
     return evolucionEnriquecida;
 }
 
+
+// ----------------------------- medicamentos ---------------------
 function nuevoMedicamento() {
     let nuevoMedicamento = document.getElementById('nuevo-medicamento');
     let i = 1;
@@ -596,12 +632,15 @@ function eliminarMedicamento(numero) {
 function capturarValoresMedicamentos() {
     const medicamentosCargados = [];
     const bloques = document.querySelectorAll('.capturarValorMedicamento');
-
+    
     bloques.forEach((bloque) => {
         const idMedicamento = bloque.querySelector('.select-medicamento').value;
         const textoMedicamento = bloque.querySelector('.txt-area-medicamento').value;
+        const idReceElement = bloque.querySelector('.idRec');
+        const idRece = idReceElement ? idReceElement.value || '' : '';
+
         if (idMedicamento != '' && textoMedicamento != '') {
-            medicamentosCargados.push({ idMedicamento, textoMedicamento });
+            medicamentosCargados.push({ idMedicamento, textoMedicamento,idRece });
         }
 
     });
@@ -660,6 +699,8 @@ function capturarValoresAlergias() {
     bloques.forEach((bloque) => {
         const nombreAlergia = bloque.querySelector('.nombre-alergia').value;
         const importanciaAlergia = bloque.querySelector('.select-alergia').value;
+        const idAlerElement = bloque.querySelector('.idAler');
+        const idAler = idAlerElement ? idAlerElement.value || '' : '';
         let desdeAlergia = bloque.querySelector('.desde-alergia').value;
         let hastaAlergia = bloque.querySelector('.hasta-alergia').value;
 
@@ -667,14 +708,14 @@ function capturarValoresAlergias() {
         //const vigenteAlergia = bloque.querySelector('.vigente-alergia').checked;
 
         if (nombreAlergia != '' && importanciaAlergia != '' && desdeAlergia != '' && desdeAlergia != '') {
-            alergiasCargadas.push({ nombreAlergia, importanciaAlergia, desdeAlergia, hastaAlergia });
+            alergiasCargadas.push({ nombreAlergia, importanciaAlergia, desdeAlergia, hastaAlergia, idAler });
         } else if (nombreAlergia != '' && importanciaAlergia != '' && desdeAlergia != '') {
             hastaAlergia = '';
-            alergiasCargadas.push({ nombreAlergia, importanciaAlergia, desdeAlergia, hastaAlergia });
+            alergiasCargadas.push({ nombreAlergia, importanciaAlergia, desdeAlergia, hastaAlergia, idAler });
         } else if (nombreAlergia != '' && importanciaAlergia != '') {
             desdeAlergia = '';
             hastaAlergia = '';
-            alergiasCargadas.push({ nombreAlergia, importanciaAlergia, desdeAlergia, hastaAlergia });
+            alergiasCargadas.push({ nombreAlergia, importanciaAlergia, desdeAlergia, hastaAlergia, idAler });
         }
 
 
@@ -728,19 +769,20 @@ function cargarValoresHabitos() {
         const textoHabito = bloque.querySelector('.texto-habito').value;
         let desdeHabito = bloque.querySelector('.desde-habito').value;
         let hastaHabito = bloque.querySelector('.hasta-habito').value;
-
+        const idHabElement = bloque.querySelector('.idHab');
+        const idHab = idHabElement ? idHabElement.value || '' : '';
         // el vigente unicamente va a poner disabled o neabled el campo de fechaHasta
         //const vigenteAlergia = bloque.querySelector('.vigente-alergia').checked;
 
         if (textoHabito != '' && desdeHabito != '' && hastaHabito != '') {
-            habitosCargados.push({ textoHabito, desdeHabito, hastaHabito });
+            habitosCargados.push({ textoHabito, desdeHabito, hastaHabito, idHab });
         } else if (textoHabito != '' && desdeHabito != '') {
             hastaHabito = '';
-            habitosCargados.push({ textoHabito, desdeHabito, hastaHabito });
+            habitosCargados.push({ textoHabito, desdeHabito, hastaHabito, idHab });
         } else if (textoHabito != '') {
             desdeHabito = '';
             hastaHabito = '';
-            habitosCargados.push({ textoHabito, desdeHabito, hastaHabito });
+            habitosCargados.push({ textoHabito, desdeHabito, hastaHabito, idHab });
         }
 
 
@@ -794,6 +836,8 @@ function cargarValoresAntecedentes() {
 
     bloques.forEach((bloque) => {
         const textoAntecedente = bloque.querySelector('.texto-antecedente').value;
+        const idAnteElement = bloque.querySelector('.idAnte');
+        const idAnte = idAnteElement ? idAnteElement.value || '' : '';
         let desdeAntecedente = bloque.querySelector('.desde-antecedente').value;
         let hastaAntecedente = bloque.querySelector('.hasta-antecedente').value;
 
@@ -801,14 +845,14 @@ function cargarValoresAntecedentes() {
         //const vigenteAlergia = bloque.querySelector('.vigente-alergia').checked;
 
         if (textoAntecedente != '' && desdeAntecedente != '' && hastaAntecedente != '') {
-            antecedentesCargados.push({ textoAntecedente, desdeAntecedente, hastaAntecedente });
+            antecedentesCargados.push({ textoAntecedente, desdeAntecedente, hastaAntecedente, idAnte});
         } else if (textoAntecedente != '' && desdeAntecedente != '') {
             hastaAntecedente = '';
-            antecedentesCargados.push({ textoAntecedente, desdeAntecedente, hastaAntecedente });
+            antecedentesCargados.push({ textoAntecedente, desdeAntecedente, hastaAntecedente, idAnte});
         } else if (textoAntecedente != '') {
             desdeAntecedente = '';
             hastaAntecedente = '';
-            antecedentesCargados.push({ textoAntecedente, desdeAntecedente, hastaAntecedente });
+            antecedentesCargados.push({ textoAntecedente, desdeAntecedente, hastaAntecedente, idAnte });
         }
 
 
