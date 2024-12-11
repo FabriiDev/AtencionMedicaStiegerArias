@@ -165,7 +165,7 @@ ORDER BY fecha DESC`
                 await conn.query(' CALL insertar_Diagnostico(?,?,?)', [data.detalles, data.estado, nTurno]);
             }
             console.log('""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""')
-            console.log(historial.evolucion)
+            console.log(historial)
             await conn.query(' CALL insertar_Evolucion(?,?)', [historial.evolucion, nTurno]);
 
             for (const data of historial.medicamentos) {
@@ -200,14 +200,19 @@ ORDER BY fecha DESC`
     static async transaccionUpdateHCE(historial, ids) {
         let nTurno = historial.numero_turno
         conn = await crearConexion()
+        console.log(historial)
 
         try {
             await conn.beginTransaction();
-            console.log(historial)
+
             try {
                 for (const element of historial.diagnosticos) {
-                    if (element.detalles != '' && element.id != 0) {
-                        await conn.query(`UPDATE diagnostico SET resumen_evolucion = ?, estado = ? WHERE id_diagnostico = ?`, [element.detalles, element.estado, element.id]);
+                    if (element.detalles != '' && element.idDiag != 0) {
+                        // si tiene texto y su id es distinto de 0 quiere hacer una update
+                        await conn.query(`UPDATE diagnostico SET resumen_evolucion = ?, estado = ? WHERE id_diagnostico = ?`, [element.detalles, element.estado, element.idDiag]);
+                    } else if (element.detalles != '') {
+                        //si no crea uno
+                        await conn.query(' CALL insertar_Diagnostico(?,?,?)', [element.detalles, element.estado, nTurno]);
                     }
                 }
             } catch (error) {
@@ -225,9 +230,9 @@ ORDER BY fecha DESC`
             try {
                 if (historial.medicamentos.length > 0) {
                     for (const element of historial.medicamentos) {
-                        if (element.idMedicamento != 0 && element.idR != 0) {
-                            await conn.query(`UPDATE receta SET numero_turno=?,id_medicamento=?,txt_receta=? WHERE id_receta=?`, [nTurno, element.idMedicamento, element.textoMedicamento, element.idR]);
-                        } else if (element.idMedicamento != 0) {
+                        if (element.idMedicamento != 0 && element.idRece != 0) {
+                            await conn.query(`UPDATE receta SET numero_turno=?,id_medicamento=?,txt_receta=? WHERE id_receta=?`, [nTurno, element.idMedicamento, element.textoMedicamento, element.idRece]);
+                        } else if (element.idRece != 0) {
                             await conn.query(' CALL insertar_receta(?,?)', [element.idMedicamento, nTurno, element.textoMedicamento]);
                         }
                     }
@@ -242,9 +247,9 @@ ORDER BY fecha DESC`
             try {
                 if (historial.antecedentes.length > 0) {
                     for (const element of historial.antecedentes) {
-                        if (element.textoAntecedente != '' && element.desdeAntecedente != '' && element.hastaAntecedente != '' && ids.idAN != 0) {
-                            await conn.query('UPDATE antecedente SET descripcion=?,fecha_desde=?,fecha_hasta=? WHERE id_antecedente=?', [element.textoAntecedente, element.desdeAntecedente, element.hastaAntecedente, ids.idAN]);
-                        } else if (element.textoAntecedente != '' && element.desdeAntecedente != '' && element.hastaAntecedente != '') {
+                        if (element.textoAntecedente != '' && element.idAnte != 0) {
+                            await conn.query('UPDATE antecedente SET descripcion=?,fecha_desde=?,fecha_hasta=? WHERE id_antecedente=?', [element.textoAntecedente, element.desdeAntecedente, element.hastaAntecedente, element.idAnte]);
+                        } else if (element.textoAntecedente != '' ) {
                             await conn.query(' CALL insertar_Antecedentes(?,?,?,?)', [element.textoAntecedente, nTurno, element.desdeAntecedente, element.hastaAntecedente]);
                         }
                     }
@@ -258,9 +263,9 @@ ORDER BY fecha DESC`
             try {
                 if (historial.habitos.length > 0) {
                     for (const element of historial.habitos) {
-                        if (element.textoHabito != '' && element.desdeHabito != '' && element.hastaHabito != '' && ids.idH != 0) {
-                            await conn.query('UPDATE habito SET descripcion=?,fecha_desde=?,fecha_hasta=? WHERE id_habito=?', [element.textoHabito, element.fdesde, element.hastaHabito, ids.idH]);
-                        } else if (element.textoHabito != '' && element.desdeHabito != '' && element.hastaHabito != '') {
+                        if (element.textoHabito != '' && element.idHab != 0) {
+                            await conn.query('UPDATE habito SET descripcion=?,fecha_desde=?,fecha_hasta=? WHERE id_habito=?', [element.textoHabito, element.desdeHabito, element.hastaHabito, element.idHab]);
+                        } else if (element.textoHabito != '') {
                             await conn.query(' CALL insertar_Habito(?,?,?,?)', [element.textoHabito, nTurno, element.desdeHabito, element.hastaHabito]);
                         }
                     }
@@ -273,9 +278,9 @@ ORDER BY fecha DESC`
             try {
                 if (historial.alergias.length > 0) {
                     for (const element of historial.alergias) {
-                        if (element.nombreAlergia != '' && element.importanciaAlergia != '' && element.desdeAlergia != '' && element.hastaAlergia != '' && ids.idAL != 0) {
-                            await conn.query('UPDATE alergia SET nombre_alergia=?,importancia=?,fecha_desde=?,fecha_hasta=? WHERE `id_alergia`=?', [element.nombreAlergia, element.importanciaAlergia, element.desdeAlergia, element.hastaAlergia, ids.idAL]);
-                        } else if (element.nombreAlergia != '' && element.importanciaAlergia != '' && element.desdeAlergia != '' && element.fhasta != '') {
+                        if (element.nombreAlergia != '' && element.importanciaAlergia != '' && element.idAler != 0) {
+                            await conn.query('UPDATE alergia SET nombre_alergia=?,importancia=?,fecha_desde=?,fecha_hasta=? WHERE `id_alergia`=?', [element.nombreAlergia, element.importanciaAlergia, element.desdeAlergia, element.hastaAlergia, element.idAler]);
+                        } else if (element.nombreAlergia != '' && element.importanciaAlergia != '') {
                             await conn.query(' CALL insertar_Alergia(?,?,?,?,?)', [element.nombreAlergia, element.importanciaAlergia, element.desdeAlergia, element.hastaAlergia, nTurno]);
                         }
                     }

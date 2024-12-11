@@ -48,18 +48,18 @@ function separador(turnos) {
             evolucion: t.evolucion || '',
             nombreAlergia: t.nombre_alergia ? t.nombre_alergia.split('|') : [''],
             importanciaAlergia: t.importancia_alergia ? t.importancia_alergia.split('|') : [''],
-            alergiaDesde: t.fecha_desde_alergia ? t.fecha_desde_alergia.split('|') : [''],
-            alergiaHasta: t.fecha_hasta_alergia ? t.fecha_hasta_alergia.split('|') : [''],
+            alergiaDesde: t.fecha_desde_alergia ? t.fecha_desde_alergia.split('|') : [null],
+            alergiaHasta: t.fecha_hasta_alergia ? t.fecha_hasta_alergia.split('|') : [null],
             habito: t.habito ? t.habito.split('|') : [''],
-            habitoDesde: t.fecha_desde_habito ? t.fecha_desde_habito.split('|') : [''],
-            habitoHasta: t.fecha_hasta_habito ? t.fecha_hasta_habito.split('|') : [''],
+            habitoDesde: t.fecha_desde_habito ? t.fecha_desde_habito.split('|') : [null],
+            habitoHasta: t.fecha_hasta_habito ? t.fecha_hasta_habito.split('|') : [null],
             idReceta: t.id_receta ? t.id_receta.split('|') : [''],
             txtReceta: t.txt_receta ? t.txt_receta.split('|') : [''],
             nombreMedicamento: t.nombre_medicamento ? t.nombre_medicamento.split('|') : [''],
             idMedicamento: t.id_medicamento ? t.id_medicamento.split('|') : [''],
             antecedente: t.antecedente ? t.antecedente.split('|') : [''],
-            antecedenteDesde: t.fecha_desde_antecedente ? t.fecha_desde_antecedente.split('|') : [''],
-            antecedenteHasta: t.fecha_hasta_antecedente ? t.fecha_hasta_antecedente.split('|') : [''],
+            antecedenteDesde: t.fecha_desde_antecedente ? t.fecha_desde_antecedente.split('|') : [null],
+            antecedenteHasta: t.fecha_hasta_antecedente ? t.fecha_hasta_antecedente.split('|') : [null],
 
             idDiagnosticoDB: t.id_diagnostico ? t.id_diagnostico.split('|') : [''],
             idRecetaDB: t.id_receta ? t.id_receta.split('|') : [''],
@@ -710,11 +710,11 @@ function capturarValoresAlergias() {
         if (nombreAlergia != '' && importanciaAlergia != '' && desdeAlergia != '' && desdeAlergia != '') {
             alergiasCargadas.push({ nombreAlergia, importanciaAlergia, desdeAlergia, hastaAlergia, idAler });
         } else if (nombreAlergia != '' && importanciaAlergia != '' && desdeAlergia != '') {
-            hastaAlergia = '';
+            hastaAlergia = null
             alergiasCargadas.push({ nombreAlergia, importanciaAlergia, desdeAlergia, hastaAlergia, idAler });
         } else if (nombreAlergia != '' && importanciaAlergia != '') {
-            desdeAlergia = '';
-            hastaAlergia = '';
+            desdeAlergia = null
+            hastaAlergia = null
             alergiasCargadas.push({ nombreAlergia, importanciaAlergia, desdeAlergia, hastaAlergia, idAler });
         }
 
@@ -777,11 +777,11 @@ function cargarValoresHabitos() {
         if (textoHabito != '' && desdeHabito != '' && hastaHabito != '') {
             habitosCargados.push({ textoHabito, desdeHabito, hastaHabito, idHab });
         } else if (textoHabito != '' && desdeHabito != '') {
-            hastaHabito = '';
+            hastaHabito = null
             habitosCargados.push({ textoHabito, desdeHabito, hastaHabito, idHab });
         } else if (textoHabito != '') {
-            desdeHabito = '';
-            hastaHabito = '';
+            desdeHabito = null
+            hastaHabito = null
             habitosCargados.push({ textoHabito, desdeHabito, hastaHabito, idHab });
         }
 
@@ -847,11 +847,11 @@ function cargarValoresAntecedentes() {
         if (textoAntecedente != '' && desdeAntecedente != '' && hastaAntecedente != '') {
             antecedentesCargados.push({ textoAntecedente, desdeAntecedente, hastaAntecedente, idAnte});
         } else if (textoAntecedente != '' && desdeAntecedente != '') {
-            hastaAntecedente = '';
+            hastaAntecedente = null;
             antecedentesCargados.push({ textoAntecedente, desdeAntecedente, hastaAntecedente, idAnte});
         } else if (textoAntecedente != '') {
-            desdeAntecedente = '';
-            hastaAntecedente = '';
+            desdeAntecedente = null;
+            hastaAntecedente = null;
             antecedentesCargados.push({ textoAntecedente, desdeAntecedente, hastaAntecedente, idAnte });
         }
 
