@@ -1,7 +1,6 @@
 document.getElementById('btn-agenda').addEventListener('click', function(event) {
     // Verifica si la URL actual contiene createHCE
     const pagActual = window.location.pathname;
-    console.log(pagActual);
     if (pagActual.includes('createHCE')) {
         event.preventDefault(); // Evita que el botón realice su acción predeterminada
         Swal.fire({

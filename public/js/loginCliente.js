@@ -1,9 +1,7 @@
 function loguear(event) {
-    // alert('on click')
     event.preventDefault();
     let mat = document.getElementById('matricula').value;
     let pass = document.getElementById('pass').value;
-    // console.log(`Matricula: ${mat}, Contraseña: ${pass}`);
 
     fetch('/login', {
         method: 'POST',

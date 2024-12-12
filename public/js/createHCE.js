@@ -186,9 +186,9 @@ function nuevaAlergia() {
         <label>Hasta: 
             <input class="hasta-alergia" type="date" name=""/>
         </label>
-        <label> Vigente
-            <input type="checkbox"/>
-        </label>
+            <label>
+                <input type="hidden"/>
+            </label>
         </div>
             <button onclick="eliminarAlergia(${i})" class="btn btn-danger fw-semibold">Eliminar</button>
     </div>`
@@ -218,7 +218,6 @@ function capturarValoresAlergias() {
         let hastaAlergia = bloque.querySelector('.hasta-alergia').value;
 
         // el vigente unicamente va a poner disabled o neabled el campo de fechaHasta
-        //const vigenteAlergia = bloque.querySelector('.vigente-alergia').checked;
 
         if (nombreAlergia != '' && importanciaAlergia != '' && desdeAlergia != '' && desdeAlergia != '') {
             alergiasCargadas.push({ nombreAlergia, importanciaAlergia, desdeAlergia, hastaAlergia });
@@ -253,8 +252,8 @@ function nuevoHabito() {
             <label>Hasta: 
                 <input type="date" class="hasta-habito" name=""/>
             </label>
-            <label>Vigente
-                <input type="checkbox"/>
+            <label>
+                <input type="hidden"/>
             </label>
         </div>
         <button onclick="eliminarHabito(${i})" class="btn btn-danger fw-semibold">Eliminar</button>
@@ -284,7 +283,7 @@ function cargarValoresHabitos() {
         let hastaHabito = bloque.querySelector('.hasta-habito').value;
 
         // el vigente unicamente va a poner disabled o neabled el campo de fechaHasta
-        //const vigenteAlergia = bloque.querySelector('.vigente-alergia').checked;
+
 
         if (textoHabito != '' && desdeHabito != '' && hastaHabito != '') {
             habitosCargados.push({ textoHabito, desdeHabito, hastaHabito });
@@ -321,8 +320,8 @@ function nuevoAntecedente() {
             <label>Hasta: 
                 <input type="date" class="hasta-antecedente" name=""/>
             </label>
-            <label>Vigente
-                <input type="checkbox"/>
+            <label>
+                <input type="hidden"/>
             </label>
         </div>
         <button onclick="eliminarAntecedente(${i})" class="btn btn-danger fw-semibold">Eliminar</button>
@@ -353,7 +352,6 @@ function cargarValoresAntecedentes() {
         let hastaAntecedente = bloque.querySelector('.hasta-antecedente').value;
 
         // el vigente unicamente va a poner disabled o neabled el campo de fechaHasta
-        //const vigenteAlergia = bloque.querySelector('.vigente-alergia').checked;
 
         if (textoAntecedente != '' && desdeAntecedente != '' && hastaAntecedente != '') {
             antecedentesCargados.push({ textoAntecedente, desdeAntecedente, hastaAntecedente });

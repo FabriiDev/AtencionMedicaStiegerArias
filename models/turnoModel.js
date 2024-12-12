@@ -97,7 +97,6 @@ ORDER BY fecha DESC`
             const [result] = await conn.query(query, [numero_turno]);
             // Accede al primer elemento del primer array de resultados
             const turno = result[0]; // Extrae el primer registro
-            console.log(turno)
             return turno || null; // Devuelve el objeto si existe, si no, null
         } catch (error) {
             console.log("Error al traer turnos: ", error);
@@ -116,7 +115,6 @@ ORDER BY fecha DESC`
             const [result] = await conn.query(query, [dni]);
             // Accede al primer elemento del primer array de resultados
             const turno = result[0]; // Extrae el primer registro
-            console.log(turno)
             return turno || null; // Devuelve el objeto si existe, si no, null
         } catch (error) {
             console.log("Error al traer turnos: ", error);
@@ -278,8 +276,7 @@ ORDER BY fecha DESC`
             for (const data of historial.diagnostico) {
                 await conn.query(' CALL insertar_Diagnostico(?,?,?)', [data.detalles, data.estado, nTurno]);
             }
-            console.log('""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""')
-            console.log(historial)
+
             await conn.query(' CALL insertar_Evolucion(?,?)', [historial.evolucion, nTurno]);
 
             for (const data of historial.medicamentos) {
@@ -314,7 +311,7 @@ ORDER BY fecha DESC`
     static async transaccionUpdateHCE(historial, ids) {
         let nTurno = historial.numero_turno
         conn = await crearConexion()
-        console.log(historial)
+
 
         try {
             await conn.beginTransaction();
@@ -362,8 +359,6 @@ ORDER BY fecha DESC`
                 if (historial.antecedentes.length > 0) {
                     for (const element of historial.antecedentes) {
                         if (element.textoAntecedente != '' && element.idAnte != 0) {
-                            console.log('antecedente')
-                            console.log(element)
                             await conn.query('UPDATE antecedente SET descripcion=?,fecha_desde=?,fecha_hasta=? WHERE id_antecedente=?', [element.textoAntecedente, element.desdeAntecedente, element.hastaAntecedente, element.idAnte]);
                         } else if (element.textoAntecedente != '') {
                             await conn.query(' CALL insertar_Antecedentes(?,?,?,?)', [element.textoAntecedente, nTurno, element.desdeAntecedente, element.hastaAntecedente]);

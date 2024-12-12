@@ -9,8 +9,7 @@ const quillEditar = new Quill('#editor-editar', {
 });
 
 // ------------------------------------------------------------ 
-console.log('---------------------');
-console.log(tiempoConsulta)
+
 
 let horas = Math.floor(tiempoConsulta[0].promedio_horas); 
 let minutos = Math.floor(tiempoConsulta[0].promedio_minutos);
@@ -28,7 +27,6 @@ let tiempoFormateado = [
     segundos.toString().padStart(2, '0')
 ].join(':');
 
-console.log(tiempoFormateado); 
 
 document.getElementById('tiempoConsulta').innerHTML = tiempoFormateado;
 
@@ -41,7 +39,7 @@ inputFecha.value = fechaSeleccionada;
 
 let pintarTablaTurnos = document.getElementById('pintarTablaTurnos');
 
-//document.getElementById('fechaInicial').innerHTML = fechaSeleccionada;
+
 
 function turnosHoy() {
     fetch('/turnos/pintarTurnos', {
@@ -67,7 +65,7 @@ function turnosHoy() {
                     document.getElementById('pintarTablaTurnos').innerHTML += pintarTabla(element);
                 }
 
-                // document.getElementById('pintarTablaTurnos').innerHTML = pintarTabla(element);
+                
             } else {
                 console.error(data.message || 'No se encontraron turnos');
                 document.getElementById('pintarTablaTurnos').innerHTML = `
@@ -97,14 +95,14 @@ inputFecha.addEventListener('change', (event) => {
         })
         .then(data => {
             if (data.success) {
-                //document.getElementById('fechaInicial').innerHTML = fechaSeleccionada;
+                
                 const turnos = JSON.parse(data.jsonstring)
                 document.getElementById('pintarTablaTurnos').innerHTML = ""
                 for (const element of turnos) {
                     document.getElementById('pintarTablaTurnos').innerHTML += pintarTabla(element);
                 }
             } else {
-                //document.getElementById('fechaInicial').innerHTML = fechaSeleccionada;
+                
                 console.error(data.message || 'No se encontraron turnos');
                 document.getElementById('pintarTablaTurnos').innerHTML = `
                 <tr class="color-primario-txt"> <td class="fw-semibold fs-3 text-danger" colspan='12'>No se encontraron turnos para el ${fechaSeleccionada}</td></tr> 
@@ -145,7 +143,6 @@ function pintarTabla(turnos) {
     }
     let colorArribado;
     let textoArribado;
-    console.log('--------------')
     if (turnos.arribado === 0) {
         colorArribado = 'text-danger';
         textoArribado = 'No'
@@ -223,9 +220,6 @@ document.getElementById('guardar-template-editar').onclick = function () {
     const templateNameEditar = document.getElementById('nombre-template-editar').value;
     const habilitar = document.getElementById('habilitar-template').checked;
 
-    console.log('Nombre del Template: ', templateNameEditar);
-    console.log('Texto en HTML: ', enHTML);
-    console.log('Habilitado: ', habilitar);
 
     document.getElementById('modal-editar').style.display = 'none';
 
@@ -272,8 +266,6 @@ let templateName = ''
 document.getElementById('guardar-template').onclick = function () {
     const enHTML = capturarTemplate();
     templateName = document.getElementById('nombre-template').value;
-    console.log('Nombre del Template: ', templateName);
-    console.log('Texto en HTML: ', enHTML);
     document.getElementById('modal').style.display = 'none';
     if (enHTML === '' || templateName === '') {
         toastr.error('Complete los campos', 'Servidor', {
@@ -316,7 +308,6 @@ function updateTemplate() {
 
             if (data.success) {
 
-                // document.getElementById('pintarTablaTurnos').innerHTML = pintarTabla(element);
             } else {
                 console.error(data.message || 'fallo en template');
             }
@@ -426,7 +417,7 @@ function serverTemplate(activo, ids) {
 
             if (data.success) {
 
-                // document.getElementById('pintarTablaTurnos').innerHTML = pintarTabla(element);
+                
             } else {
                 console.error(data.message || 'fallo en template');
             }

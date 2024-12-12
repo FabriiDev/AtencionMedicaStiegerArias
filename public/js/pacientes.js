@@ -1,4 +1,4 @@
-console.log(pacientes)
+
 
 function pintarPrimero(pacientes){
     let contenedor = document.getElementById('pintarTablaPacientes');

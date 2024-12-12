@@ -7,7 +7,7 @@ class TurnoController {
         let turnos = await turnoModel.turnosPorMedico(req.session.matricula)
         let nombre = req.session.nombre
         let tiempo = await turnoModel.traerTiempoPromedio(req.session.matricula)
-        console.log(tiempo)
+        
         res.render('agenda', { turnos, nombre, tiempo })
     }
 
@@ -72,8 +72,8 @@ class TurnoController {
     async guardarHCE(req, res) {
         let envio = { success: false }//si hay tiempo mandar un mensaje segun el error o el if que dio el return
         let historial = req.body.historial
-        console.log(historial)
-
+         
+ 
         historial.diagnostico.forEach(element => {
             if (element.estado == '' || element.detalle == '') {
                 //si falta cualquiera de los dos se sale de la ruta y se envia el valor de succes por default:false
@@ -154,7 +154,7 @@ class TurnoController {
     }
 
     async drop(req, res) {
-        console.log(req.body)
+        
         switch (req.body.tipo) {
             case 'd':
                 turnoModel.dDiagnostico(req.body.data)

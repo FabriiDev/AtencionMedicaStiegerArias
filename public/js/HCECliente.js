@@ -1,9 +1,6 @@
-/*
-#nombreMedicamento
-*/
+
 // ------------------- libreria txt enriquesido --------------- 
 
-console.log(matriculaMedicoLog)
 medicoLogueado = matriculaMedicoLog;
 // ------------------------------------------------------------ 
 
@@ -91,8 +88,6 @@ function separador(turnos) {
 
     return turnoFormateado;
 }
-console.log('tuqi')
-console.log(separador(turnos))
 
 
 
@@ -101,7 +96,6 @@ try {
     separador()
 } catch (error) {
 }
-//console.log(turnos)
 let body = document.getElementById('table-body');
 
 
@@ -179,10 +173,6 @@ function pintarTabla() {
         // ---------------------- tabla completa -------------------------------------
 
         let trContent;
-        console.log('----------------');
-        console.log('Matricula medico server: ' + element.matriculaMedico);
-        console.log('Matricula medico logueado: ' + medicoLogueado);
-        console.log('----------------');
         if (element.estadoTurno == "Atendido") {
             almenosUnTurno =true;
             if(element.matriculaMedico == medicoLogueado){
@@ -339,32 +329,4 @@ function pintarTabla() {
     document.getElementById('table-body').innerHTML = tabla;
 }
 pintarTabla();
-
-
-
-/*
-if (flagElse && turnoS.estado == 'Atendido') {
-    const quill = new Quill('#editor', {
-        theme: 'snow'
-    });
-    quill.clipboard.dangerouslyPasteHTML(evolucionEriquesida);
-    quill.disable()
-
-
-    cDiagnostico()
-    cAntecedente()
-    cHabito()
-    cAlergia()
-    cMedicamento()
-    cargardatos()
-    flechasInicio()
-
-} else if (turnoS.estado == 'Atendido') {
-    cDiagnostico()
-    cargardatos()
-} else {
-    cargardatos()
-}
-*/
-
 

@@ -338,9 +338,9 @@ function traerOtraAlergia(nombreAlergia, importanciaAlergia, desdeAlergia, hasta
         <label>Hasta: 
             <input class="hasta-alergia" type="date" name="" value="${hastaAlergia}"/>
         </label>
-        <label> Vigente
-            <input type="checkbox"/>
-        </label>
+            <label>
+                <input type="hidden"/>
+            </label>
         </div>
             <button onclick="eliminarAlergiaConConfirmacion('${idAlergia}','${idAler}')" class="btn btn-danger fw-semibold">Eliminar</button>
     </div>`
@@ -407,8 +407,8 @@ function traerOtroHabito(habito, desdeHabito, hastaHabito, idHab) {
             <label>Hasta: 
                 <input type="date" class="hasta-habito" name="" value="${hastaHabito}"/>
             </label>
-            <label>Vigente
-                <input type="checkbox"/>
+            <label>
+                <input type="hidden"/>
             </label>
         </div>
         <button onclick="eliminarHabitoConConfirmacion('${idHabito}','${idHab}')" class="btn btn-danger fw-semibold">Eliminar</button>
@@ -475,8 +475,8 @@ function traerOtroAntecedente(antecedente, desdeAntecedente, hastaAntecedente, i
             <label>Hasta: 
                 <input type="date" class="hasta-antecedente" name="" value="${hastaAntecedente}"/>
             </label>
-            <label>Vigente
-                <input type="checkbox"/>
+            <label>
+                <input type="hidden"/>
             </label>
         </div>
         <button onclick="eliminarAntecedenteConConfirmacion('${idAntecedente}','${idAnte}')" class="btn btn-danger fw-semibold">Eliminar</button>
@@ -677,9 +677,9 @@ function nuevaAlergia() {
         <label>Hasta: 
             <input class="hasta-alergia" type="date" name=""/>
         </label>
-        <label> Vigente
-            <input type="checkbox"/>
-        </label>
+            <label>
+                <input type="hidden"/>
+            </label>
         </div>
             <button onclick="eliminarAlergia('${idAlergia}')" class="btn btn-danger fw-semibold">Eliminar</button>
     </div>`
@@ -712,7 +712,7 @@ function capturarValoresAlergias() {
         let hastaAlergia = bloque.querySelector('.hasta-alergia').value;
 
         // el vigente unicamente va a poner disabled o neabled el campo de fechaHasta
-        //const vigenteAlergia = bloque.querySelector('.vigente-alergia').checked;
+
 
         if (nombreAlergia != '' && importanciaAlergia != '' && desdeAlergia != '' && desdeAlergia != '') {
             alergiasCargadas.push({ nombreAlergia, importanciaAlergia, desdeAlergia, hastaAlergia, idAler });
@@ -747,8 +747,8 @@ function nuevoHabito() {
             <label>Hasta: 
                 <input type="date" class="hasta-habito" name=""/>
             </label>
-            <label>Vigente
-                <input type="checkbox"/>
+            <label>
+                <input type="hidden"/>
             </label>
         </div>
         <button onclick="eliminarHabito('${idHabito}')" class="btn btn-danger fw-semibold">Eliminar</button>
@@ -779,7 +779,6 @@ function cargarValoresHabitos() {
         const idHabElement = bloque.querySelector('.idHab');
         const idHab = idHabElement ? idHabElement.value || '' : '';
         // el vigente unicamente va a poner disabled o neabled el campo de fechaHasta
-        //const vigenteAlergia = bloque.querySelector('.vigente-alergia').checked;
 
         if (textoHabito != '' && desdeHabito != '' && hastaHabito != '') {
             habitosCargados.push({ textoHabito, desdeHabito, hastaHabito, idHab });
@@ -815,8 +814,8 @@ function nuevoAntecedente() {
             <label>Hasta: 
                 <input type="date" class="hasta-antecedente" name=""/>
             </label>
-            <label>Vigente
-                <input type="checkbox"/>
+            <label>
+                <input type="hidden"/>
             </label>
         </div>
         <button onclick="eliminarAntecedente('${idAntecedente}')" class="btn btn-danger fw-semibold">Eliminar</button>
@@ -851,7 +850,7 @@ function cargarValoresAntecedentes() {
         let hastaAntecedente = bloque.querySelector('.hasta-antecedente').value;
 
         // el vigente unicamente va a poner disabled o neabled el campo de fechaHasta
-        //const vigenteAlergia = bloque.querySelector('.vigente-alergia').checked;
+
 
         if (textoAntecedente != '' && desdeAntecedente != '' && hastaAntecedente != '') {
             antecedentesCargados.push({ textoAntecedente, desdeAntecedente, hastaAntecedente, idAnte });
@@ -911,10 +910,6 @@ function guardarHistorial() {
             let ante = cargarValoresAntecedentes();
 
             let test = [vcd, ec, med, ale, hab, ante, numero]
-            console.log('----------------------------test------------------------')
-            console.log(test)
-            console.log(numero)
-            console.log('--------------------------------------------------------')
             postServer(vcd, ec, med, ale, hab, ante, numero)
             toastr.success('Cargando pacientes', 'Consulta finalizada con exito', {
                 progressBar: true,
