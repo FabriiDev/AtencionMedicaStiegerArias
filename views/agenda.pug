@@ -18,11 +18,16 @@ block content
                 .d-flex.gap-3.justify-content-center.p-3
                     button.btn.btn-HCE-invertido#btn-template.color-primario-txt.fw-semibold Crear Template
                     button.btn.btn-HCE#btn-template-editar.fw-semibold Editar Template
+                
                 .conteiner.rounded.p-2
                     .d-flex.justify-content-center.gap-3.align-items-start
                         .d-flex.align-items-end.gap-3.titulos-tur.text-light
                             p.color-primario-txt.mb-0 Elegir fecha 
                             input(type="date")#fecha
+                .d-flex.gap-3.justify-content-center.p-3.align-items-center.h-100
+                    span(class="material-symbols-outlined") schedule
+                    p.text-center.fs-5.fw-semibold.m-0 Tiempo promedio de consulta:
+                        p.fs-5.fw-semibold#tiempoConsulta.m-0
 
                     //- ------------- MODAL PARA EL CREAR TEMPLATE --------------
             #modal.modal 
@@ -65,7 +70,8 @@ block content
                             th Atender
                     tbody#pintarTablaTurnos
                         //- SEGUN ESTADO PINTAR, ROJO CANCELADO, VERDE ATENDIDO
-
+    script.
+        let tiempoConsulta = !{JSON.stringify(tiempo)};
     script(src="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.min.js")  
     script(src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js") 
     script(src="https://cdn.jsdelivr.net/npm/sweetalert2@11")

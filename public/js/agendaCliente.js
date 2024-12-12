@@ -9,7 +9,30 @@ const quillEditar = new Quill('#editor-editar', {
 });
 
 // ------------------------------------------------------------ 
+console.log('---------------------');
+console.log(tiempoConsulta)
 
+let horas = Math.floor(tiempoConsulta[0].promedio_horas); 
+let minutos = Math.floor(tiempoConsulta[0].promedio_minutos);
+let segundos = Math.round(tiempoConsulta[0].promedio_segundos);
+
+minutos += Math.floor(segundos / 60);
+segundos = segundos % 60;
+
+horas += Math.floor(minutos / 60);
+minutos = minutos % 60;
+
+let tiempoFormateado = [
+    horas.toString().padStart(2, '0'),
+    minutos.toString().padStart(2, '0'),
+    segundos.toString().padStart(2, '0')
+].join(':');
+
+console.log(tiempoFormateado); 
+
+document.getElementById('tiempoConsulta').innerHTML = tiempoFormateado;
+
+//---------------------------------
 const inputFecha = document.getElementById('fecha');
 let hoy = new Date();
 let fechaSeleccionada = hoy.toLocaleDateString('en-CA'); // Formato YYYY-MM-DD
@@ -43,7 +66,7 @@ function turnosHoy() {
                 for (const element of turnos) {
                     document.getElementById('pintarTablaTurnos').innerHTML += pintarTabla(element);
                 }
-                
+
                 // document.getElementById('pintarTablaTurnos').innerHTML = pintarTabla(element);
             } else {
                 console.error(data.message || 'No se encontraron turnos');
@@ -105,7 +128,7 @@ function alertaComenzarAtencion(nroTurno) {
         confirmButtonText: 'Sí, comenzar atencion'
     }).then((result) => {
         if (result.isConfirmed) {
-            window.location.href = `/turnos/createHCE${nroTurno}`; 
+            window.location.href = `/turnos/createHCE${nroTurno}`;
         }
     });
 }
@@ -254,7 +277,7 @@ document.getElementById('guardar-template').onclick = function () {
         toastr.error('Complete los campos', 'Servidor', {
             "progressBar": true,
             "positionClass": "toast-top-center"
-            
+
         });
     } else {
         toastr.success('Guardando nueva template', 'Por favor, espere un momento:', {
@@ -353,7 +376,7 @@ document.getElementById('nombres-templates-editar').addEventListener('change', (
     if (datos) {
         activarCamposET(false);
         document.getElementById('nombre-template-editar').value = datos.nombre
-        idServer=datos.id_template
+        idServer = datos.id_template
         quillEditar.clipboard.dangerouslyPasteHTML(datos.txt_template);
     } else {
         console.warn('No se encontraron datos para el template seleccionado.');
@@ -362,7 +385,7 @@ document.getElementById('nombres-templates-editar').addEventListener('change', (
     }
 });
 
-function limpiarCamposET(){
+function limpiarCamposET() {
     document.getElementById('nombre-template-editar').value = '';
     quillEditar.root.innerHTML = '';
     document.getElementById('nombres-templates-editar').value = '';
@@ -376,7 +399,7 @@ function activarCamposET(bool) {
     quillEditar.enable(!bool);
 }
 
-function serverTemplate(activo,ids) {
+function serverTemplate(activo, ids) {
     let nombre = document.getElementById('nombre-template-editar').value
     let contenido = quillEditar.root.innerHTML
     fetch('/updateTemplate', {
@@ -388,7 +411,7 @@ function serverTemplate(activo,ids) {
             template: contenido,
             nombre: nombre,
             activo: activo,
-            id:ids
+            id: ids
         })
     })
         .then(response => {
@@ -422,7 +445,7 @@ document.getElementById('eliminar-template-editar').addEventListener('click', (e
         confirmButtonText: 'Sí, eliminar template'
     }).then((result) => {
         if (result.isConfirmed) {
-            serverTemplate(0,idServer)
+            serverTemplate(0, idServer)
             limpiarCamposET();
             toastr.success('Borrando el template', 'Por favor espera un momento', {
                 progressBar: true,
@@ -431,10 +454,10 @@ document.getElementById('eliminar-template-editar').addEventListener('click', (e
                     window.location.href = '/turnos/agenda';
                 }
             });
-            
+
         }
     });
-    
+
 })
 
 
@@ -446,7 +469,7 @@ document.getElementById('guardar-template-editar').addEventListener('click', (ev
             window.location.href = '/turnos/agenda';
         }
     });
-    
-    serverTemplate(1,idServer);
+
+    serverTemplate(1, idServer);
     limpiarCamposET();
 })

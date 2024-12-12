@@ -41,7 +41,8 @@ LEFT JOIN medico_especialidad m_e ON
 LEFT JOIN especialidad espe ON
 	espe.id_especialidad = m_e.id_especialidad
 WHERE
-    t.fecha = ? AND t.matricula_medico = ?;`;
+    t.fecha = ? AND t.matricula_medico = ?
+ORDER BY hora;`;
         try {
             const [result] = await conn.query(query, [fecha, matricula]);
             return result.length ? result : null;
@@ -55,7 +56,7 @@ WHERE
 
     static async turnosPorMedico(matricula) {
         conn = await crearConexion()
-        let query = 'SELECT * FROM `turno` WHERE `matricula_medico` =?;'
+        let query = 'SELECT * FROM `turno` WHERE `matricula_medico` =? ORDER BY hora ASC;'
         try {
             const [result] = await conn.query(query, [matricula]);
             return result.length ? result : null;
