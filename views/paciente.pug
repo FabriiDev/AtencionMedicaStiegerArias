@@ -11,23 +11,23 @@ block header
     include templates/header.pug
 block content
     .width-90.title.text-center.mt-5
-        .bg-bienvenido.p-3
-            h1.color-primario-txt.fw-bold Buscar pacientes
-            .d-flex.gap-3.justify-content-center.p-3
-                label(for="") Nombre o Apellido: 
-                input(type="text")#busqueda.border.border-dark.rounded
-        .text-center.text-light.fs-4.color-primario-bg.fw-semibold.p-3.border-bottom.border-light Agenda Diaria
-            .table-responsive
-                table.table.table-striped.sombra-tabla.color-primario-txt.fs-5.fw-semibold
-                    thead.table-info
-                        tr
-                            th Nombre
-                            th Apellido
-                            th DNI
-                            th Direccion 
-                            th Edad
-                            th HCE
-                    tbody#pintarTablaPacientes
+        .bg-bienvenido
+            h1.color-primario-txt.fw-bold.p-3  Buscar pacientes
+            .d-flex.gap-3.pb-3.flex-column.align-items-center
+                label(for="").text-start.fw-semibold (Nombre o Apellido)
+                input(type="text" placeholder="Pedro Hernandez")#busqueda.rounded.border.sombra-buscar-pacientes
+                
+        .table-responsive
+            table.table.table-striped.sombra-tabla.color-primario-txt.fs-5
+                thead.table-info
+                    tr
+                        th Nombre
+                        th Apellido
+                        th DNI
+                        th Direccion 
+                        th Edad
+                        th HCE
+                tbody#pintarTablaPacientes
                     
 
 

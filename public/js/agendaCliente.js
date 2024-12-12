@@ -136,9 +136,12 @@ function pintarTabla(turnos) {
 
     if (turnos.arribado == 1 && turnos.estado == 'Pendiente') {
         btnComenzarAtencion = `
-        <button class="btn btn-HCE-invertido fw-semibold" onclick="alertaComenzarAtencion(${turnos.numero_turno})" >Comenzar atencion</button>`
+        <button class="btn btn-comenzar-atencion fw-semibold" onclick="alertaComenzarAtencion(${turnos.numero_turno})" >Comenzar atencion</button>`
     } else {
-        btnComenzarAtencion = '<p></p>';
+        btnComenzarAtencion = `
+        <p class="p-0" title="El turno no esta pendiente o el paciente no esta arribado">
+        <button disabled class="btn btn-HCE-invertido fw-semibold" onclick="alertaComenzarAtencion(${turnos.numero_turno})" >Comenzar atencion</button>
+        </p>`;
     }
 
     pintarTablaTurnos = `
@@ -150,12 +153,17 @@ function pintarTabla(turnos) {
                 <td class="text-danger-emphasis pb-4 pt-5"> ${turnos.motivo_consulta} </td>
                 <td class="${colorEstado} pb-4 pt-5"> ${turnos.estado} </td>
                 <td class="${colorArribado} pb-4 pt-5"> ${textoArribado} </td>
-                <td class="text-danger-emphasis pb-4 pt-5""> ${turnos.nombre_especialidad} </td>
+                <td class="text-danger-emphasis pb-4 pt-5"> ${turnos.nombre_especialidad} </td>
 
-                <td class="pb-4 pt-5 d-flex gap-3"> 
+                <td class="pb-4 pt-5 gap-3"> 
                     <a href="/turnos/HCE${turnos.dni_paciente}" target="_blank"> 
-                        <button class="btn btn-HCE fw-semibold">HCE</button>
+                        <span class="material-symbols-outlined icono-hce">
+                        clinical_notes
+                        </span>
                     </a> 
+                </td>
+
+                <td class="pb-4 pt-5 gap-3"> 
                     ${btnComenzarAtencion}
                 </td>
             </tr>`;

@@ -6,12 +6,25 @@ function pintarPrimero(pacientes){
     for (const element of pacientes) {
         pintar = `
         <tr>
-            <td>${element.nombre}</td>
-            <td>${element.apellido}</td>
-            <td>${element.dni_paciente}</td>
-            <td>${element.direccion}</td>
-            <td>${element.edad}</td>
-            <td><a href="/turnos/HCE${element.dni_paciente}" target="_blank" class="btn btn-HCE-invertido">HCE</a></td>
+            <td class="color-primario-txt pt-2" >
+                <p class="pt-3 fw-semibold">${element.nombre}</p></td>
+            <td class="color-primario-txt pt-2" >
+                <p class="pt-3 fw-semibold">${element.apellido}</p></td>
+            <td class="color-primario-txt pt-2">
+                <p class="pt-3 fw-semibold">${element.dni_paciente}</p>
+            </td>
+            <td class="color-primario-txt pt-2">
+                <p class="pt-3 fw-semibold">${element.direccion}</p>
+            </td>
+            <td class="color-primario-txt pt-2">
+                <p class="pt-3 fw-semibold">${element.edad}</p>
+            </td>
+            <td>
+            <a href="/turnos/HCE${element.dni_paciente} target="_blank">
+            <span class="material-symbols-outlined icono-hce pt-2">
+                clinical_notes
+            </span>
+            </a></td>
         </tr>`
         contenedor.innerHTML += pintar;
     }
@@ -34,11 +47,11 @@ function mostrarResultados(resultados) {
     resultados.forEach(paciente => {
         let fila = document.createElement('tr');
         fila.innerHTML = `
-            <td>${paciente.nombre}</td>
-            <td>${paciente.apellido}</td>
-            <td>${paciente.dni_paciente}</td>
-            <td>${paciente.direccion}</td>
-            <td>${paciente.edad}</td>
+            <td class="color-primario-txt pt-2">${paciente.nombre}</td>
+            <td class="color-primario-txt pt-2">${paciente.apellido}</td>
+            <td class="color-primario-txt pt-2">${paciente.dni_paciente}</td>
+            <td class="color-primario-txt pt-2">${paciente.direccion}</td>
+            <td class="color-primario-txt pt-2">${paciente.edad}</td>
             <td><a href="/turnos/HCE${paciente.dni_paciente}" target="_blank" class="btn btn-HCE-invertido">HCE</a></td>
         `;
         contenedor.appendChild(fila);

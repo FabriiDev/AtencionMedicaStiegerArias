@@ -11,17 +11,12 @@ block header
 
 block content
     .container-fluid.cont-todo.width-90
-        .text-center.cont-todo.mt-5
-            .row.g-3
-                .card.col-12.col-md-12.p-2.border-bottom.border-dark
-                    .w-100 
-                        .card-body
-                            h3.card-title.fs-2.text-center.d-flex.align-items-center.justify-content-center.gap-2
-                                //-img(src="/icons/paciente.png", alt="").img-fluid
-                                span(class="material-symbols-outlined") face
-                                #nombre-paciente.color-primario-txt.fw-bold
+        .bg-bienvenido.mt-5
+            .d-flex.gap-3.justify-content-center.p-4
+                    span(class="material-symbols-outlined") clinical_notes
+                    #nombre-paciente.color-primario-txt.fw-bold
         
-        table.table.table-striped-columns.sombra-tabla.table-borderer.border-dark.align-middle.mt-4
+        table.table.table-striped-columns.table-borderer.border-dark.align-middle
             thead.text-center.table-info.color-primario-bg
                 tr
                     th Fecha

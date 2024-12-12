@@ -106,7 +106,8 @@ let body = document.getElementById('table-body');
 
 
 function pintarTabla() {
-    document.getElementById('nombre-paciente').innerHTML = `Historial clínico del paciente: ${turnos[0].nombre_paciente} ${turnos[0].apellido_paciente}`;
+    document.getElementById('nombre-paciente').innerHTML = `<h2>
+    Historial clínico del paciente: ${turnos[0].nombre_paciente} ${turnos[0].apellido_paciente}</h2>`;
 
     let tabla = "";
     let primerTr = true; // Bandera para identificar el primer <tr>
