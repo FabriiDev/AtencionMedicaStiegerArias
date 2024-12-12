@@ -5,13 +5,10 @@ const path = require('path');
 const cookieSession = require('cookie-session') //• $ npm install cookie-session
 
 require('dotenv').config();
-let bcrypt;
+const bcrypt = require('bcryptjs');
 
-try {
-    bcrypt = require('bcrypt');
-} catch (e) {
-    bcrypt = require('bcryptjs');
-}
+
+
 
 const medicoRoutes = require('./routes/medicoRoutes');
 const turnoRoutes = require('./routes/turnoRoutes');
