@@ -394,3 +394,8 @@ tr a{
     -webkit-box-shadow: 1px 9px 9px -6px rgba(0,0,0,0.51);
     -moz-box-shadow: 1px 9px 9px -6px rgba(0,0,0,0.51);
 }
+
+.tacho{
+    font-size: 20px;
+    color: white;
+}

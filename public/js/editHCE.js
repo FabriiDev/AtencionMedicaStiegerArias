@@ -76,7 +76,7 @@ function separador(turnos) {
 console.log(separador(turnos))
 
 // la fecha del turno ya viene formateada del sv
-document.getElementById('fecha').innerHTML = 'turno del: ' + turnoFormateado[0].fecha;
+document.getElementById('fecha').innerHTML = `<p class="fw-semibold fs-6">Turno del: ${turnoFormateado[0].fecha} </p>`;
 
 // ----------------- select medicamentos ----------------
 
@@ -890,12 +890,14 @@ function guardarHistorial() {
                 toastr.error('Debe ingresar al menos un diagnostico', 'Servidor', {
                     progressBar: true,
                     positionClass: 'toast-top-center',
+                    "timeOut": "2000",
                 });
                 return;
             } else if (ec == '<p><br></p>') {
                 toastr.error('Debe ingresar la evolucion', 'Servidor', {
                     progressBar: true,
                     positionClass: 'toast-top-center',
+                    "timeOut": "2000",
                 });
                 return;
             }
@@ -914,12 +916,13 @@ function guardarHistorial() {
             console.log(numero)
             console.log('--------------------------------------------------------')
             postServer(vcd, ec, med, ale, hab, ante, numero)
-            toastr.success('Regresando a la agenda', 'Consulta finalizada con exito', {
+            toastr.success('Cargando pacientes', 'Consulta finalizada con exito', {
                 progressBar: true,
                 positionClass: 'toast-top-center',
-                /*onHidden: function () {
-                    window.location.href = '/turnos/agenda';
-                }*/
+                "timeOut": "2000",
+                onHidden: function () {
+                    window.location.href = '/pacientes';
+                }
             });
 
         }

@@ -52,8 +52,15 @@ block content
                     input(type="text" disabled)#nombre-template-editar
                     label Template:
                     div(disabled)#editor-editar
-                    button(disabled).btn.btn-danger.mt-4#eliminar-template-editar Eliminar
-                    button(disabled).btn.btn-success#guardar-template-editar Editar
+                    .d-flex.justify-content-center.gap-5
+                        button(disabled).btn.btn-success#guardar-template-editar.d-flex.gap-2.justify-content-center 
+                            span(class="material-symbols-outlined").tacho edit
+                            p.m-0 Editar
+                        button(disabled).btn.btn-danger#eliminar-template-editar.d-flex.gap-2.justify-content-center
+                            span(class="material-symbols-outlined").tacho delete
+                            p.m-0 Eliminar
+
+                        
 
             .text-center.text-light.fs-4.color-primario-bg.fw-semibold.p-3.border-bottom.border-light Agenda Diaria
             .table-responsive
@@ -77,5 +84,3 @@ block content
     script(src="https://cdn.jsdelivr.net/npm/sweetalert2@11")
     script(src="/js/agendaCliente.js")  
 
-block footer 
-    include templates/footer.pug

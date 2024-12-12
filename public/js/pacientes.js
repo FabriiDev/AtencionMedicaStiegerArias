@@ -47,12 +47,26 @@ function mostrarResultados(resultados) {
     resultados.forEach(paciente => {
         let fila = document.createElement('tr');
         fila.innerHTML = `
-            <td class="color-primario-txt pt-2">${paciente.nombre}</td>
-            <td class="color-primario-txt pt-2">${paciente.apellido}</td>
-            <td class="color-primario-txt pt-2">${paciente.dni_paciente}</td>
-            <td class="color-primario-txt pt-2">${paciente.direccion}</td>
-            <td class="color-primario-txt pt-2">${paciente.edad}</td>
-            <td><a href="/turnos/HCE${paciente.dni_paciente}" target="_blank" class="btn btn-HCE-invertido">HCE</a></td>
+            <td class="color-primario-txt pt-2">
+                <p class="pt-3 fw-semibold">${paciente.nombre}</p>
+            </td>
+            <td class="color-primario-txt pt-2">
+                <p class="pt-3 fw-semibold">${paciente.apellido}</p>
+            </td>
+            <td class="color-primario-txt pt-2">
+                <p class="pt-3 fw-semibold">${paciente.dni_paciente}</p>
+            </td>
+            <td class="color-primario-txt pt-2">
+                <p class="pt-3 fw-semibold">${paciente.direccion}</p>
+            </td>
+            <td class="color-primario-txt pt-2">
+                <p class="pt-3 fw-semibold">${paciente.edad}</p>
+            </td>
+            <td>
+                <a href="/turnos/HCE${paciente.dni_paciente}" target="_blank">
+                <span class="material-symbols-outlined icono-hce pt-2">
+                clinical_notes
+            </span></a></td>
         `;
         contenedor.appendChild(fila);
     });

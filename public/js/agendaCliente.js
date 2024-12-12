@@ -233,11 +233,13 @@ document.getElementById('guardar-template-editar').onclick = function () {
         toastr.error('Complete los campos', 'Servidor', {
             progressBar: true,
             positionClass: 'toast-top-center',
+            "timeOut": "2000",
         });
     } else {
         toastr.success('Template actualizado con éxito!', 'Servidor:', {
             progressBar: true,
             positionClass: 'toast-top-center',
+            "timeOut": "2000",
         });
         actualizarTemplate(templateNameEditar, enHTML, habilitar);
     }
@@ -276,6 +278,7 @@ document.getElementById('guardar-template').onclick = function () {
     if (enHTML === '' || templateName === '') {
         toastr.error('Complete los campos', 'Servidor', {
             "progressBar": true,
+            "timeOut": "2000",
             "positionClass": "toast-top-center"
 
         });
@@ -283,6 +286,7 @@ document.getElementById('guardar-template').onclick = function () {
         toastr.success('Guardando nueva template', 'Por favor, espere un momento:', {
             "progressBar": true,
             "positionClass": "toast-top-center",
+            "timeOut": "2000",
             onHidden: function () {
                 window.location.href = '/turnos/agenda';
             }
@@ -450,6 +454,7 @@ document.getElementById('eliminar-template-editar').addEventListener('click', (e
             toastr.success('Borrando el template', 'Por favor espera un momento', {
                 progressBar: true,
                 positionClass: 'toast-top-center',
+                "timeOut": "2000",
                 onHidden: function () {
                     window.location.href = '/turnos/agenda';
                 }
@@ -465,6 +470,7 @@ document.getElementById('guardar-template-editar').addEventListener('click', (ev
     toastr.success('Guardando template', 'Por favor espera un momento', {
         progressBar: true,
         positionClass: 'toast-top-center',
+        "timeOut": "2000",
         onHidden: function () {
             window.location.href = '/turnos/agenda';
         }
