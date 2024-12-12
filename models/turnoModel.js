@@ -149,9 +149,81 @@ ORDER BY fecha DESC`
             console.log("Error al traer ids: ", error);
         }
     }
+    //------------------------------------------------------------------------------drops---------------------------------------------------------------
+    static async dDiagnostico(id) {
+        conn = await crearConexion()
+        let query = `DELETE FROM diagnostico WHERE diagnostico.id_diagnostico =?`
+
+        try {
+            const [result] = await conn.query(query, [id]);
+            return result.length ? result : null;
+        } catch (error) {
+            console.log("Error al bajar la receta: ", error);
+        } finally {
+            if (conn) conn.end();
+        }
+    }
+
+
+    static async dReceta(id) {
+        conn = await crearConexion()
+        let query = `DELETE FROM receta WHERE receta.id_receta = ?`
+
+        try {
+            const [result] = await conn.query(query, [id]);
+            return result.length ? result : null;
+        } catch (error) {
+            console.log("Error al bajar la receta: ", error);
+        } finally {
+            if (conn) conn.end();
+        }
+    }
+
+    static async dAlergia(id) {
+        conn = await crearConexion()
+        let query = `DELETE FROM alergia WHERE alergia.id_alergia =?`
+
+        try {
+            const [result] = await conn.query(query, [id]);
+            return result.length ? result : null;
+        } catch (error) {
+            console.log("Error al bajar la alergia: ", error);
+        } finally {
+            if (conn) conn.end();
+        }
+    }
+
+    static async dHabito(id) {
+        conn = await crearConexion()
+        let query = `DELETE FROM habito WHERE habito.id_habito = ?`
+
+        try {
+            const [result] = await conn.query(query, [id]);
+            return result.length ? result : null;
+        } catch (error) {
+            console.log("Error al bajar el habito: ", error);
+        } finally {
+            if (conn) conn.end();
+        }
+    }
+
+    static async dAntecedente(id) {
+        conn = await crearConexion()
+        let query = `DELETE FROM antecedente WHERE antecedente.id_antecedente = ?`
+
+        try {
+            const [result] = await conn.query(query, [id]);
+            return result.length ? result : null;
+        } catch (error) {
+            console.log("Error al bajar el antecedente: ", error);
+        } finally {
+            if (conn) conn.end();
+        }
+    }
 
 
 
+    //------------------------------------------------------------------------------drops---------------------------------------------------------------
     static async transaccionHCE(historial) {
         conn = await crearConexion()
         let nTurno = historial.numero_turno
@@ -249,7 +321,7 @@ ORDER BY fecha DESC`
                     for (const element of historial.antecedentes) {
                         if (element.textoAntecedente != '' && element.idAnte != 0) {
                             await conn.query('UPDATE antecedente SET descripcion=?,fecha_desde=?,fecha_hasta=? WHERE id_antecedente=?', [element.textoAntecedente, element.desdeAntecedente, element.hastaAntecedente, element.idAnte]);
-                        } else if (element.textoAntecedente != '' ) {
+                        } else if (element.textoAntecedente != '') {
                             await conn.query(' CALL insertar_Antecedentes(?,?,?,?)', [element.textoAntecedente, nTurno, element.desdeAntecedente, element.hastaAntecedente]);
                         }
                     }

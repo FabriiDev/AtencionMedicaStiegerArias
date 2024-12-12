@@ -57,12 +57,12 @@ class TurnoController {
     }
 
     async editHCE(req, res) {
-        let numero=req.params.numeroTurno
+        let numero = req.params.numeroTurno
         let turno = await turnoModel.numero_turno(numero)
         const fechaFormateada = turno[0].fecha.toISOString().split('T')[0];
         let medicamentos = await turnoModel.medicamentos()
-        
-        res.render('editHCE', { turno, fechaFormateada, medicamentos,numero })
+
+        res.render('editHCE', { turno, fechaFormateada, medicamentos, numero })
     }
 
 
@@ -142,7 +142,33 @@ class TurnoController {
         envio = { success: true }
         res.send(envio)
     }
+
+    async drop(req, res) {
+        console.log(req.body)
+        switch (req.body.tipo) {
+            case 'd':
+                turnoModel.dDiagnostico(req.body.data)
+                break;
+                case 'm':
+                turnoModel.dReceta(req.body.data)
+                break;
+                case 'a':
+                turnoModel.dAlergia(req.body.data)
+                break;
+                case 'h':
+                turnoModel.dHabito(req.body.data)
+                break;
+                case 'An':
+                turnoModel.dAntecedente(req.body.data)
+                break;
+            default:
+                console.log('skill issue')
+                break;
+        }
+    }
 }
+
+
 
 
 

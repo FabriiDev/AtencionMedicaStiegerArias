@@ -132,10 +132,10 @@ function traerDiagnostico() {
     document.querySelector('.select-diagnostico').value = turnoFormateado[0].estadoDiagnostico[0];
     document.querySelector('.txt-area-diagnostico').innerHTML = turnoFormateado[0].diagnostico[0];
     let idDiag = turnoFormateado[0].idDiagnosticoDB[0];
-    console.log('hola',idDiag);
+    console.log('hola', idDiag);
     if (turnoFormateado[0].diagnostico.length > 1) {
         for (let i = 1; i < turnoFormateado[0].diagnostico.length; i++) {
-            traerOtroDiagnostico(turnoFormateado[0].diagnostico[i], turnoFormateado[0].estadoDiagnostico[i],turnoFormateado[0].idDiagnosticoDB[i])
+            traerOtroDiagnostico(turnoFormateado[0].diagnostico[i], turnoFormateado[0].estadoDiagnostico[i], turnoFormateado[0].idDiagnosticoDB[i])
             idDiag = turnoFormateado[0].idDiagnosticoDB[i]
             console.log(idDiag);
         }
@@ -166,7 +166,7 @@ function traerOtroDiagnostico(txt_diag, estDiag, idDiag) {
         <label class="text-center">Detalles:</label>
         <textarea class="txt-area-create txt-area-diagnostico text-left">${txt_diag}</textarea>
         
-        <button class="btn btn-danger" onclick="eliminarDiagnosticoConConfirmacion('${idDiagnostico}')">Eliminar</button>
+        <button class="btn btn-danger" onclick="eliminarDiagnosticoConConfirmacion('${idDiagnostico}','${idDiag}')">Eliminar</button>
     </div>
     `;
 
@@ -174,7 +174,7 @@ function traerOtroDiagnostico(txt_diag, estDiag, idDiag) {
     diagnosticoCounter++; // Incrementar el contador
 }
 
-function eliminarDiagnosticoConConfirmacion(idDiagnostico) {
+function eliminarDiagnosticoConConfirmacion(idDiagnostico,idDiag) {
     Swal.fire({
         title: '¿Estás seguro?',
         text: "¡No podrás revertir esto!",
@@ -188,6 +188,7 @@ function eliminarDiagnosticoConConfirmacion(idDiagnostico) {
         if (result.isConfirmed) {
             // aca deberiamos hacer un borrado FISICO, ya que no le pucimos estados en db
             // hay que traer los id en el pa obtener_turno_detalleTRES
+            drop('d', idDiag)
             eliminarDiagnostico(idDiagnostico);
             toastr.success('Diagnóstico eliminado exitosamente');
         }
@@ -234,7 +235,7 @@ function traerMedicamento() {
 traerMedicamento()
 //llenarSelectMedicamento();
 
-function traerOtroMedicamento(nombreMedicamento, txtReceta,idRec) {
+function traerOtroMedicamento(nombreMedicamento, txtReceta, idRec) {
     let nuevoMedicamento = document.getElementById('nuevo-medicamento');
     let idMedicamento = `idMedicamento${medicamentoCounter}`;
     let pintar = `
@@ -250,7 +251,7 @@ function traerOtroMedicamento(nombreMedicamento, txtReceta,idRec) {
         </div>
         <label>Receta: </label>
         <textarea class="txt-area-medicamento txt-area-create text-left">${txtReceta || ''}</textarea>
-        <button onclick="eliminarMedicamentosConConfirmacion(${medicamentoCounter})" class="btn btn-danger fw-semibold">Eliminar</button>
+        <button onclick="eliminarMedicamentosConConfirmacion('${medicamentoCounter}','${idRec}')" class="btn btn-danger fw-semibold">Eliminar</button>
     </div>`;
     medicamentoCounter++;
     nuevoMedicamento.innerHTML += pintar;
@@ -263,7 +264,7 @@ function traerOtroMedicamento(nombreMedicamento, txtReceta,idRec) {
     }
 }
 
-function eliminarMedicamentosConConfirmacion(idMedicamento) {
+function eliminarMedicamentosConConfirmacion(idMedicamento,idRec) {
     Swal.fire({
         title: '¿Estás seguro?',
         text: "¡No podrás revertir esto!",
@@ -277,6 +278,7 @@ function eliminarMedicamentosConConfirmacion(idMedicamento) {
         if (result.isConfirmed) {
             // aca deberiamos hacer un borrado FISICO, ya que no le pucimos estados en db
             // hay que traer los id en el pa obtener_turno_detalleTRES
+            drop('m', idRec)
             eliminarMedicamento(idMedicamento);
             toastr.success('Medicamento eliminado exitosamente');
         }
@@ -290,7 +292,7 @@ function traerAlergia() {
     // estos cargan en los bloques estaticos de pug
     toggleContent('ampliarAlergia')
     let idAlerDB = turnoFormateado[0].idAlergiaDB[0];
-    console.log('id pos 0 alergia '+idAlerDB);
+    console.log('id pos 0 alergia ' + idAlerDB);
     let nombreAlergia = document.querySelector('.nombre-alergia').value = turnoFormateado[0].nombreAlergia[0];
     let importanciaAlergia = document.querySelector('.select-alergia').value = turnoFormateado[0].importanciaAlergia[0];
     let desdeAlergia = document.querySelector('.desde-alergia').value = turnoFormateado[0].alergiaDesde[0] || '';
@@ -300,8 +302,8 @@ function traerAlergia() {
         for (let i = 1; i < turnoFormateado[0].nombreAlergia.length; i++) {
             // crashea si le mando las variables creados como parametros xd
             idAlerDB = turnoFormateado[0].idAlergiaDB[i];
-            console.log(`id pos ${i} alergia `+idAlerDB);
-            traerOtraAlergia(turnoFormateado[0].nombreAlergia[i], turnoFormateado[0].importanciaAlergia[i], turnoFormateado[0].alergiaDesde[i], turnoFormateado[0].alergiaHasta[i],turnoFormateado[0].idAlergiaDB[i])
+            console.log(`id pos ${i} alergia ` + idAlerDB);
+            traerOtraAlergia(turnoFormateado[0].nombreAlergia[i], turnoFormateado[0].importanciaAlergia[i], turnoFormateado[0].alergiaDesde[i], turnoFormateado[0].alergiaHasta[i], turnoFormateado[0].idAlergiaDB[i])
         }
     }
 }
@@ -309,7 +311,7 @@ traerAlergia()
 
 // Contador global para IDs únicos
 
-function traerOtraAlergia(nombreAlergia, importanciaAlergia, desdeAlergia, hastaAlergia,idAler) {
+function traerOtraAlergia(nombreAlergia, importanciaAlergia, desdeAlergia, hastaAlergia, idAler) {
     let lev = importanciaAlergia === 'leve' ? 'selected' : '';
     let nor = importanciaAlergia === 'normal' ? 'selected' : '';
     let alt = importanciaAlergia === 'alta' ? 'selected' : '';
@@ -340,14 +342,14 @@ function traerOtraAlergia(nombreAlergia, importanciaAlergia, desdeAlergia, hasta
             <input type="checkbox"/>
         </label>
         </div>
-            <button onclick="eliminarAlergiaConConfirmacion('${idAlergia}')" class="btn btn-danger fw-semibold">Eliminar</button>
+            <button onclick="eliminarAlergiaConConfirmacion('${idAlergia}','${idAler}')" class="btn btn-danger fw-semibold">Eliminar</button>
     </div>`
 
     nuevaAlergia.innerHTML += pintar;
     alergiaCounter++;
 }
 
-function eliminarAlergiaConConfirmacion(idAlergia) {
+function eliminarAlergiaConConfirmacion(idAlergia,idAler) {
     Swal.fire({
         title: '¿Estás seguro?',
         text: "¡No podrás revertir esto!",
@@ -361,6 +363,7 @@ function eliminarAlergiaConConfirmacion(idAlergia) {
         if (result.isConfirmed) {
             // aca deberiamos hacer un borrado FISICO, ya que no le pucimos estados en db
             // hay que traer los id en el pa obtener_turno_detalleTRES
+            drop('a', idAler)
             eliminarAlergia(idAlergia);
             toastr.success('Alergia eliminada exitosamente');
         }
@@ -372,7 +375,7 @@ function eliminarAlergiaConConfirmacion(idAlergia) {
 function traerHabito() {
     toggleContent('ampliarHabito')
     let idHabDB = turnoFormateado[0].idHabitoDB[0];
-    console.log('id pos 0 habito '+idHabDB);
+    console.log('id pos 0 habito ' + idHabDB);
     document.querySelector('.texto-habito').innerHTML = turnoFormateado[0].habito[0];
     document.querySelector('.desde-habito').value = turnoFormateado[0].habitoDesde[0] || '';
     document.querySelector('.hasta-habito').value = turnoFormateado[0].habitoHasta[0] || '';
@@ -381,14 +384,14 @@ function traerHabito() {
         for (let i = 1; i < turnoFormateado[0].habito.length; i++) {
             // crashea si le mando las variables creados como parametros xd
             idHabDB = turnoFormateado[0].idHabitoDB[i];
-            console.log(`id pos ${i} habito `+idHabDB);
-            traerOtroHabito(turnoFormateado[0].habito[i], turnoFormateado[0].habitoDesde[i], turnoFormateado[0].habitoHasta[i],turnoFormateado[0].idHabitoDB[i])
+            console.log(`id pos ${i} habito ` + idHabDB);
+            traerOtroHabito(turnoFormateado[0].habito[i], turnoFormateado[0].habitoDesde[i], turnoFormateado[0].habitoHasta[i], turnoFormateado[0].idHabitoDB[i])
         }
     }
 }
 traerHabito()
 
-function traerOtroHabito(habito, desdeHabito, hastaHabito,idHab) {
+function traerOtroHabito(habito, desdeHabito, hastaHabito, idHab) {
     let nuevoHabito = document.getElementById('nuevo-habito');
     let idHabito = `idHabito${habitoCounter}`;
     let pintar = `
@@ -408,13 +411,13 @@ function traerOtroHabito(habito, desdeHabito, hastaHabito,idHab) {
                 <input type="checkbox"/>
             </label>
         </div>
-        <button onclick="eliminarHabitoConConfirmacion('${idHabito}')" class="btn btn-danger fw-semibold">Eliminar</button>
+        <button onclick="eliminarHabitoConConfirmacion('${idHabito}','${idHab}')" class="btn btn-danger fw-semibold">Eliminar</button>
     </div>`
     habitoCounter++;
     nuevoHabito.innerHTML += pintar;
 }
 
-function eliminarHabitoConConfirmacion(idHabito) {
+function eliminarHabitoConConfirmacion(idHabito,idHab) {
     Swal.fire({
         title: '¿Estás seguro?',
         text: "¡No podrás revertir esto!",
@@ -428,6 +431,7 @@ function eliminarHabitoConConfirmacion(idHabito) {
         if (result.isConfirmed) {
             // aca deberiamos hacer un borrado FISICO, ya que no le pucimos estados en db
             // hay que traer los id en el pa obtener_turno_detalleTRES
+            drop('h', idHab)
             eliminarHabito(idHabito);
             toastr.success('Habito eliminado exitosamente');
         }
@@ -439,7 +443,7 @@ function eliminarHabitoConConfirmacion(idHabito) {
 function traerAntecedente() {
     toggleContent('ampliarAntecedente')
     let idAntDB = turnoFormateado[0].idAntecedenteDB[0];
-    console.log('id pos 0 antecedente '+idAntDB);
+    console.log('id pos 0 antecedente ' + idAntDB);
     document.querySelector('.texto-antecedente').innerHTML = turnoFormateado[0].antecedente[0];
     document.querySelector('.desde-antecedente').value = turnoFormateado[0].antecedenteDesde[0] || '';
     document.querySelector('.hasta-antecedente').value = turnoFormateado[0].antecedenteHasta[0] || '';
@@ -448,14 +452,14 @@ function traerAntecedente() {
         for (let i = 1; i < turnoFormateado[0].antecedente.length; i++) {
             // crashea si le mando las variables creados como parametros xd
             idAntDB = turnoFormateado[0].idAntecedenteDB[i];
-            console.log(`id pos ${i} antecedente `+idAntDB);
-            traerOtroAntecedente(turnoFormateado[0].antecedente[i], turnoFormateado[0].antecedenteDesde[i], turnoFormateado[0].antecedenteHasta[i],turnoFormateado[0].idAntecedenteDB[i])
+            console.log(`id pos ${i} antecedente ` + idAntDB);
+            traerOtroAntecedente(turnoFormateado[0].antecedente[i], turnoFormateado[0].antecedenteDesde[i], turnoFormateado[0].antecedenteHasta[i], turnoFormateado[0].idAntecedenteDB[i])
         }
     }
 }
 traerAntecedente()
 
-function traerOtroAntecedente(antecedente, desdeAntecedente, hastaAntecedente,idAnte) {
+function traerOtroAntecedente(antecedente, desdeAntecedente, hastaAntecedente, idAnte) {
     let nuevoAnteccedente = document.getElementById('nuevo-antecedente');
     let idAntecedente = `idAntecedente${antecedenteCounter}`;
     let pintar = `
@@ -475,13 +479,13 @@ function traerOtroAntecedente(antecedente, desdeAntecedente, hastaAntecedente,id
                 <input type="checkbox"/>
             </label>
         </div>
-        <button onclick="eliminarAntecedenteConConfirmacion('${idAntecedente}')" class="btn btn-danger fw-semibold">Eliminar</button>
+        <button onclick="eliminarAntecedenteConConfirmacion('${idAntecedente}','${idAnte}')" class="btn btn-danger fw-semibold">Eliminar</button>
     </div>`
     antecedenteCounter++;
     nuevoAnteccedente.innerHTML += pintar;
 }
 
-function eliminarAntecedenteConConfirmacion(idAntecedente) {
+function eliminarAntecedenteConConfirmacion(idAntecedente,idAnte) {
     Swal.fire({
         title: '¿Estás seguro?',
         text: "¡No podrás revertir esto!",
@@ -495,6 +499,7 @@ function eliminarAntecedenteConConfirmacion(idAntecedente) {
         if (result.isConfirmed) {
             // aca deberiamos hacer un borrado FISICO, ya que no le pucimos estados en db
             // hay que traer los id en el pa obtener_turno_detalleTRES
+            drop('An', idAnte)
             eliminarAntecedente(idAntecedente);
             toastr.success('Antecedente eliminado exitosamente');
         }
@@ -623,6 +628,7 @@ function eliminarMedicamento(numero) {
     if (medicamento) {
         medicamento.classList.add('animacion-salida-eliminar');
         medicamento.addEventListener('animationend', function handleAnimationEnd() {
+
             medicamento.remove();
             medicamento.removeEventListener('animationend', handleAnimationEnd);
         });
@@ -632,7 +638,7 @@ function eliminarMedicamento(numero) {
 function capturarValoresMedicamentos() {
     const medicamentosCargados = [];
     const bloques = document.querySelectorAll('.capturarValorMedicamento');
-    
+
     bloques.forEach((bloque) => {
         const idMedicamento = bloque.querySelector('.select-medicamento').value;
         const textoMedicamento = bloque.querySelector('.txt-area-medicamento').value;
@@ -640,7 +646,7 @@ function capturarValoresMedicamentos() {
         const idRece = idReceElement ? idReceElement.value || '' : '';
 
         if (idMedicamento != '' && textoMedicamento != '') {
-            medicamentosCargados.push({ idMedicamento, textoMedicamento,idRece });
+            medicamentosCargados.push({ idMedicamento, textoMedicamento, idRece });
         }
 
     });
@@ -686,6 +692,7 @@ function eliminarAlergia(idAlergia) {
     if (alergia) {
         alergia.classList.add('animacion-salida-eliminar');
         alergia.addEventListener('animationend', function handleAnimationEnd() {
+            
             alergia.remove();
             alergia.removeEventListener('animationend', handleAnimationEnd);
         });
@@ -821,8 +828,10 @@ function nuevoAntecedente() {
 function eliminarAntecedente(idAntecedente) {
     let antecedente = document.getElementById(idAntecedente);
     if (antecedente) {
+        
         antecedente.classList.add('animacion-salida-eliminar');
         antecedente.addEventListener('animationend', function handleAnimationEnd() {
+            
             antecedente.remove();
             antecedente.removeEventListener('animationend', handleAnimationEnd);
         });
@@ -845,10 +854,10 @@ function cargarValoresAntecedentes() {
         //const vigenteAlergia = bloque.querySelector('.vigente-alergia').checked;
 
         if (textoAntecedente != '' && desdeAntecedente != '' && hastaAntecedente != '') {
-            antecedentesCargados.push({ textoAntecedente, desdeAntecedente, hastaAntecedente, idAnte});
+            antecedentesCargados.push({ textoAntecedente, desdeAntecedente, hastaAntecedente, idAnte });
         } else if (textoAntecedente != '' && desdeAntecedente != '') {
             hastaAntecedente = null;
-            antecedentesCargados.push({ textoAntecedente, desdeAntecedente, hastaAntecedente, idAnte});
+            antecedentesCargados.push({ textoAntecedente, desdeAntecedente, hastaAntecedente, idAnte });
         } else if (textoAntecedente != '') {
             desdeAntecedente = null;
             hastaAntecedente = null;
@@ -890,7 +899,7 @@ function guardarHistorial() {
                 });
                 return;
             }
-        
+
             let med = capturarValoresMedicamentos();
 
             let ale = capturarValoresAlergias();
@@ -899,12 +908,12 @@ function guardarHistorial() {
 
             let ante = cargarValoresAntecedentes();
 
-            let test=[vcd,ec,med,ale,hab,ante,numero]
+            let test = [vcd, ec, med, ale, hab, ante, numero]
             console.log('----------------------------test------------------------')
             console.log(test)
             console.log(numero)
             console.log('--------------------------------------------------------')
-            postServer(vcd,ec,med,ale,hab,ante,numero)
+            postServer(vcd, ec, med, ale, hab, ante, numero)
             toastr.success('Regresando a la agenda', 'Consulta finalizada con exito', {
                 progressBar: true,
                 positionClass: 'toast-top-center',
@@ -914,46 +923,75 @@ function guardarHistorial() {
             });
 
         }
-    });}
+    });
+}
 
-    function postServer(diagnosticos,evolucion,medicamentos,alergias,habitos,antecedentes,numero) {
-        let historial={
-            diagnosticos: diagnosticos,
-            evolucion: evolucion,
-            medicamentos: medicamentos,
-            alergias: alergias,
-            habitos: habitos,
-            antecedentes: antecedentes,
-            numero_turno:numero}
+function postServer(diagnosticos, evolucion, medicamentos, alergias, habitos, antecedentes, numero) {
+    let historial = {
+        diagnosticos: diagnosticos,
+        evolucion: evolucion,
+        medicamentos: medicamentos,
+        alergias: alergias,
+        habitos: habitos,
+        antecedentes: antecedentes,
+        numero_turno: numero
+    }
 
 
-        fetch(`/turnos/actualizarHCE`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                historial:historial
-            })
+    fetch(`/turnos/actualizarHCE`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            historial: historial
         })
-            .then(response => {
-    
-                return response.json();
-            })
-            .then(data => {
-    
-                if (data.success) {
-    
-                } else {
-                    console.error(data.message || 'fallo en el server');
-                }
-            })
-            .catch(error => {
-                console.error('Error al updatear', error);
-            })
-        }
-        
-    
+    })
+        .then(response => {
+
+            return response.json();
+        })
+        .then(data => {
+
+            if (data.success) {
+
+            } else {
+                console.error(data.message || 'fallo en el server');
+            }
+        })
+        .catch(error => {
+            console.error('Error al updatear', error);
+        })
+}
+
+
+async function drop(tipo, data) {
+    fetch(`/turnos/dropDatabase`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            data: data,
+            tipo: tipo
+        })
+    })
+        .then(response => {
+
+            return response.json();
+        })
+        .then(data => {
+
+            if (data.success) {
+
+            } else {
+                console.error(data.message || 'fallo en el server');
+            }
+        })
+        .catch(error => {
+            console.error('Error al updatear', error);
+        })
+}
 
 // ------------------------------------ viejo -----------------------------
 /*

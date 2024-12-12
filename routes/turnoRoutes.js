@@ -22,6 +22,7 @@ router.post('/actualizarHCE',turnoController.actualizarHCE)
 router.get("/HCErender", turnoController.HCErender);
 router.post("/guardarHCE",turnoController.guardarHCE)
 
+router.post("/dropDatabase",turnoController.drop)
 
 router.get("/createHCE:numeroTurno",turnoController.createHCE)
 router.get("/editarHCE:numeroTurno",turnoController.editHCE)
