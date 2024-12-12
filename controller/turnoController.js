@@ -2,12 +2,14 @@ const turnoModel = require("../models/turnoModel");
 
 
 class TurnoController {
-    Agenda = (req, res) => {
-        turnoModel.turnosPorMedico(req.session.matricula).then(turnos => {
-            let nombre = req.session.nombre
-            res.render('agenda', { turnos, nombre })
-        })
-    };
+
+    async Agenda(req, res) {
+        let turnos = await turnoModel.turnosPorMedico(req.session.matricula)
+        let nombre = req.session.nombre
+        let tiempo = await turnoModel.traerTiempoPromedio(req.session.matricula)
+        console.log(tiempo)
+        res.render('agenda', { turnos, nombre, tiempo })
+    }
 
     async pintarTurnos(req, res) {
         try {
@@ -126,12 +128,12 @@ class TurnoController {
             res.send(error)
         }
 
-        let hora=historial.horaFinal.hora-historial.horaComienzo.hora
-        let minutos=historial.horaFinal.minutos-historial.horaComienzo.minutos
-        let segundos=historial.horaFinal.segundos-historial.horaComienzo.segundos
-        let hora_comienzo=`${historial.horaComienzo.hora}:${historial.horaComienzo.minutos}:${historial.horaComienzo.segundos}`
-        let hora_final=`${historial.horaFinal.hora}:${historial.horaFinal.minutos}:${historial.horaFinal.segundos}`
-        await turnoModel.tiempoAtencion(hora,minutos,segundos,hora_comienzo,hora_final,req.session.matricula)
+        let hora = historial.horaFinal.hora - historial.horaComienzo.hora
+        let minutos = historial.horaFinal.minutos - historial.horaComienzo.minutos
+        let segundos = historial.horaFinal.segundos - historial.horaComienzo.segundos
+        let hora_comienzo = `${historial.horaComienzo.hora}:${historial.horaComienzo.minutos}:${historial.horaComienzo.segundos}`
+        let hora_final = `${historial.horaFinal.hora}:${historial.horaFinal.minutos}:${historial.horaFinal.segundos}`
+        await turnoModel.tiempoAtencion(hora, minutos, segundos, hora_comienzo, hora_final, req.session.matricula)
 
         envio = { success: true }
         res.send(envio)
@@ -157,16 +159,16 @@ class TurnoController {
             case 'd':
                 turnoModel.dDiagnostico(req.body.data)
                 break;
-                case 'm':
+            case 'm':
                 turnoModel.dReceta(req.body.data)
                 break;
-                case 'a':
+            case 'a':
                 turnoModel.dAlergia(req.body.data)
                 break;
-                case 'h':
+            case 'h':
                 turnoModel.dHabito(req.body.data)
                 break;
-                case 'An':
+            case 'An':
                 turnoModel.dAntecedente(req.body.data)
                 break;
             default:

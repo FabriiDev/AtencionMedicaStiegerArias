@@ -225,12 +225,12 @@ ORDER BY fecha DESC`
 
 
     //----------------------------------------------------------------------------------------tiempo de atencion-------------------------------------------------------
-    static async tiempoAtencion(horas,minutos,segundos,horaComienzo,horaFinal,matricula) {
+    static async tiempoAtencion(horas, minutos, segundos, horaComienzo, horaFinal, matricula) {
         conn = await crearConexion()
         let query = `INSERT INTO tiempos_consulta( matricula_medico, horas, minutos, segundos, hora_comienzo, hora_final) VALUES (?,?,?,?,?,?)`
 
         try {
-            const [result] = await conn.query(query, [matricula,horas,minutos,segundos,horaComienzo,horaFinal]);
+            const [result] = await conn.query(query, [matricula, horas, minutos, segundos, horaComienzo, horaFinal]);
             return result.length ? result : null;
         } catch (error) {
             console.log("Error al bajar el antecedente: ", error);
@@ -238,13 +238,33 @@ ORDER BY fecha DESC`
             if (conn) conn.end();
         }
     }
-    
-    
-    
-    
+
+
+    static async traerTiempoPromedio(matricula) {
+        conn = await crearConexion()
+        let query = `SELECT 
+    AVG(horas) AS promedio_horas,
+    AVG(minutos) AS promedio_minutos,
+    AVG(segundos) AS promedio_segundos
+    FROM tiempos_consulta
+    WHERE matricula_medico = ?`
+
+        try {
+            const [result] = await conn.query(query, [matricula]);
+            return result.length ? result : null;
+        } catch (error) {
+            console.log("Error al traer el los tiempos: ", error);
+        } finally {
+            if (conn) conn.end();
+        }
+    }
+
+
+
+
     //--------------------------------------------------------------------------------------------------------------------------------------------------
-    
-    
+
+
     static async transaccionHCE(historial) {
         conn = await crearConexion()
         let nTurno = historial.numero_turno
@@ -262,7 +282,7 @@ ORDER BY fecha DESC`
             await conn.query(' CALL insertar_Evolucion(?,?)', [historial.evolucion, nTurno]);
 
             for (const data of historial.medicamentos) {
-                await conn.query(' CALL insertar_receta(?,?,?)', [data.idMedicamento, nTurno,data.textoMedicamento]);
+                await conn.query(' CALL insertar_receta(?,?,?)', [data.idMedicamento, nTurno, data.textoMedicamento]);
             }
 
             for (const data of historial.antecedentes) {

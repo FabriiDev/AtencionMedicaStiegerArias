@@ -128,7 +128,7 @@ block content
         
         .bg-opcionales.d-flex.flex-column.align-items-start.p-3.gap-4.capturarValorAntecedente
             if(turno[0].id_antecedente)
-                - const idAntecedenteFormateado = turno[0].id_habito.split('|')[0]
+                - const idAntecedenteFormateado = turno[0].id_antecedente.split('|')[0]
                 input(type="hidden" class="idAnte" value=idAntecedenteFormateado)
             h3(onclick="toggleContent('ampliarAntecedente')").text-center.d-flex.align-items-center.cont-flecha-abrir  Antecedentes
                 div(class="material-symbols-outlined").flecha-abrir stat_minus_1
