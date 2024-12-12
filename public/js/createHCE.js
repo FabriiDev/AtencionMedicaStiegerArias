@@ -423,9 +423,15 @@ document.getElementById('fecha').innerHTML = 'turno del: ' + formatearFecha(turn
 //----------------------------------------------------------------------------------------------------------------------------
 
 
+
+
+//------------------------------------------------------------TIEMPOS DE ATENCION----------------------------------------------------------
+let auxiliar= new Date()
+let horaComienzo={hora:auxiliar.getHours(), minutos:auxiliar.getMinutes(), segundos:auxiliar.getSeconds()}
+let horaFinal={}
+//----------------------------------------------------------------------------------------------------------------------------------------
+
 // --------------> btn guardar
-
-
 function guardarHistorial() {
     Swal.fire({
         title: '¿Deseas finalizar la atencion?',
@@ -461,8 +467,9 @@ function guardarHistorial() {
             let hab = cargarValoresHabitos();
 
             let ante = cargarValoresAntecedentes();
-
-            postServer(vcd, ec, med, ale, hab, ante)
+            auxiliar= new Date()
+            horaFinal={hora:auxiliar.getHours(), minutos:auxiliar.getMinutes(), segundos:auxiliar.getSeconds()}
+            postServer(vcd, ec, med, ale, hab, ante,horaComienzo,horaFinal)
             toastr.success('Regresando a la agenda', 'Consulta finalizada con exito', {
                 progressBar: true,
                 positionClass: 'toast-top-center',
@@ -478,7 +485,7 @@ function guardarHistorial() {
 
 
 
-function postServer(diagnostico, evolucion, medicamentos, alergias, habitos, antecedentes) {
+function postServer(diagnostico, evolucion, medicamentos, alergias, habitos, antecedentes,horaComienzo,horaFinal) {
     let historial={
         diagnostico: diagnostico,
         evolucion: evolucion,
@@ -486,7 +493,9 @@ function postServer(diagnostico, evolucion, medicamentos, alergias, habitos, ant
         alergias: alergias,
         habitos: habitos,
         antecedentes: antecedentes,
-        numero_turno:turnazo[0].numero_turno
+        numero_turno:turnazo[0].numero_turno,
+        horaComienzo:horaComienzo,
+        horaFinal:horaFinal
     }
     fetch(`/turnos/guardarHCE`, {
         method: 'POST',

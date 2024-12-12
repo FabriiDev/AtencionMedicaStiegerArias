@@ -1,3 +1,4 @@
+const { Console } = require("console");
 const crearConexion = require("../config/db");
 let conn;
 
@@ -223,7 +224,27 @@ ORDER BY fecha DESC`
 
 
 
-    //------------------------------------------------------------------------------drops---------------------------------------------------------------
+    //----------------------------------------------------------------------------------------tiempo de atencion-------------------------------------------------------
+    static async tiempoAtencion(horas,minutos,segundos,horaComienzo,horaFinal,matricula) {
+        conn = await crearConexion()
+        let query = `INSERT INTO tiempos_consulta( matricula_medico, horas, minutos, segundos, hora_comienzo, hora_final) VALUES (?,?,?,?,?,?)`
+
+        try {
+            const [result] = await conn.query(query, [matricula,horas,minutos,segundos,horaComienzo,horaFinal]);
+            return result.length ? result : null;
+        } catch (error) {
+            console.log("Error al bajar el antecedente: ", error);
+        } finally {
+            if (conn) conn.end();
+        }
+    }
+    
+    
+    
+    
+    //--------------------------------------------------------------------------------------------------------------------------------------------------
+    
+    
     static async transaccionHCE(historial) {
         conn = await crearConexion()
         let nTurno = historial.numero_turno
@@ -241,7 +262,7 @@ ORDER BY fecha DESC`
             await conn.query(' CALL insertar_Evolucion(?,?)', [historial.evolucion, nTurno]);
 
             for (const data of historial.medicamentos) {
-                await conn.query(' CALL insertar_receta(?,?)', [data.valor, nTurno]);
+                await conn.query(' CALL insertar_receta(?,?,?)', [data.idMedicamento, nTurno,data.textoMedicamento]);
             }
 
             for (const data of historial.antecedentes) {
@@ -292,8 +313,8 @@ ORDER BY fecha DESC`
             }
 
             try {
-                if (historial.evolucion != '' && historial.evolucion.id != 0) {
-                    await conn.query(`UPDATE evolucion SET resumen_evolucion=? WHERE id_evolucion=?`, [historial.evolucion, historial.evolucion.id]);
+                if (historial.evolucion != '') {
+                    await conn.query(`UPDATE evolucion SET resumen_evolucion=? WHERE numero_turno=?`, [historial.evolucion, nTurno]);
                 }
             } catch (error) {
                 console.log(error)
@@ -320,6 +341,8 @@ ORDER BY fecha DESC`
                 if (historial.antecedentes.length > 0) {
                     for (const element of historial.antecedentes) {
                         if (element.textoAntecedente != '' && element.idAnte != 0) {
+                            console.log('antecedente')
+                            console.log(element)
                             await conn.query('UPDATE antecedente SET descripcion=?,fecha_desde=?,fecha_hasta=? WHERE id_antecedente=?', [element.textoAntecedente, element.desdeAntecedente, element.hastaAntecedente, element.idAnte]);
                         } else if (element.textoAntecedente != '') {
                             await conn.query(' CALL insertar_Antecedentes(?,?,?,?)', [element.textoAntecedente, nTurno, element.desdeAntecedente, element.hastaAntecedente]);

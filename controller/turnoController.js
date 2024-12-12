@@ -125,6 +125,14 @@ class TurnoController {
             console.log(error)
             res.send(error)
         }
+
+        let hora=historial.horaFinal.hora-historial.horaComienzo.hora
+        let minutos=historial.horaFinal.minutos-historial.horaComienzo.minutos
+        let segundos=historial.horaFinal.segundos-historial.horaComienzo.segundos
+        let hora_comienzo=`${historial.horaComienzo.hora}:${historial.horaComienzo.minutos}:${historial.horaComienzo.segundos}`
+        let hora_final=`${historial.horaFinal.hora}:${historial.horaFinal.minutos}:${historial.horaFinal.segundos}`
+        await turnoModel.tiempoAtencion(hora,minutos,segundos,hora_comienzo,hora_final,req.session.matricula)
+
         envio = { success: true }
         res.send(envio)
     }
