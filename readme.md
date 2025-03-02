@@ -43,8 +43,8 @@ La aplicación utiliza una base de datos estructurada para almacenar la informac
 Para ejecutar este proyecto en tu máquina local, asegúrate de tener los siguientes requisitos:
 
 - **Node.js**: Versión >= 14.x
-- **npm** o **yarn** para gestionar las dependencias.
-- **Base de datos**: Debes tener una base de datos configurada (MySQL, PostgreSQL, etc.) para almacenar la información de la aplicación.
+- **npm** para gestionar las dependencias.
+- **Base de datos**: Debes tener una base de datos configurada MySQL para almacenar la información de la aplicación.
 
 ---
 
