@@ -47,11 +47,3 @@ Para ejecutar este proyecto en tu máquina local, asegúrate de tener los siguie
 - **Base de datos**: Debes tener una base de datos configurada MySQL para almacenar la información de la aplicación.
 
 ---
-
-## Instalación
-
-1. **Clona el repositorio**:
-
-   ```bash
-   git clone https://github.com/tu_usuario/atencion-medica.git
-   cd atencion-medica
