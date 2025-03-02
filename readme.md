@@ -1,53 +1,57 @@
-> [!NOTE]
-> Práctico Integrador Laboratorio 2
+# Atención Médica - Aplicación de Gestión de Agenda y Historia Clínica
 
-La aplicación “Atención Médica” consiste en una aplicación para que el médico profesional pueda consultar 
-su agenda en la institución además de poder gestionar la información de la historia clínica de sus pacientes.
-El profesional accede con su usuario y puede consultar la información de su agenda diaria. Al comienzo vera 
-lo turnos para el día actual, pero si es necesario puede consultar los turnos de otros días. En la información de 
-su agenda verá quienes son los pacientes que debe atender y el estado de cada horario.
-La agenda debe facilitar al profesional cual es el paciente que tienen que atender, visualizando el motivo de la 
-consulta y pudiendo acceder rápidamente al historial de atenciones que tuvo ese paciente con el profesional.
-En ese historial debe mostrarse fecha de atención, motivo de consulta, diagnóstico, evolución (resumen que 
-detalla el profesional en cada atención que realiza a un paciente), Alergias, Antecedentes patológicos, Hábitos 
-y Medicamentos en uso.
+## Descripción
 
-La aplicación debe permitir seleccionar al paciente para iniciar la atención de la consulta, en este momento el 
-estado del horario pasará a atendido. Al iniciar la consulta se debe abrir la historia clínica del paciente para 
-que el profesional pueda visualizarla. Además, el profesional deberá registrar los datos de la atención actual.
-Historia Clínica Electrónica (HCE)
-La HCE debe reflejar la información de todas las atenciones que tuvo el paciente en esa institución.
-La HCE consta de:
+La aplicación **Atención Médica** está diseñada para ayudar a los profesionales médicos a gestionar su agenda y las historias clínicas de sus pacientes. A través de esta plataforma, los médicos pueden acceder a su agenda diaria, consultar los turnos programados, visualizar el historial clínico de sus pacientes, registrar nuevas consultas y mantener un registro completo de la evolución clínica de cada paciente.
 
-• Evoluciones (o notas clínicas) donde el médico describe un resumen de la atención. La evolución 
-debe poder escribirse en una interfaz de texto enriquecido para que el médico pueda darle un 
-formato adecuado a la evolución.
-• Diagnósticos de cada atención. Que pueden ser preliminares o confirmados. Puede existir mas de un 
-diagnóstico por atención. Los diagnósticos serán campos de texto libre. Es Obligatorio que exista un 
-diagnóstico por atención.
-• Alergias, pueden ser registradas opcionalmente en cualquier atención. Constan de un nombre, 
-importancia (leve, normal, alta), fecha desde y hasta. Las alergias deben estar nomencladas.
-• Antecedentes patológicos, pueden ser registrados opcionalmente en cualquier atención. Son de texto 
-libre y deben incluir una fecha desde y hasta.
-• Hábitos, pueden ser registrados opcionalmente en cualquier atención. Son de texto libre y deben 
-incluir una fecha desde y hasta.
-• Medicamentos en uso, pueden ser registrados opcionalmente y serán de texto libre.
-Todos los registros de atenciones anteriores no podrán ser modificados. Solo los registros pertenecientes a la 
-última atención del paciente.
-Al momento de consultar la HCE el profesional puede ver algunos datos de las atenciones que tuvo el 
-paciente con otros profesionales. En estos casos solo podrá ver la fecha en que se atendió el paciente, con 
-quién se atendió, el motivo de consulta y el diagnóstico. Los demás datos de la HCE solo podrán ser 
-observados por el médico que lo registro.
-Una vez que el profesional ha terminado de atender al paciente, este debe cerrar la consulta actual para que 
-esta información impacte en el estado de la agenda. Para poder cerrar la consulta actual el sistema debe 
-Laboratorio II – Desarrollador de Software
-corroborar que el paciente tenga registrado un diagnóstico y una evolución en la consulta, sino no podrá cerrar 
-la atención.
+### Funcionalidades principales:
 
-Sobre las evoluciones
-El sistema debe proveer una funcionabilidad que permita al médica cargar templates de notas clínicas. Estos 
-templates pueden ser llamados (cargados) al momento de crear una nueva evolución para facilitar la escritura
-de las notas clínicas.
-Sobre la agenda del Profesional
-Este TPI no debe cubrir la gestión de la agenda del profesional, aunque si es necesario que se simule la 
-disponibilidad de tal agenda para comenzar los flujos de trabajo.
+- **Agenda del profesional**: Los médicos pueden consultar y gestionar los turnos programados para cada día. Al seleccionar un turno, se pueden visualizar detalles del paciente, incluyendo el motivo de consulta y el estado de la atención.
+  
+- **Historia Clínica Electrónica (HCE)**: Cada paciente tiene su propio historial clínico, que incluye información como:
+  - Evoluciones (notas clínicas)
+  - Diagnósticos
+  - Alergias, antecedentes patológicos, hábitos y medicamentos en uso.
+  
+- **Interfaz de usuario**: Los médicos pueden ver la evolución de cada paciente, agregar notas clínicas enriquecidas, registrar diagnósticos y realizar modificaciones solo en la última atención registrada.
+
+- **Registro de atención**: El profesional puede iniciar y finalizar una consulta, y los registros de atención se actualizan automáticamente en la agenda.
+
+---
+
+## Características
+
+- **Acceso profesional**: Los médicos inician sesión con su usuario para consultar su agenda y gestionar las consultas de pacientes.
+- **Consultas de pacientes**: Los médicos pueden acceder a la historia clínica de los pacientes y registrar nueva información sobre cada consulta.
+- **Plantillas de notas clínicas**: El sistema permite cargar plantillas de notas clínicas para facilitar la escritura de evoluciones.
+- **Estado de la consulta**: El estado de cada turno se actualiza automáticamente (ej. "Atendido") cuando se cierra la consulta.
+
+---
+
+## Estructura de la Base de Datos
+
+La aplicación utiliza una base de datos estructurada para almacenar la información de los pacientes, sus atenciones y la agenda del profesional. A continuación se muestra un esquema básico de la base de datos que puede adaptarse según las necesidades:
+
+- **Pacientes**: Información personal, historial clínico.
+- **Atenciones**: Registros de cada consulta, diagnóstico, evolución, etc.
+- **Agenda**: Programación de turnos para los profesionales.
+
+---
+
+## Requisitos
+
+Para ejecutar este proyecto en tu máquina local, asegúrate de tener los siguientes requisitos:
+
+- **Node.js**: Versión >= 14.x
+- **npm** o **yarn** para gestionar las dependencias.
+- **Base de datos**: Debes tener una base de datos configurada (MySQL, PostgreSQL, etc.) para almacenar la información de la aplicación.
+
+---
+
+## Instalación
+
+1. **Clona el repositorio**:
+
+   ```bash
+   git clone https://github.com/tu_usuario/atencion-medica.git
+   cd atencion-medica
